@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # mega-automotives
 
 This template should help get you started developing with Vue 3 in Vite.
@@ -33,3 +34,7 @@ npm run build
 ```sh
 npm run lint
 ```
+=======
+# Mega-Automotives
+A fullstack web app built with MERN for an automotive company with RBAC (customer, admin, technician and insurance company)
+>>>>>>> b486f0e7b849501900647af3767cd8adfd822dea
