@@ -6,11 +6,10 @@ import { useToast } from 'vue-toastification'
 const userStore = useUserStore()
 const toast = useToast()
 
-export const handleUserImgUpdate = async (paramsToSign, file) => {
+export const handleImageUpdate = async (paramsToSign, file, photoUrl) => {
   try {
-    const photoUrl = userStore.user.photo
     if (photoUrl) {
-      const res = await deleteProfilePhoto(photoUrl)
+      const res = await deletePhoto(photoUrl)
 
       if (res.data.result !== 'ok') {
         toast.error(`Image Upload Error: ${res.result}`)
@@ -18,15 +17,13 @@ export const handleUserImgUpdate = async (paramsToSign, file) => {
       }
     }
 
-    const res = await uploadProfilePhoto(paramsToSign, file)
-
-    await userStore.updateProfilePhoto({ photo: res.data.url })
+    return await uploadPhoto(paramsToSign, file)
   } catch (err) {
     toast.error(`Failed to update profile photo: ${err.message}`)
   }
 }
 
-const deleteProfilePhoto = async (photoUrl) => {
+const deletePhoto = async (photoUrl) => {
   try {
     let public_id = extractPublicId(photoUrl)
     if (!public_id) return
@@ -48,7 +45,7 @@ const deleteProfilePhoto = async (photoUrl) => {
   }
 }
 
-const uploadProfilePhoto = async (paramsToSign, file) => {
+const uploadPhoto = async (paramsToSign, file) => {
   try {
     let { data } = await userStore.generateSignature({
       eager: paramsToSign.eager,

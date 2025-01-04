@@ -1,11 +1,9 @@
 <script setup>
 import { onMounted, ref } from 'vue'
-import { useAuthStore } from '@/stores/authStore'
 import { formatDate } from '@/utils/formatters'
 import { useUserStore } from '@/stores/userStore'
-import { handleUserImgUpdate } from '@/composables/handleUserImgUpdate'
+import { handleImageUpdate } from '@/composables/handleImageUpdate'
 
-const authStore = useAuthStore()
 const userStore = useUserStore()
 
 const user = ref(null)
@@ -13,7 +11,7 @@ const fileInput = ref(null)
 const loading = ref(false)
 
 onMounted(async () => {
-  user.value = authStore.user
+  user.value = userStore.user
   loading.value = userStore.loading
 })
 
@@ -25,12 +23,15 @@ const handleFileChange = async (e) => {
   const file = e.target.files[0]
   user.value.photo = URL.createObjectURL(file)
 
+  const photoUrl = userStore.user.photo
   const paramsToSign = {
     eager: 'c_pad,h_300,w_400|c_crop,h_200,w_260',
     folder: `mega-automotives/users/${user.value._id}`,
   }
+  const res = await handleImageUpdate(paramsToSign, file, photoUrl)
+
+  await userStore.updateProfilePhoto({ photo: res.data.url })
   loading.value = true
-  await handleUserImgUpdate(paramsToSign, file)
 }
 </script>
 
