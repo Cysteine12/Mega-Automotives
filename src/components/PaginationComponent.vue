@@ -15,7 +15,7 @@ const page = ref({
   currentPage: props.pagination.currentPage,
   perPage: props.pagination.perPage,
   total: props.pagination.total,
-  totalPage: Math.round(props.pagination.total / props.pagination.perPage),
+  totalPage: Math.ceil(props.pagination.total / props.pagination.perPage),
 })
 const currentRoute = ref(router.currentRoute.value.path)
 

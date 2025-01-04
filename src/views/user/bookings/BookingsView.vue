@@ -18,7 +18,7 @@ const pagination = ref({
 const error = ref(null)
 
 const getBookings = async () => {
-  const query = { page: pagination.value.currentPage, limit: 4 }
+  const query = { page: pagination.value.currentPage, limit: pagination.value.perPage }
   await customerStore.fetchBookings(query)
 
   bookings.value = customerStore.bookings

@@ -3,8 +3,11 @@ import { onMounted, ref } from 'vue'
 import { useCustomerStore } from '@/stores/customerStore'
 import PageHeading from '@/components/PageHeading.vue'
 import ProfileCard from '@/features/users/ProfileCard.vue'
+import DialogueModal from '@/components/DialogueModal.vue'
+import { useUserStore } from '@/stores/userStore'
 
 const customerStore = useCustomerStore()
+const userStore = useUserStore()
 
 const vehicles = ref(null)
 const bookings = ref(null)
@@ -17,6 +20,10 @@ onMounted(async () => {
   await customerStore.fetchBookings(query)
   bookings.value = customerStore.bookings
 })
+
+const submitDelete = async () => {
+  await userStore.deleteProfile()
+}
 </script>
 
 <template>
@@ -43,6 +50,12 @@ onMounted(async () => {
         </ProfileCard>
       </div>
     </div>
+
+    <DialogueModal
+      title="Delete Your Profile"
+      message="Are you sure you want to delete your profile? This action cannot be undone!"
+      @confirm-action="submitDelete"
+    />
   </main>
 </template>
 

@@ -3,6 +3,7 @@ import { onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { useCustomerStore } from '@/stores/customerStore'
 import PageHeading from '@/components/PageHeading.vue'
+import DialogueModal from '@/components/DialogueModal.vue'
 
 const customerStore = useCustomerStore()
 const route = useRoute()
@@ -22,6 +23,10 @@ onMounted(async () => {
   await customerStore.fetchBookingById(bookingId)
   booking.value = customerStore.bookings[0]
 })
+
+const handleDelete = async () => {
+  await customerStore.deleteBooking(booking.value._id)
+}
 </script>
 
 <template>
@@ -61,9 +66,13 @@ onMounted(async () => {
                 <i class="fas fa-edit"></i> Edit Booking
               </router-link>
               <div class="dropdown-divider"></div>
-              <router-link class="dropdown-item small text-danger" to="/">
+              <a
+                class="dropdown-item small text-danger"
+                data-toggle="modal"
+                data-target="#promptModal"
+              >
                 <i class="fas fa-trash-alt"></i> Delete Booking
-              </router-link>
+              </a>
             </div>
           </div>
         </div>
@@ -117,6 +126,12 @@ onMounted(async () => {
         </div>
       </div>
     </div>
+
+    <DialogueModal
+      title="Delete Booking"
+      message="Are you sure you want to delete this booking?"
+      @confirmAction="handleDelete"
+    />
   </main>
 </template>
 

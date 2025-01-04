@@ -122,6 +122,8 @@ const scrollToTop = async () => {
           <div
             id="collapsePages"
             class="collapse"
+            data-toggle="collapse"
+            data-target="#collapsePages"
             aria-labelledby="headingPages"
             data-parent="#accordionSidebar"
           >
@@ -148,6 +150,8 @@ const scrollToTop = async () => {
           <div
             id="collapseThree"
             class="collapse"
+            data-toggle="collapse"
+            data-target="#collapseThree"
             aria-labelledby="headingThree"
             data-parent="#accordionSidebar"
           >
@@ -174,6 +178,8 @@ const scrollToTop = async () => {
           <div
             id="collapseTwo"
             class="collapse"
+            data-toggle="collapse"
+            data-target="#collapseTwo"
             aria-labelledby="headingTwo"
             data-parent="#accordionSidebar"
           >

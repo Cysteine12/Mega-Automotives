@@ -2,14 +2,32 @@
 import { onMounted, ref } from 'vue'
 import { useAuthStore } from '@/stores/authStore'
 import { formatDate } from '@/utils/formatters'
+import { useUserStore } from '@/stores/userStore'
 
 const authStore = useAuthStore()
+const userStore = useUserStore()
 
 const user = ref(null)
+const fileInput = ref(null)
+const loading = ref(false)
 
 onMounted(async () => {
   user.value = authStore.user
 })
+
+const triggerFileInput = () => {
+  fileInput.value.click()
+}
+
+const handleFileChange = async (e) => {
+  const file = e.target.files[0]
+  user.value.photo = URL.createObjectURL(file)
+
+  console.log(file.name)
+  const folder = `me`
+  await userStore.uploadPhoto(folder, file)
+  loading.value = userStore.loading
+}
 </script>
 
 <template>
@@ -42,9 +60,9 @@ onMounted(async () => {
             <i class="fas fa-key"></i> Change Password
           </router-link>
           <div class="dropdown-divider"></div>
-          <router-link class="dropdown-item small text-danger" to="/">
+          <a class="dropdown-item small text-danger" data-toggle="modal" data-target="#promptModal">
             <i class="fas fa-trash-alt"></i> Delete Account
-          </router-link>
+          </a>
         </div>
       </div>
 
@@ -52,9 +70,15 @@ onMounted(async () => {
         <div class="profile-img">
           <div>
             <img :src="user.photo" class="rounded-circle" width="80" />
-            <span class="badge rounded-circle bg-white text-primary p-1">
+            <span v-if="loading" class="img-spinner"><i class="fas fa-spinner fa-spin"></i></span>
+            <span
+              v-if="!loading"
+              @click="triggerFileInput"
+              class="badge rounded-circle bg-white text-primary p-1"
+            >
               <i class="fas fa-images small" aria-hidden="true"></i>
             </span>
+            <input v-show="false" type="file" ref="fileInput" @change="handleFileChange" />
           </div>
         </div>
         <button
@@ -156,8 +180,15 @@ onMounted(async () => {
 
 .profile-btn {
   position: absolute;
-  top: -20px;
+  top: -1.5em; /* - 20px */
   right: 0;
+}
+
+.img-spinner {
+  position: absolute;
+  top: 25%;
+  right: 35%;
+  font-size: 25px;
 }
 
 .badge {
