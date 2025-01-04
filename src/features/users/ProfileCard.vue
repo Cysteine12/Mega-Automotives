@@ -3,6 +3,7 @@ import { onMounted, ref } from 'vue'
 import { useAuthStore } from '@/stores/authStore'
 import { formatDate } from '@/utils/formatters'
 import { useUserStore } from '@/stores/userStore'
+import { handleUserImgUpdate } from '@/composables/handleUserImgUpdate'
 
 const authStore = useAuthStore()
 const userStore = useUserStore()
@@ -13,6 +14,7 @@ const loading = ref(false)
 
 onMounted(async () => {
   user.value = authStore.user
+  loading.value = userStore.loading
 })
 
 const triggerFileInput = () => {
@@ -23,10 +25,12 @@ const handleFileChange = async (e) => {
   const file = e.target.files[0]
   user.value.photo = URL.createObjectURL(file)
 
-  console.log(file.name)
-  const folder = `me`
-  await userStore.uploadPhoto(folder, file)
-  loading.value = userStore.loading
+  const paramsToSign = {
+    eager: 'c_pad,h_300,w_400|c_crop,h_200,w_260',
+    folder: `mega-automotives/users/${user.value._id}`,
+  }
+  loading.value = true
+  await handleUserImgUpdate(paramsToSign, file)
 }
 </script>
 
@@ -69,18 +73,21 @@ const handleFileChange = async (e) => {
       <div class="user text-center">
         <div class="profile-img">
           <div>
-            <img :src="user.photo" class="rounded-circle" width="80" />
+            <img :src="user.photo || 'img/user.png'" class="rounded-circle" width="80" />
             <span v-if="loading" class="img-spinner"><i class="fas fa-spinner fa-spin"></i></span>
-            <span
+
+            <button
               v-if="!loading"
+              type="button"
               @click="triggerFileInput"
-              class="badge rounded-circle bg-white text-primary p-1"
+              class="btn badge rounded-circle bg-white text-primary p-1"
             >
               <i class="fas fa-images small" aria-hidden="true"></i>
-            </span>
+            </button>
             <input v-show="false" type="file" ref="fileInput" @change="handleFileChange" />
           </div>
         </div>
+
         <button
           type="button"
           class="profile-btn btn btn-outline btn-icon-split rounded-pill btn-success text-white mr-3 small"
@@ -189,6 +196,7 @@ const handleFileChange = async (e) => {
   top: 25%;
   right: 35%;
   font-size: 25px;
+  color: #fff;
 }
 
 .badge {

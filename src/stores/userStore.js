@@ -2,7 +2,6 @@ import { defineStore } from 'pinia'
 import router from '../router'
 import { useToast } from 'vue-toastification'
 import API from '@/libs/api'
-// import * as cloudinary from '@/libs/cloudinary'
 
 const toast = useToast()
 
@@ -88,24 +87,13 @@ export const useUserStore = defineStore('user', {
       }
     },
 
-    async uploadPhoto(folder, file) {
+    async generateSignature(paramsToSign) {
       this.loading = true
       this.error = null
       try {
-        const { data } = await API.patch(`/users/generate-signature`, { folder })
+        const res = await API.post(`/users/generate-signature`, paramsToSign)
 
-        const formData = new FormData()
-        formData.append('file', file)
-        formData.append('api_key', data.api_key)
-        formData.append('signature', data.signature)
-        formData.append('timestamp', data.timestamp)
-        formData.append('folder', folder)
-
-        // const res = await cloudinary.upload(data.cloud_name, formData)
-        // console.log(res)
-        // this.updateProfilePhoto({ photo: res.url })
-
-        console.log(formData)
+        return res
       } catch (err) {
         this.error = err.response?.data?.message
         toast.error(this.error)
