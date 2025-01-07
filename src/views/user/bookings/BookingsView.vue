@@ -2,9 +2,9 @@
 import { onMounted, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { useCustomerStore } from '@/stores/customerStore'
-import PageHeading from '@/components/PageHeading.vue'
+import AppHeading from '@/components/AppHeading.vue'
 import BookingCard from '@/features/bookings/BookingCard.vue'
-import PaginationComponent from '@/components/PaginationComponent.vue'
+import AppPagination from '@/components/AppPagination.vue'
 
 const route = useRoute()
 const customerStore = useCustomerStore()
@@ -40,7 +40,7 @@ watch(
 
 <template>
   <main>
-    <PageHeading title="My Bookings" />
+    <AppHeading title="My Bookings" />
 
     <div v-if="bookings" class="row mx-lg-auto">
       <div
@@ -60,6 +60,6 @@ watch(
       <div v-if="error">{{ error }}</div>
     </div>
 
-    <PaginationComponent v-if="bookings" :pagination="pagination" />
+    <AppPagination v-if="bookings" :pagination="pagination" />
   </main>
 </template>

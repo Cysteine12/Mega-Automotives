@@ -2,17 +2,16 @@
 import { onMounted, ref } from 'vue'
 import { formatDate } from '@/utils/formatters'
 import { useUserStore } from '@/stores/userStore'
-import { handleImageUpdate } from '@/composables/handleImageUpdate'
+import { handleImageUpdate, handleImageUpload } from '@/services/imageService'
 
 const userStore = useUserStore()
 
 const user = ref(null)
 const fileInput = ref(null)
-const loading = ref(false)
+const loading = ref(userStore.loading)
 
 onMounted(async () => {
   user.value = userStore.user
-  loading.value = userStore.loading
 })
 
 const triggerFileInput = () => {
@@ -21,17 +20,20 @@ const triggerFileInput = () => {
 
 const handleFileChange = async (e) => {
   const file = e.target.files[0]
-  user.value.photo = URL.createObjectURL(file)
 
   const photoUrl = userStore.user.photo
+
+  user.value.photo = URL.createObjectURL(file)
   const paramsToSign = {
     eager: 'c_pad,h_300,w_400|c_crop,h_200,w_260',
     folder: `mega-automotives/users/${user.value._id}`,
   }
-  const res = await handleImageUpdate(paramsToSign, file, photoUrl)
+  loading.value = true
+  const res = photoUrl
+    ? await handleImageUpdate(paramsToSign, file, photoUrl)
+    : await handleImageUpload(paramsToSign, file)
 
   await userStore.updateProfilePhoto({ photo: res.data.url })
-  loading.value = true
 }
 </script>
 
@@ -85,7 +87,13 @@ const handleFileChange = async (e) => {
             >
               <i class="fas fa-images small" aria-hidden="true"></i>
             </button>
-            <input v-show="false" type="file" ref="fileInput" @change="handleFileChange" />
+            <input
+              v-show="false"
+              type="file"
+              accept="image/*"
+              ref="fileInput"
+              @change="handleFileChange"
+            />
           </div>
         </div>
 

@@ -1,9 +1,9 @@
 <script setup>
 import { onMounted, ref } from 'vue'
 import { useCustomerStore } from '@/stores/customerStore'
-import PageHeading from '@/components/PageHeading.vue'
+import AppHeading from '@/components/AppHeading.vue'
 import ProfileCard from '@/features/users/ProfileCard.vue'
-import DialogueModal from '@/components/DialogueModal.vue'
+import AppModal from '@/components/AppModal.vue'
 import { useUserStore } from '@/stores/userStore'
 
 const customerStore = useCustomerStore()
@@ -28,7 +28,7 @@ const submitDelete = async () => {
 
 <template>
   <main>
-    <PageHeading title="My Profile" />
+    <AppHeading title="My Profile" />
 
     <div class="row">
       <div class="col-xl-8 col-lg-7">
@@ -51,7 +51,7 @@ const submitDelete = async () => {
       </div>
     </div>
 
-    <DialogueModal
+    <AppModal
       title="Delete Your Profile"
       message="Are you sure you want to delete your profile? This action cannot be undone!"
       @confirm-action="submitDelete"

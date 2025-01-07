@@ -1,29 +1,27 @@
+import { useToast } from 'vue-toastification'
 import { useUserStore } from '@/stores/userStore'
 import * as cloudinary from '@/libs/cloudinary'
-import { extractPublicId } from '@/utils/extractPublicId'
-import { useToast } from 'vue-toastification'
+import extractPublicId from '@/utils/extractPublicId'
 
 const userStore = useUserStore()
 const toast = useToast()
 
 export const handleImageUpdate = async (paramsToSign, file, photoUrl) => {
   try {
-    if (photoUrl) {
-      const res = await deletePhoto(photoUrl)
+    const res = await handleImageDelete(photoUrl)
 
-      if (res.data.result !== 'ok') {
-        toast.error(`Image Upload Error: ${res.result}`)
-        return
-      }
+    if (res.data.result !== 'ok') {
+      toast.error(`Failed to update image: ${res.result}`)
+      return
     }
 
-    return await uploadPhoto(paramsToSign, file)
+    return await handleImageUpload(paramsToSign, file)
   } catch (err) {
-    toast.error(`Failed to update profile photo: ${err.message}`)
+    toast.error(`Failed to update image: ${err.message}`)
   }
 }
 
-const deletePhoto = async (photoUrl) => {
+export const handleImageDelete = async (photoUrl) => {
   try {
     let public_id = extractPublicId(photoUrl)
     if (!public_id) return
@@ -41,11 +39,11 @@ const deletePhoto = async (photoUrl) => {
 
     return await cloudinary.destroy(data.cloud_name, formData)
   } catch (err) {
-    toast.error(err.message)
+    toast.error(`Failed to update image: ${err.message}`)
   }
 }
 
-const uploadPhoto = async (paramsToSign, file) => {
+export const handleImageUpload = async (paramsToSign, file) => {
   try {
     let { data } = await userStore.generateSignature({
       eager: paramsToSign.eager,
@@ -62,6 +60,6 @@ const uploadPhoto = async (paramsToSign, file) => {
 
     return await cloudinary.upload(data.cloud_name, formData)
   } catch (err) {
-    toast.error(err.message)
+    toast.error(`Failed to update image: ${err.message}`)
   }
 }

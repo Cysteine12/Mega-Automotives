@@ -1,7 +1,7 @@
 <script setup>
 import { reactive, ref } from 'vue'
 import { useAuthStore } from '@/stores/authStore'
-import PageHeading from '@/components/PageHeading.vue'
+import AppHeading from '@/components/AppHeading.vue'
 import { useToast } from 'vue-toastification'
 
 const authStore = useAuthStore()
@@ -27,7 +27,7 @@ const submitForm = async () => {
 
 <template>
   <main>
-    <PageHeading title="Change My Password" />
+    <AppHeading title="Change My Password" />
 
     <div class="card o-hidden border-0 shadow-lg my-1">
       <div class="card-body p-0">

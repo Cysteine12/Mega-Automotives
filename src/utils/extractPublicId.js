@@ -1,4 +1,4 @@
-export const extractPublicId = (url) => {
+const extractPublicId = (url) => {
   // Remove the base URL and transformations
   const parts = url.split('/')
   const index = parts.findIndex((part) => part === 'upload')
@@ -20,3 +20,5 @@ export const extractPublicId = (url) => {
 
   return publicId
 }
+
+export default extractPublicId

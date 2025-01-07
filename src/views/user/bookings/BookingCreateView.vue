@@ -1,9 +1,9 @@
 <script setup>
-import PageHeading from '@/components/PageHeading.vue'
-import BookServiceForm from '@/features/bookings/BookServiceForm.vue'
-import { useCustomerStore } from '@/stores/customerStore'
-import { useServiceStore } from '@/stores/serviceStore'
 import { computed, onMounted, ref } from 'vue'
+import { useServiceStore } from '@/stores/serviceStore'
+import { useCustomerStore } from '@/stores/customerStore'
+import AppHeading from '@/components/AppHeading.vue'
+import BookServiceForm from '@/features/bookings/BookServiceForm.vue'
 
 const serviceStore = useServiceStore()
 const customerStore = useCustomerStore()
@@ -33,7 +33,7 @@ const handleSubmit = async (formData) => {
 
 <template>
   <main>
-    <PageHeading title="Book Service" />
+    <AppHeading title="Book Service" />
 
     <div v-if="filteredSubservices && vehicles">
       <BookServiceForm

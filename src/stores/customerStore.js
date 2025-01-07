@@ -179,7 +179,7 @@ export const useCustomerStore = defineStore('customer', {
           this.message = res.data.message
           toast.success(this.message)
 
-          router.push(`/bookings/${this.bookings[0]._id}`)
+          router.push(`/bookings/${res.data.data._id}`)
         } else {
           this.error = res.data.message
           toast.error(this.error)

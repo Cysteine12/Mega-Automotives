@@ -3,7 +3,7 @@ import { computed, onMounted, ref } from 'vue'
 import { useCustomerStore } from '@/stores/customerStore'
 import { useRoute } from 'vue-router'
 import { useServiceStore } from '@/stores/serviceStore'
-import PageHeading from '@/components/PageHeading.vue'
+import AppHeading from '@/components/AppHeading.vue'
 import BookServiceForm from '@/features/bookings/BookServiceForm.vue'
 
 const route = useRoute()
@@ -41,7 +41,7 @@ const handleSubmit = async (formData) => {
 
 <template>
   <main>
-    <PageHeading title="Edit Booking" />
+    <AppHeading title="Edit Booking" />
 
     <div v-if="booking && filteredSubservices && vehicles">
       <BookServiceForm

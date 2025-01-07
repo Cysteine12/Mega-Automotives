@@ -1,5 +1,5 @@
 <script setup>
-import ButtonComponent from '@/components/ButtonComponent.vue'
+import AppButton from '@/components/AppButton.vue'
 import { formatDate } from '@/utils/formatters'
 
 defineProps({
@@ -74,7 +74,7 @@ const statusTags = {
       <div class="font-weight-bold small m-3">{{ formatDate(booking.updatedAt) }}</div>
 
       <router-link :to="`/bookings/${booking._id}`" class="btn link mx-2">
-        <ButtonComponent type="button" text="View Booking" class="btn-sm" />
+        <AppButton type="button" text="View Booking" class="btn-sm" />
       </router-link>
     </div>
   </div>

@@ -1,7 +1,7 @@
 <script setup>
 import { onMounted, ref } from 'vue'
 import { useServiceStore } from '@/stores/serviceStore'
-import PageHeading from '@/components/PageHeading.vue'
+import AppHeading from '@/components/AppHeading.vue'
 import ServiceCard from '@/features/services/ServiceCard.vue'
 
 const serviceStore = useServiceStore()
@@ -15,7 +15,7 @@ onMounted(async () => {
 
 <template>
   <main>
-    <PageHeading title="Dashboard" />
+    <AppHeading title="Dashboard" />
 
     <!-- Content Row -->
     <div class="row">

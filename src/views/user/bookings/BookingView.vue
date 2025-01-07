@@ -2,8 +2,8 @@
 import { onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { useCustomerStore } from '@/stores/customerStore'
-import PageHeading from '@/components/PageHeading.vue'
-import DialogueModal from '@/components/DialogueModal.vue'
+import AppHeading from '@/components/AppHeading.vue'
+import AppModal from '@/components/AppModal.vue'
 
 const customerStore = useCustomerStore()
 const route = useRoute()
@@ -31,7 +31,7 @@ const handleDelete = async () => {
 
 <template>
   <main>
-    <PageHeading title="Booking Details" />
+    <AppHeading title="Booking Details" />
 
     <div class="row m-auto">
       <div v-if="booking" class="card mb-4 mx-lg-2">
@@ -127,7 +127,7 @@ const handleDelete = async () => {
       </div>
     </div>
 
-    <DialogueModal
+    <AppModal
       title="Delete Booking"
       message="Are you sure you want to delete this booking?"
       @confirmAction="handleDelete"

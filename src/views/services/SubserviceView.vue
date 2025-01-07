@@ -3,7 +3,7 @@ import { onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { useServiceStore } from '@/stores/serviceStore'
 import { useCustomerStore } from '@/stores/customerStore'
-import PageHeading from '@/components/PageHeading.vue'
+import AppHeading from '@/components/AppHeading.vue'
 import SubserviceComponent from '@/features/services/SubserviceComponent.vue'
 import BookServiceForm from '@/features/bookings/BookServiceForm.vue'
 import BookingUnavailableCard from '@/features/bookings/BookingUnavailableCard.vue'
@@ -35,7 +35,7 @@ const handleSubmit = async (formData) => {
 
 <template>
   <main v-if="subservice">
-    <PageHeading :title="subservice.name" />
+    <AppHeading :title="subservice.name" />
 
     <!-- Content Row -->
     <div class="row">

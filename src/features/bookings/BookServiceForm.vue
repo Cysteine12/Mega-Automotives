@@ -1,5 +1,8 @@
 <script setup>
 import { ref } from 'vue'
+import { useUserStore } from '@/stores/userStore'
+import InputFileBox from '@/components/InputFileBox.vue'
+import handleFileChange from '@/composables/handleFileChange'
 
 const props = defineProps({
   subservices: {
@@ -19,7 +22,9 @@ const props = defineProps({
 
 const emit = defineEmits(['submitForm'])
 
-const loading = ref()
+const userStore = useUserStore()
+
+const loading = ref(false)
 const formData = ref({
   vehicle: null,
   assignedTo: [],
@@ -46,9 +51,17 @@ if (props.booking) {
   formData.value.assignedTo = props.booking?.assignedTo?.map((subservice) => subservice._id)
 }
 
+const handleEmit = (fileInput) => {
+  formData.value.photos.photoBefore = fileInput[0]
+}
+
 const submitForm = async () => {
   loading.value = true
 
+  formData.value.photos.photoBefore = await handleFileChange(
+    formData.value.photos.photoBefore,
+    userStore.user._id,
+  )
   emit('submitForm', formData.value)
 }
 </script>
@@ -160,7 +173,10 @@ const submitForm = async () => {
           <label for="vehiclePic" class="form-label text-primary">
             Current picture of your vehicle
           </label>
-          <input type="file" class="form-control form-file" id="vehiclePic" required />
+          <InputFileBox
+            :photos="formData.photos.photoBefore ? [formData.photos.photoBefore] : []"
+            @fileInput="handleEmit"
+          />
         </div>
 
         <button type="submit" class="btn btn-primary btn-user btn-block" :disabled="loading">

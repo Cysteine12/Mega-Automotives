@@ -2,7 +2,7 @@
 import { onMounted, ref } from 'vue'
 import { useAuthStore } from '@/stores/authStore'
 import { useUserStore } from '@/stores/userStore'
-import PageHeading from '@/components/PageHeading.vue'
+import AppHeading from '@/components/AppHeading.vue'
 
 const authStore = useAuthStore()
 const userStore = useUserStore()
@@ -29,7 +29,7 @@ const submitForm = async () => {
 
 <template>
   <main>
-    <PageHeading title="Edit My Profile" />
+    <AppHeading title="Edit My Profile" />
 
     <div class="card o-hidden border-0 shadow-lg my-1">
       <div class="card-body p-0">

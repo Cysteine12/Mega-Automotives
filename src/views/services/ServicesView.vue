@@ -2,7 +2,7 @@
 import { onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { useServiceStore } from '@/stores/serviceStore'
-import PageHeading from '@/components/PageHeading.vue'
+import AppHeading from '@/components/AppHeading.vue'
 import SearchFormModal from '@/components/SearchFormModal.vue'
 import SubservicesList from '@/features/services/SubservicesList.vue'
 
@@ -56,7 +56,7 @@ const changeCategory = (category) => {
 
 <template>
   <main>
-    <PageHeading title="Our Services" />
+    <AppHeading title="Our Services" />
 
     <!-- Content Row -->
 
