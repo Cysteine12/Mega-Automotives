@@ -1,14 +1,14 @@
 <script setup>
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, toRef } from 'vue'
 import { formatDate } from '@/utils/formatters'
 import { useUserStore } from '@/stores/userStore'
-import { handleImageUpdate, handleImageUpload } from '@/services/imageService'
+import handleFileChange from '@/composables/handleFileChange'
 
 const userStore = useUserStore()
 
 const user = ref(null)
 const fileInput = ref(null)
-const loading = ref(userStore.loading)
+const loading = toRef(userStore.loading)
 
 onMounted(async () => {
   user.value = userStore.user
@@ -18,22 +18,16 @@ const triggerFileInput = () => {
   fileInput.value.click()
 }
 
-const handleFileChange = async (e) => {
+const handleFileInput = async (e) => {
   const file = e.target.files[0]
-
-  const photoUrl = userStore.user.photo
+  const currentFileUrl = userStore.user.photo
 
   user.value.photo = URL.createObjectURL(file)
-  const paramsToSign = {
-    eager: 'c_pad,h_300,w_400|c_crop,h_200,w_260',
-    folder: `mega-automotives/users/${user.value._id}`,
-  }
   loading.value = true
-  const res = photoUrl
-    ? await handleImageUpdate(paramsToSign, file, photoUrl)
-    : await handleImageUpload(paramsToSign, file)
 
-  await userStore.updateProfilePhoto({ photo: res.data.url })
+  const newFileUrl = await handleFileChange(user.value._id, file, currentFileUrl)
+
+  await userStore.updateProfilePhoto({ photo: newFileUrl })
 }
 </script>
 
@@ -92,7 +86,7 @@ const handleFileChange = async (e) => {
               type="file"
               accept="image/*"
               ref="fileInput"
-              @change="handleFileChange"
+              @change="handleFileInput"
             />
           </div>
         </div>

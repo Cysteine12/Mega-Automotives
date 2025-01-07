@@ -1,6 +1,6 @@
-import { handleImageUpdate, handleImageUpload } from '@/services/imageService'
+import * as fileService from '@/services/fileService'
 
-const handleFileChange = async (file, userId, currentFileUrl = null) => {
+const handleFileChange = async (userId, file, currentFileUrl = null) => {
   if (!file) return null
 
   const paramsToSign = {
@@ -9,8 +9,8 @@ const handleFileChange = async (file, userId, currentFileUrl = null) => {
   }
 
   const res = currentFileUrl
-    ? await handleImageUpdate(paramsToSign, file)
-    : await handleImageUpload(paramsToSign, file)
+    ? await fileService.updateFile(paramsToSign, file, currentFileUrl)
+    : await fileService.uploadFile(paramsToSign, file)
 
   return res.data.url
 }
