@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { useUserStore } from '@/stores/userStore'
 import InputFileBox from '@/components/InputFileBox.vue'
 import handleFileChange from '@/composables/handleFileChange'
@@ -45,11 +45,13 @@ const formData = ref({
   },
 })
 
-if (props.booking) {
-  formData.value = props.booking
-  formData.value.vehicle = props.booking?.vehicle?._id
-  formData.value.assignedTo = props.booking?.assignedTo?.map((subservice) => subservice._id)
-}
+onMounted(() => {
+  if (props.booking) {
+    formData.value = props.booking
+    formData.value.vehicle = props.booking?.vehicle?._id
+    formData.value.assignedTo = props.booking?.assignedTo?.map((subservice) => subservice._id)
+  }
+})
 
 const handleEmit = (fileInput) => {
   formData.value.photos.photoBefore = fileInput[0]
@@ -59,8 +61,8 @@ const submitForm = async () => {
   loading.value = true
 
   formData.value.photos.photoBefore = await handleFileChange(
-    formData.value.photos.photoBefore,
     userStore.user._id,
+    formData.value.photos.photoBefore,
   )
   emit('submitForm', formData.value)
 }
@@ -179,7 +181,7 @@ const submitForm = async () => {
           />
         </div>
 
-        <button type="submit" class="btn btn-primary btn-user btn-block" :disabled="loading">
+        <button type="submit" class="btn btn-primary btn-block" :disabled="loading">
           Place Booking
         </button>
       </form>

@@ -43,13 +43,15 @@ const handleSubmit = async (formData) => {
   <main>
     <AppHeading title="Edit Booking" />
 
-    <div v-if="booking && filteredSubservices && vehicles">
-      <BookServiceForm
-        :subservices="filteredSubservices"
-        :vehicles="vehicles"
-        :booking="booking"
-        @submitForm="handleSubmit"
-      />
+    <div v-if="booking && filteredSubservices && vehicles" class="row">
+      <div class="col-md-6 mb-4">
+        <BookServiceForm
+          :subservices="filteredSubservices"
+          :vehicles="vehicles"
+          :booking="booking"
+          @submitForm="handleSubmit"
+        />
+      </div>
     </div>
   </main>
 </template>
