@@ -12,14 +12,13 @@ const formData = reactive({
   email: null,
 })
 
-const submitForm = async () => {
+const handleSubmit = async () => {
   if (!formData.email) {
     toast.error(`Please input your email`)
     return
   }
 
   loading.value = authStore.loading
-
   await authStore.forgotPassword(formData)
 }
 </script>
@@ -35,7 +34,7 @@ const submitForm = async () => {
     </template>
 
     <template #body-content>
-      <form @submit.prevent="submitForm" class="user">
+      <form @submit.prevent="handleSubmit" class="user">
         <div class="form-group">
           <input
             v-model="formData.email"

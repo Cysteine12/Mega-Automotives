@@ -26,14 +26,13 @@ onMounted(() => {
   }
 })
 
-const submitForm = async () => {
+const handleSubmit = async () => {
   if (!formData.password) {
     toast.error(`Please input password`)
     return
   }
 
   loading.value = authStore.loading
-
   await authStore.resetPassword(token.value, formData)
 }
 </script>
@@ -46,7 +45,7 @@ const submitForm = async () => {
     </template>
 
     <template #body-content>
-      <form @submit.prevent="submitForm" class="user">
+      <form @submit.prevent="handleSubmit" class="user">
         <div class="form-group">
           <input
             v-model="formData.password"

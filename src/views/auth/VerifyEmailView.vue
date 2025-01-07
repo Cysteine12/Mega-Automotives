@@ -14,9 +14,8 @@ onMounted(() => {
   token.value = route.params.token
 })
 
-const submitForm = async () => {
+const handleSubmit = async () => {
   loading.value = authStore.loading
-
   await authStore.verifyEmail(token.value)
 }
 </script>
@@ -40,7 +39,7 @@ const submitForm = async () => {
     <template #body-content>
       <form
         v-if="token"
-        @submit.prevent="submitForm"
+        @submit.prevent="handleSubmit"
         class="user d-flex align-items-center justify-content-center"
       >
         <button type="submit" class="btn btn-success btn-icon-split btn-sm" :disabled="loading">
