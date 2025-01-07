@@ -1,8 +1,9 @@
 import { defineStore } from 'pinia'
-import API from '@/libs/api'
 import { useToast } from 'vue-toastification'
-import router from '../router'
+import API from '@/libs/api'
 import axios from 'axios'
+import * as google from '@/libs/google'
+import router from '../router'
 
 const API2 = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
@@ -71,6 +72,39 @@ export const useAuthStore = defineStore('auth', {
       } catch (err) {
         this.error = err.response?.data?.message
         toast.error(this.error)
+      } finally {
+        this.loading = false
+      }
+    },
+
+    async googleLogin() {
+      this.loading = true
+      this.error = null
+      try {
+        const { access_token } = await google.login()
+        if (!access_token) {
+          toast.error('Error completing sign in')
+          return
+        }
+
+        const res = await API.post(`/auth/google`, { access_token })
+
+        if (res.data.success) {
+          this.user = res.data.user
+          this.message = res.data.message
+
+          localStorage.setItem('user', JSON.stringify(this.user))
+          toast.success(this.message)
+
+          router.push('/dashboard')
+          return
+        } else {
+          this.error = res.data.message
+          toast.error(this.error)
+        }
+      } catch (err) {
+        this.error = err.response?.data?.message
+        console.log(err)
       } finally {
         this.loading = false
       }

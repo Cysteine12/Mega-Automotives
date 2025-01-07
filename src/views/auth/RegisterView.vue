@@ -19,15 +19,18 @@ const formData = reactive({
   phone: null,
 })
 
-const submitForm = async () => {
+const handleSubmit = async () => {
   if (formData.password !== formData.confirmPassword) {
     toast.error('Passwords does not match')
     return
   }
 
   loading.value = authStore.loading
-
   await authStore.register(formData)
+}
+
+const handleGoogleAuth = async () => {
+  await authStore.googleLogin()
 }
 </script>
 
@@ -38,7 +41,7 @@ const submitForm = async () => {
     </template>
 
     <template #body-content>
-      <form @submit.prevent="submitForm" class="user">
+      <form @submit.prevent="handleSubmit" class="user">
         <div class="form-group row">
           <div class="col-sm-6 mb-3 mb-sm-0">
             <input
@@ -107,9 +110,14 @@ const submitForm = async () => {
           Register Account
         </button>
         <hr />
-        <router-link to="/" class="btn btn-google btn-user btn-block">
+        <button
+          @click="handleGoogleAuth"
+          type="button"
+          to="/"
+          class="btn btn-google btn-user btn-block"
+        >
           <i class="fab fa-google fa-fw"></i> Register with Google
-        </router-link>
+        </button>
       </form>
     </template>
 

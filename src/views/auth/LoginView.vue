@@ -13,15 +13,18 @@ const formData = reactive({
   password: null,
 })
 
-const submitForm = async () => {
+const handleSubmit = async () => {
   if (!formData.email || !formData.password) {
     toast.error(`${!formData.email ? 'Email' : 'Password'} not found`)
     return
   }
 
   loading.value = authStore.loading
-
   await authStore.login(formData)
+}
+
+const handleGoogleAuth = async () => {
+  await authStore.googleLogin()
 }
 </script>
 
@@ -32,7 +35,7 @@ const submitForm = async () => {
     </template>
 
     <template #body-content>
-      <form @submit.prevent="submitForm" class="user">
+      <form @submit.prevent="handleSubmit" class="user">
         <div class="form-group">
           <input
             v-model="formData.email"
@@ -64,9 +67,14 @@ const submitForm = async () => {
           Login
         </button>
         <hr />
-        <router-link to="/" class="btn btn-google btn-user btn-block">
+        <button
+          @click="handleGoogleAuth"
+          type="button"
+          to="/"
+          class="btn btn-google btn-user btn-block"
+        >
           <i class="fab fa-google fa-fw"></i> Login with Google
-        </router-link>
+        </button>
       </form>
     </template>
 
