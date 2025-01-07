@@ -121,6 +121,33 @@ const router = createRouter({
             },
           ],
         },
+        {
+          path: '/vehicles',
+          children: [
+            {
+              path: '',
+              name: 'user.vehicles.index',
+              component: () => import('@/views/user/vehicles/VehiclesView.vue'),
+            },
+            {
+              path: 'create',
+              name: 'user.vehicles.create',
+              component: () => import('@/views/user/vehicles/VehicleCreateView.vue'),
+            },
+            {
+              path: ':id',
+              name: 'user.vehicles.show',
+              component: () => import('@/views/user/vehicles/VehicleView.vue'),
+              props: true,
+            },
+            {
+              path: ':id/edit',
+              name: 'user.vehicles.edit',
+              component: () => import('@/views/user/vehicles/VehicleEditView.vue'),
+              props: true,
+            },
+          ],
+        },
       ],
     },
     {

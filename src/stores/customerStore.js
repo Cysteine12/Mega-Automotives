@@ -68,7 +68,7 @@ export const useCustomerStore = defineStore('customer', {
           this.message = res.data.message
           toast.success(this.message)
 
-          router.push(`/vehicles/${this.vehicles[0]._id}`)
+          router.push(`/vehicles/${this.vehicles.at(-1)._id}`)
         } else {
           this.error = res.data.message
           toast.error(this.error)
@@ -179,7 +179,7 @@ export const useCustomerStore = defineStore('customer', {
           this.message = res.data.message
           toast.success(this.message)
 
-          router.push(`/bookings/${res.data.data._id}`)
+          router.push(`/bookings/${this.bookings.at(-1)._id}`)
         } else {
           this.error = res.data.message
           toast.error(this.error)

@@ -128,8 +128,8 @@ const scrollToTop = async () => {
             data-parent="#accordionSidebar"
           >
             <div class="bg-white py-2 collapse-inner rounded">
-              <router-link class="collapse-item" to="/">Add new vehicle</router-link>
-              <router-link class="collapse-item" to="/">View vehicles</router-link>
+              <router-link class="collapse-item" to="/vehicles/create">Add new vehicle</router-link>
+              <router-link class="collapse-item" to="/vehicles">View vehicles</router-link>
             </div>
           </div>
         </li>
