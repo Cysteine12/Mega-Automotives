@@ -4,7 +4,7 @@ import { useRoute } from 'vue-router'
 import { useCustomerStore } from '@/stores/customerStore'
 import AppHeading from '@/components/AppHeading.vue'
 import AppPagination from '@/components/AppPagination.vue'
-import { formatDate } from '@/utils/formatters'
+import VehicleCard from '@/features/vehicles/VehicleCard.vue'
 
 const route = useRoute()
 const customerStore = useCustomerStore()
@@ -43,22 +43,13 @@ watch(
     <AppHeading title="My Vehicles" />
 
     <div v-if="vehicles" class="row">
-      <div class="col-xl-3 col-md-6 mb-4">
-        <div v-for="vehicle in vehicles" :key="vehicle._id" class="card my-4">
-          <div class="card-header text-primary font-weight-bold text-capitalize">
-            {{ vehicle.brand }} {{ vehicle.model }}
-          </div>
-          <div class="card-body">
-            <i :class="`fas fa-${vehicle.category}`"></i>
-            {{ vehicle.category }}
-            {{ vehicle.licenseNo }}
-            {{ vehicle.color }}
-            {{ formatDate(vehicle.createdAt) }}
-            <router-link :to="`/vehicles/${vehicle._id}`" class="btn btn-primary"
-              >View vehicle</router-link
-            >
-          </div>
-        </div>
+      <div class="col-md-6 mb-4">
+        <VehicleCard
+          v-for="vehicle in vehicles"
+          :key="vehicle._id"
+          :vehicle="vehicle"
+          showButton="true"
+        />
       </div>
     </div>
 

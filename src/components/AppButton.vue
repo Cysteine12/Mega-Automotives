@@ -23,10 +23,11 @@ defineProps({
 
 <style scoped>
 .btn {
-  border: 2px solid;
+  border: 1.5px solid #3d40df;
+  border-radius: 5px;
 }
 .btn-primary:hover {
-  border: 2px solid #3d40df;
+  border: 1.5px solid #3d40df;
   background: #fff;
   color: #3d40df;
 }
