@@ -4,7 +4,7 @@ import AppButton from '@/components/AppButton.vue'
 
 defineProps({
   vehicle: {
-    type: String,
+    type: Object,
     required: true,
   },
   showMenu: {

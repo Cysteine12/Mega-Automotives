@@ -29,7 +29,7 @@ const handleDelete = async () => {
 
     <div v-if="vehicle" class="row mb-4 mx-lg-2">
       <div class="col-md-6 mb-4">
-        <VehicleCard :vehicle="vehicle" showMenu="true" />
+        <VehicleCard :vehicle="vehicle" :showMenu="true" />
       </div>
     </div>
 

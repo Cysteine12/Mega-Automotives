@@ -44,7 +44,7 @@ export const useCustomerStore = defineStore('customer', {
         const res = await API.get(`/customer/vehicles/${id}`)
 
         if (res.data.success) {
-          this.vehicles.push(res.data.data)
+          this.vehicles = [res.data.data]
         } else {
           this.error = res.data.message
           toast.error(this.error)

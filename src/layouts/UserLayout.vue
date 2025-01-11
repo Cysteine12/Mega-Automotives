@@ -86,7 +86,7 @@ const scrollToTop = async () => {
 
         <!-- Nav Item - Rentals -->
         <li class="nav-item">
-          <router-link class="nav-link" to="/">
+          <router-link class="nav-link" to="/rentals">
             <i class="fas fa-fw fa-car"></i>
             <span>Rentals</span>
           </router-link>

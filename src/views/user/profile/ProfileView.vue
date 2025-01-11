@@ -34,7 +34,11 @@ const submitDelete = async () => {
       <div class="col-xl-8 col-lg-7">
         <ProfileCard>
           <template #profile-content>
-            <router-link v-if="vehicles" :to="`/`" class="stats mx-2 btn btn-sm text-primary">
+            <router-link
+              v-if="vehicles"
+              :to="`/vehicles`"
+              class="stats mx-2 btn btn-sm text-primary"
+            >
               <h6 class="mb-0">My Vehicles</h6>
               <span>{{ vehicles.length }}</span>
             </router-link>

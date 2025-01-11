@@ -34,18 +34,18 @@ const statusTags = {
         <div class="vehicle small font-weight-bold my-3 my-lg-0 mx-lg-auto">
           <div class="d-flex justify-content-between mb-2">
             <span class="text-primary mx-lg-2">License: </span>
-            <span class="text-uppercase ml-2">{{ booking.vehicle.licenseNo }}</span>
+            <span class="text-uppercase ml-2">{{ booking.vehicles[0].licenseNo }}</span>
           </div>
           <div class="d-flex justify-content-between mb-2">
             <span class="text-primary mx-lg-2">Model: </span>
             <span class="text-capitalize ml-2">
-              {{ booking.vehicle.brand }} {{ booking.vehicle.model }}
+              {{ booking.vehicles[0].brand }} {{ booking.vehicles[0].model }}
             </span>
           </div>
           <div class="d-flex justify-content-between mb-2">
             <span class="text-primary mx-lg-2">Desc: </span>
             <span class="text-capitalize ml-2">
-              {{ booking.vehicle.color }} {{ booking.vehicle.category }}
+              {{ booking.vehicles[0].color }} {{ booking.vehicles[0].category }}
             </span>
           </div>
           <div class="d-flex justify-content-between mb-2">

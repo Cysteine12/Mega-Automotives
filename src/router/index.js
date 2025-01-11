@@ -75,6 +75,22 @@ const router = createRouter({
           ],
         },
         {
+          path: '/rentals',
+          children: [
+            {
+              path: '',
+              name: 'user.rentals.index',
+              component: () => import('@/views/rentals/RentalsView.vue'),
+            },
+            {
+              path: ':id',
+              name: 'user.rentals.show',
+              component: () => import('@/views/rentals/RentalView.vue'),
+              props: true,
+            },
+          ],
+        },
+        {
           path: '/profile',
           children: [
             {

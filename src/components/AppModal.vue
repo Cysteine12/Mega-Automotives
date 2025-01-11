@@ -19,6 +19,13 @@ const closeModal = () => {
   // <div class="modal-backdrop fade show"></div>
   let backdrop = document.getElementsByClassName('modal-backdrop')[0]
   backdrop.remove()
+
+  let modal = document.getElementsByClassName('modal fade show')[0]
+  modal.classList.toggle('show')
+  modal.removeAttribute('role')
+  modal.removeAttribute('aria-modal')
+  modal.setAttribute('aria-hidden', true)
+  modal.style.display = 'none'
 }
 
 const confirmModal = () => {

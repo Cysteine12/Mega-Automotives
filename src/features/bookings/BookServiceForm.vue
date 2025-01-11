@@ -26,7 +26,7 @@ const userStore = useUserStore()
 
 const loading = ref(false)
 const formData = ref({
-  vehicle: null,
+  vehicles: [],
   assignedTo: [],
   assignedToModel: 'Subservice',
   description: null,
@@ -48,7 +48,7 @@ const formData = ref({
 onMounted(() => {
   if (props.booking) {
     formData.value = props.booking
-    formData.value.vehicle = props.booking?.vehicle?._id
+    formData.value.vehicles = props.booking?.vehicles?.map((vehicle) => vehicle._id)
     formData.value.assignedTo = props.booking?.assignedTo?.map((subservice) => subservice._id)
   }
 })
@@ -78,13 +78,13 @@ const submitForm = async () => {
         <div class="form-group">
           <label for="vehicle" class="form-label text-primary">Select a Vehicle*</label>
 
-          <select v-model="formData.vehicle" class="form-control" title="Select a vehicle">
+          <select v-model="formData.vehicles[0]" class="form-control" title="Select a vehicle">
             <template v-if="vehicles">
               <option
                 v-for="vehicle in vehicles"
                 :key="vehicle._id"
                 :value="vehicle._id"
-                :selected="formData.vehicle === vehicle._id"
+                :selected="formData.vehicles.includes(vehicle._id)"
               >
                 {{ vehicle.brand }} {{ vehicle.model }} ({{ vehicle.licenseNo }})
               </option>
