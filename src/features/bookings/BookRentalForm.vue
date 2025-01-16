@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 
 const props = defineProps({
   rentals: {
@@ -15,6 +15,7 @@ const props = defineProps({
 
 const emit = defineEmits(['submitForm'])
 
+const selectedRentalRef = ref(null)
 const loading = ref(false)
 const formData = ref({
   vehicles: [],
@@ -32,7 +33,7 @@ const formData = ref({
     },
   },
   photos: {
-    photoBefore: null,
+    license: null,
   },
 })
 
@@ -40,9 +41,34 @@ onMounted(() => {
   if (props.booking) {
     formData.value = props.booking
     formData.value.vehicles = props.booking?.vehicles?.map((vehicle) => vehicle._id)
-    formData.value.assignedTo = props.booking?.assignedTo?.map((subservice) => subservice._id)
+    formData.value.assignedTo = props.booking?.assignedTo?.map((rental) => rental._id)
   }
 })
+
+const addSelectedRental = () => {
+  if (formData.value.assignedTo.includes(selectedRentalRef.value.value)) {
+    selectedRentalRef.value.value = null
+    return
+  }
+
+  formData.value.assignedTo.push(selectedRentalRef.value.value)
+  formData.value.vehicles.push(
+    [props.rentals.find((rental) => rental._id === selectedRentalRef.value.value)][0].vehicle._id,
+  )
+
+  selectedRentalRef.value.value = null
+}
+
+const removeSelectedRental = (selectedRental, selectedVehicle) => {
+  formData.value.assignedTo = formData.value.assignedTo.filter(
+    (rental) => rental !== selectedRental,
+  )
+  formData.value.vehicles = formData.value.vehicles.filter((vehicle) => vehicle !== selectedVehicle)
+}
+
+const filteredSelectedRental = computed(() =>
+  props.rentals.filter((rental) => formData.value.assignedTo.includes(rental._id)),
+)
 
 const submitForm = async () => {
   loading.value = true
@@ -54,23 +80,45 @@ const submitForm = async () => {
 <template>
   <div class="card shadow mb-4">
     <div class="card-header py-3">
-      <h6 class="m-0 font-weight-bold text-primary">Rent A Vehicle</h6>
+      <h6 class="m-0 font-weight-bold text-primary">Rent Vehicle(s)</h6>
     </div>
     <div class="card-body">
       <form @submit.prevent="submitForm">
         <div v-if="rentals" class="form-group">
-          <label for="vehicle" class="form-label text-primary">Select a Vehicle*</label>
-
-          <select v-model="formData.assignedTo" class="form-control" title="Select a vehicle">
-            <option
-              v-for="rental in rentals"
-              :key="rental._id"
-              :value="rental._id"
-              :selected="formData.assignedTo.includes(rental._id)"
+          <label for="vehicle" class="form-label text-primary">Select Vehicle(s)*</label>
+          <div class="d-flex">
+            <select ref="selectedRentalRef" class="form-control" title="Select vehicle">
+              <option disabled hidden selected>Select..</option>
+              <option v-for="rental in rentals" :key="rental._id" :value="rental._id">
+                {{ rental.vehicle.brand }}
+                {{ rental.vehicle.model }}
+                ({{ rental.vehicle.licenseNo }})
+              </option>
+            </select>
+            <button type="button" @click="addSelectedRental" class="btn btn-primary d-flex ml-2">
+              <span><i class="fas fa-plus"></i></span>
+              <span class="ml-1">Add</span>
+            </button>
+          </div>
+          <div>
+            <div
+              v-for="rental in filteredSelectedRental"
+              :key="rental"
+              class="d-flex justify-content-between align-items-center badge border border-gray my-1 py-1"
             >
-              {{ vehicle.brand }} {{ vehicle.model }} ({{ vehicle.licenseNo }})
-            </option>
-          </select>
+              <span>
+                {{ rental.vehicle.brand }}
+                {{ rental.vehicle.model }}
+                ({{ rental.vehicle.licenseNo }})
+              </span>
+              <button
+                @click="removeSelectedRental(rental._id, rental.vehicle._id)"
+                class="btn p-0 px-2 m-0 text-danger"
+              >
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+          </div>
         </div>
 
         <div class="form-group row">

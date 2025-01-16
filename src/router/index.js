@@ -119,9 +119,14 @@ const router = createRouter({
               component: () => import('@/views/user/bookings/BookingsView.vue'),
             },
             {
-              path: 'create',
-              name: 'user.bookings.create',
-              component: () => import('@/views/user/bookings/BookingCreateView.vue'),
+              path: 'service/create',
+              name: 'user.bookings.service.create',
+              component: () => import('@/views/user/bookings/BookingServiceCreateView.vue'),
+            },
+            {
+              path: 'rental/create',
+              name: 'user.bookings.rental.create',
+              component: () => import('@/views/user/bookings/BookingRentalCreateView.vue'),
             },
             {
               path: ':id',
@@ -130,9 +135,15 @@ const router = createRouter({
               props: true,
             },
             {
-              path: ':id/edit',
-              name: 'user.bookings.edit',
-              component: () => import('@/views/user/bookings/BookingEditView.vue'),
+              path: 'service/:id/edit',
+              name: 'user.bookings.service.edit',
+              component: () => import('@/views/user/bookings/BookingServiceEditView.vue'),
+              props: true,
+            },
+            {
+              path: 'rental/:id/edit',
+              name: 'user.bookings.rental.edit',
+              component: () => import('@/views/user/bookings/BookingRentalEditView.vue'),
               props: true,
             },
           ],

@@ -3,7 +3,8 @@ import { onMounted, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { useCustomerStore } from '@/stores/customerStore'
 import AppHeading from '@/components/AppHeading.vue'
-import BookingCard from '@/features/bookings/BookingCard.vue'
+import BookingServiceCard from '@/features/bookings/BookingServiceCard.vue'
+import BookingRentalCard from '@/features/bookings/BookingRentalCard.vue'
 import AppPagination from '@/components/AppPagination.vue'
 
 const route = useRoute()
@@ -48,7 +49,16 @@ watch(
         :key="booking._id"
         class="d-flex align-items-stretch col-xl-6 col-lg-6"
       >
-        <BookingCard :booking="booking" />
+        <BookingServiceCard
+          v-if="booking.assignedToModel === 'Subservice'"
+          :booking="booking"
+          :showButton="true"
+        />
+        <BookingRentalCard
+          v-else-if="booking.assignedToModel === 'Rental'"
+          :booking="booking"
+          :showButton="true"
+        />
       </div>
     </div>
 

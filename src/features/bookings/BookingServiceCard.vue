@@ -7,6 +7,14 @@ defineProps({
     type: Object,
     required: true,
   },
+  showMenu: {
+    type: Boolean,
+    default: false,
+  },
+  showButton: {
+    type: Boolean,
+    default: false,
+  },
 })
 
 const statusTags = {
@@ -19,11 +27,41 @@ const statusTags = {
 </script>
 
 <template>
-  <div class="card mb-4 mx-lg-auto">
-    <div class="card-header py-3 position-relative">
-      <h6 class="m-0 font-weight-bold text-primary">
-        Vehicle {{ booking.assignedToModel === 'Subservice' ? 'Services' : 'Rental' }}
-      </h6>
+  <div class="card w-100 mb-4 mx-lg-auto">
+    <div
+      class="card-header d-flex align-items-center justify-content-between py-3 position-relative"
+    >
+      <h6 class="m-0 font-weight-bold text-primary">Vehicle Service</h6>
+      <div v-if="showMenu" class="dropdown no-arrow">
+        <a
+          class="dropdown-toggle"
+          href="#"
+          role="button"
+          id="dropdownMenuLink"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+          <i class="fas fa-ellipsis-v fa-sm fa-fw"></i>
+        </a>
+        <div
+          class="dropdown-menu dropdown-menu-right shadow animated--fade-in p-1"
+          aria-labelledby="dropdownMenuLink"
+        >
+          <div class="dropdown-header">Booking Settings:</div>
+          <router-link
+            v-if="['booked', 'confirmed'].includes(booking.status)"
+            class="dropdown-item small"
+            :to="`/bookings/service/${booking._id}/edit`"
+          >
+            <i class="fas fa-edit"></i> Edit Booking
+          </router-link>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item small text-danger" data-toggle="modal" data-target="#promptModal">
+            <i class="fas fa-trash-alt"></i> Delete Booking
+          </a>
+        </div>
+      </div>
     </div>
     <div class="card-body">
       <div class="d-flex justify-content-between flex-wrap mb-lg-3">
@@ -60,7 +98,7 @@ const statusTags = {
         </div>
       </div>
 
-      <div v-if="booking.assignedToModel === 'Subservice'" class="small">
+      <div class="small">
         <div class="font-weight-bold text-primary">Booked Categories</div>
 
         <div v-for="subservice in booking.assignedTo" :key="subservice._id" class="my-2">
@@ -68,12 +106,14 @@ const statusTags = {
           <span> {{ subservice.name }}</span>
         </div>
       </div>
+
+      <slot name="content"></slot>
     </div>
 
     <div class="d-flex justify-content-between">
-      <div class="font-weight-bold small m-3">{{ formatDate(booking.updatedAt) }}</div>
+      <div class="font-weight-bold small m-3">Updated: {{ formatDate(booking.updatedAt) }}</div>
 
-      <router-link :to="`/bookings/${booking._id}`" class="btn link mx-2">
+      <router-link v-if="showButton" :to="`/bookings/${booking._id}`" class="btn link mx-2">
         <AppButton type="button" text="View Booking" class="btn-sm" />
       </router-link>
     </div>

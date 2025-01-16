@@ -6,7 +6,6 @@ import { useCustomerStore } from '@/stores/customerStore'
 import AppHeading from '@/components/AppHeading.vue'
 import BookRentalForm from '@/features/bookings/BookRentalForm.vue'
 import BookingUnavailableCard from '@/features/bookings/BookingUnavailableCard.vue'
-import RentalCard from '@/features/rentals/RentalCard.vue'
 
 const route = useRoute()
 const rentalStore = useRentalStore()
@@ -35,7 +34,60 @@ const handleSubmit = async (formData) => {
 
     <div v-if="rental" class="row">
       <div class="col-xl-6 mb-4">
-        <RentalCard :rental="rental" />
+        <div class="card">
+          <div class="card-body">
+            <div class="card-img-wrapper position-relative">
+              <img :src="rental.thumbnail" alt="Rental vehicle image" class="card-img" />
+              <div class="img-title bg-white text-primary font-weight-bold text-uppercase px-1">
+                {{ rental.vehicle.brand }} {{ rental.vehicle.model }}
+              </div>
+            </div>
+            <br />
+
+            <div class="row">
+              <div class="col-md-6 mb-2">
+                <div class="row font-weight-bold small">
+                  <div class="col-6 text-primary">Category</div>
+                  <div class="col-6 text-capitalize">{{ rental.vehicle.category }}</div>
+                </div>
+                <div class="row font-weight-bold small">
+                  <div class="col-6 text-primary">Color</div>
+                  <div class="col-6 text-capitalize">{{ rental.vehicle.color }}</div>
+                </div>
+              </div>
+
+              <div class="col-md-6 row font-weight-bold small">
+                <div class="col-6 text-primary">Renting Price</div>
+                <div class="col-6 text-capitalize">
+                  <div class="mb-1 mr-2">${{ rental.price.perHour }}/hour</div>
+                  <div class="mb-1 mr-2">${{ rental.price.perDay }}/day</div>
+                  <div class="mb-1 mr-2">${{ rental.price.perWeek }}/week</div>
+                </div>
+              </div>
+            </div>
+
+            <p class="text-center my-2">
+              <i class="small">
+                <sup><i class="fas fa-quote-left fa-xs"></i></sup>
+                <span class="mx-1">{{ rental.description }}</span>
+                <sup><i class="fas fa-quote-right fa-xs"></i></sup>
+              </i>
+            </p>
+
+            <div class="mt-4 text-center">
+              <span
+                class="badge rounded-pill border border-2"
+                :class="`${rental.status === 'available' ? 'border-success text-success' : 'border-danger text-danger'}`"
+              >
+                <i
+                  class="fas fa-circle"
+                  :class="`${rental.status === 'available' ? 'text-success' : 'text-danger'}`"
+                ></i>
+                {{ rental.status === 'available' ? 'Available' : 'Unavailable' }}
+              </span>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div class="col-xl-6 mb-4">
@@ -46,3 +98,17 @@ const handleSubmit = async (formData) => {
     </div>
   </main>
 </template>
+
+<style scoped>
+.img-title {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  margin: 0 0 1px 1px;
+  border-radius: 0 0 0 4px;
+}
+
+.badge {
+  border: 3px solid;
+}
+</style>

@@ -74,7 +74,7 @@ const scrollToTop = async () => {
         <hr class="sidebar-divider" />
 
         <!-- Heading -->
-        <div class="sidebar-heading">Interface</div>
+        <div class="sidebar-heading">Workshop</div>
 
         <!-- Nav Item - Services -->
         <li class="nav-item">
@@ -104,7 +104,7 @@ const scrollToTop = async () => {
         <hr class="sidebar-divider" />
 
         <!-- Heading -->
-        <div class="sidebar-heading">Addons</div>
+        <div class="sidebar-heading">Personals</div>
 
         <!-- Nav Item - Pages Collapse Menu -->
         <li class="nav-item">
@@ -156,7 +156,12 @@ const scrollToTop = async () => {
             data-parent="#accordionSidebar"
           >
             <div class="bg-white py-2 collapse-inner rounded">
-              <router-link class="collapse-item" to="/bookings/create">Book a service</router-link>
+              <router-link class="collapse-item" to="/bookings/service/create"
+                >Book services</router-link
+              >
+              <router-link class="collapse-item" to="/bookings/rental/create"
+                >Rent vehicles</router-link
+              >
               <router-link class="collapse-item" to="/bookings">View bookings</router-link>
             </div>
           </div>

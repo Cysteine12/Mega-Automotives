@@ -4,6 +4,7 @@ import { useRoute } from 'vue-router'
 import { useRentalStore } from '@/stores/rentalStore'
 import AppHeading from '@/components/AppHeading.vue'
 import RentalCard from '@/features/rentals/RentalCard.vue'
+import AppPagination from '@/components/AppPagination.vue'
 
 const route = useRoute()
 const rentalStore = useRentalStore()
@@ -41,10 +42,12 @@ watch(
   <main>
     <AppHeading title="Our Rental Vehicles" />
 
-    <div class="row">
-      <div v-if="rentals" class="col-md-6">
-        <RentalCard v-for="rental in rentals" :key="rental._id" :rental="rental" />
+    <div v-if="rentals" class="row">
+      <div v-for="rental in rentals" :key="rental._id" class="d-flex align-items-stretch col-md-6">
+        <RentalCard :rental="rental" />
       </div>
     </div>
+
+    <AppPagination v-if="rentals" :pagination="pagination" />
   </main>
 </template>
