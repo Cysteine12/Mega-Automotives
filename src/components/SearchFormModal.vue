@@ -1,31 +1,39 @@
 <script setup>
-import { reactive } from 'vue'
+import { ref } from 'vue'
 
-const emit = defineEmits(['handleSearchInput'])
-
-const form = reactive({
-  text: null,
+defineProps({
+  placeholder: {
+    type: String,
+    default: 'Search here...',
+  },
 })
+
+const emit = defineEmits(['handleSearchInput', 'handleSubmit'])
+
+const searchInput = ref(null)
 
 const handleSearchInput = (e) => {
   emit('handleSearchInput', e.target.value)
 }
+const handleSubmit = () => {
+  emit('handleSubmit', searchInput.value)
+}
 </script>
 
 <template>
-  <form class="form-block ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+  <form @submit.prevent="handleSubmit" class="form-block ml-md-3 my-2 my-md-0 mw-100 navbar-search">
     <div class="input-group">
       <input
         type="text"
         @input="handleSearchInput"
-        v-model="form.text"
+        v-model="searchInput"
         class="form-control bg-light border-1 small"
-        placeholder="Search for a service..."
+        :placeholder="placeholder"
         aria-label="Search"
         aria-describedby="basic-addon2"
       />
       <div class="input-group-append">
-        <button class="btn btn-primary" type="button">
+        <button class="btn btn-primary" type="submit">
           <i class="fas fa-search fa-sm"></i>
         </button>
       </div>

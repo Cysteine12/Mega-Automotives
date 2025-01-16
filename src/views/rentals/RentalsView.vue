@@ -5,6 +5,7 @@ import { useRentalStore } from '@/stores/rentalStore'
 import AppHeading from '@/components/AppHeading.vue'
 import RentalCard from '@/features/rentals/RentalCard.vue'
 import AppPagination from '@/components/AppPagination.vue'
+import SearchFormModal from '@/components/SearchFormModal.vue'
 
 const route = useRoute()
 const rentalStore = useRentalStore()
@@ -15,7 +16,6 @@ const pagination = ref({
   perPage: 4,
   total: null,
 })
-const error = ref(null)
 
 const getRentals = async () => {
   const query = { page: pagination.value.currentPage, limit: pagination.value.perPage }
@@ -23,7 +23,6 @@ const getRentals = async () => {
 
   rentals.value = rentalStore.rentals
   pagination.value.total = rentalStore.total
-  error.value = rentalStore.error
 }
 
 onMounted(() => getRentals())
@@ -36,11 +35,20 @@ watch(
     window.scrollTo(0, 0)
   },
 )
+
+const handleSubmit = async (searchInput) => {
+  if (!searchInput) return
+
+  await rentalStore.searchRentalsByNameOrLicense(searchInput)
+  rentals.value = rentalStore.rentals
+}
 </script>
 
 <template>
   <main>
     <AppHeading title="Our Rental Vehicles" />
+
+    <SearchFormModal placeholder="Search for a vehicle..." @handleSubmit="handleSubmit" />
 
     <div v-if="rentals" class="row">
       <div v-for="rental in rentals" :key="rental._id" class="d-flex align-items-stretch col-md-6">

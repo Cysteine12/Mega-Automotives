@@ -62,7 +62,10 @@ const changeCategory = (category) => {
 
     <div class="custom-wrapper m-auto">
       <!-- Service Search -->
-      <SearchFormModal @handleSearchInput="handleSearchInput" />
+      <SearchFormModal
+        placeholder="Search for a service..."
+        @handleSearchInput="handleSearchInput"
+      />
 
       <div
         v-if="services"

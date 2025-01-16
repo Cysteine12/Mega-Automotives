@@ -36,17 +36,14 @@ export const useRentalStore = defineStore('rental', {
       }
     },
 
-    async searchRentalsByLicenseNo({ licenseNo, page, limit }) {
+    async searchRentalsByNameOrLicense(query) {
       this.loading = true
       this.error = null
       try {
-        const res = await API.get(
-          `/rentals/search?licenseNo=${licenseNo}&page=${page}&limit=${limit}`,
-        )
+        const res = await API.get(`/rentals/search?query=${query}`)
 
         if (res.data.success) {
           this.rentals = res.data.data
-          //   this.total = res.data.total
         } else {
           this.error = res.data.message
           toast.error(this.error)
