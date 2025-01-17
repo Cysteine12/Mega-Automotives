@@ -5,7 +5,7 @@ import { useRentalStore } from '@/stores/rentalStore'
 import AppHeading from '@/components/AppHeading.vue'
 import RentalCard from '@/features/rentals/RentalCard.vue'
 import AppPagination from '@/components/AppPagination.vue'
-import SearchFormModal from '@/components/SearchFormModal.vue'
+import AppSearchModal from '@/components/AppSearchModal.vue'
 
 const route = useRoute()
 const rentalStore = useRentalStore()
@@ -37,8 +37,6 @@ watch(
 )
 
 const handleSubmit = async (searchInput) => {
-  if (!searchInput) return
-
   await rentalStore.searchRentalsByNameOrLicense(searchInput)
   rentals.value = rentalStore.rentals
 }
@@ -48,7 +46,7 @@ const handleSubmit = async (searchInput) => {
   <main>
     <AppHeading title="Our Rental Vehicles" />
 
-    <SearchFormModal placeholder="Search for a vehicle..." @handleSubmit="handleSubmit" />
+    <AppSearchModal placeholder="Search for a vehicle..." @handleSubmit="handleSubmit" />
 
     <div v-if="rentals" class="row">
       <div v-for="rental in rentals" :key="rental._id" class="d-flex align-items-stretch col-md-6">

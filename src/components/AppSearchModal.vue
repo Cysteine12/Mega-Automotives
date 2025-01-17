@@ -16,6 +16,7 @@ const handleSearchInput = (e) => {
   emit('handleSearchInput', e.target.value)
 }
 const handleSubmit = () => {
+  if (!searchInput.value) return
   emit('handleSubmit', searchInput.value)
 }
 </script>

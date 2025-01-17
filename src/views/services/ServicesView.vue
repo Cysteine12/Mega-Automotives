@@ -3,7 +3,7 @@ import { onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { useServiceStore } from '@/stores/serviceStore'
 import AppHeading from '@/components/AppHeading.vue'
-import SearchFormModal from '@/components/SearchFormModal.vue'
+import AppSearchModal from '@/components/AppSearchModal.vue'
 import SubservicesList from '@/features/services/SubservicesList.vue'
 
 const route = useRoute()
@@ -62,7 +62,7 @@ const changeCategory = (category) => {
 
     <div class="custom-wrapper m-auto">
       <!-- Service Search -->
-      <SearchFormModal
+      <AppSearchModal
         placeholder="Search for a service..."
         @handleSearchInput="handleSearchInput"
       />
