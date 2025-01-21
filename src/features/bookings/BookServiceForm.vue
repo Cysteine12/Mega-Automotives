@@ -1,7 +1,7 @@
 <script setup>
 import { onMounted, ref } from 'vue'
 import { useUserStore } from '@/stores/userStore'
-import InputFileBox from '@/components/InputFileBox.vue'
+import AppInputFileBox from '@/components/AppInputFileBox.vue'
 import handleFileChange from '@/composables/handleFileChange'
 
 const props = defineProps({
@@ -175,7 +175,7 @@ const submitForm = async () => {
           <label for="vehiclePic" class="form-label text-primary">
             Current picture of your vehicle
           </label>
-          <InputFileBox
+          <AppInputFileBox
             :photos="formData.photos.photoBefore ? [formData.photos.photoBefore] : []"
             @fileInput="handleEmit"
           />
