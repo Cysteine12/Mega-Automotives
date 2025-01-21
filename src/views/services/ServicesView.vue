@@ -5,6 +5,7 @@ import { useServiceStore } from '@/stores/serviceStore'
 import AppHeading from '@/components/AppHeading.vue'
 import AppSearchModal from '@/components/AppSearchModal.vue'
 import SubservicesList from '@/features/services/SubservicesList.vue'
+import AppMegaBotComponent from '@/components/AppMegaBotComponent.vue'
 
 const route = useRoute()
 const serviceStore = useServiceStore()
@@ -84,6 +85,8 @@ const changeCategory = (category) => {
       </div>
 
       <SubservicesList v-if="filteredSubservices" :filteredSubservices="filteredSubservices" />
+
+      <AppMegaBotComponent />
     </div>
   </main>
 </template>
