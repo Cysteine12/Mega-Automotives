@@ -22,7 +22,7 @@ const handleSubmit = () => {
 </script>
 
 <template>
-  <form @submit.prevent="handleSubmit" class="form-block ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+  <form @submit.prevent="handleSubmit" class="form-block my-2 my-md-0 mx-auto navbar-search">
     <div class="input-group">
       <input
         type="text"
@@ -41,3 +41,9 @@ const handleSubmit = () => {
     </div>
   </form>
 </template>
+
+<style scoped>
+.form-block {
+  max-width: 400px;
+}
+</style>

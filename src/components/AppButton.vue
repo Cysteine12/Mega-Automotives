@@ -8,6 +8,10 @@ defineProps({
     type: String,
     required: true,
   },
+  color: {
+    type: String,
+    default: 'btn-primary',
+  },
   isDisabled: {
     type: Boolean,
     default: false,
@@ -16,19 +20,15 @@ defineProps({
 </script>
 
 <template>
-  <button :type="type" class="btn btn-primary btn-primary-hover" :isDisabled="isDisabled">
+  <button :type="type" class="btn border-2 shadow" :class="color" :disabled="isDisabled">
     {{ text }}
   </button>
 </template>
 
 <style scoped>
-.btn {
-  border: 1.5px solid #3d40df;
-  border-radius: 5px;
-}
-.btn-primary:hover {
-  border: 1.5px solid #3d40df;
+.btn:hover {
   background: #fff;
   color: #3d40df;
+  color: var(--bs-primary);
 }
 </style>

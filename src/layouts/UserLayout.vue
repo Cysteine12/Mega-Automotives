@@ -56,7 +56,7 @@ const scrollToTop = async () => {
           <div class="sidebar-brand-icon rotate-n-15">
             <i class="fas fa-truck"></i>
           </div>
-          <div class="sidebar-brand-text mx-3">Mega Automotives</div>
+          <div class="sidebar-brand-text mx-3">Mega Auto</div>
         </router-link>
 
         <!-- Divider -->
@@ -94,7 +94,7 @@ const scrollToTop = async () => {
 
         <!-- Nav Item - Inventory -->
         <li class="nav-item">
-          <router-link class="nav-link" to="/">
+          <router-link class="nav-link" to="/inventories">
             <i class="fas fa-fw fa-cogs"></i>
             <span>Inventory</span>
           </router-link>

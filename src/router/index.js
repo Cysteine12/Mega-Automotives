@@ -91,6 +91,22 @@ const router = createRouter({
           ],
         },
         {
+          path: '/inventories',
+          children: [
+            {
+              path: '',
+              name: 'user.inventories.index',
+              component: () => import('@/views/inventories/InventoriesView.vue'),
+            },
+            {
+              path: ':id',
+              name: 'user.inventories.show',
+              component: () => import('@/views/inventories/InventoryView.vue'),
+              props: true,
+            },
+          ],
+        },
+        {
           path: '/profile',
           children: [
             {
