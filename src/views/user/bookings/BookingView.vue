@@ -29,7 +29,7 @@ const handleDelete = async () => {
     <AppHeading title="Booking Details" />
 
     <div class="row">
-      <div class="col-md-6 mb-4">
+      <div class="col-lg-6 mb-4">
         <BookingServiceCard
           v-if="booking && booking.assignedToModel === 'Subservice'"
           :booking="booking"

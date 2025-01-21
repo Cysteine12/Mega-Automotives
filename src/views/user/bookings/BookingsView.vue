@@ -16,7 +16,6 @@ const pagination = ref({
   perPage: 4,
   total: null,
 })
-const error = ref(null)
 
 const getBookings = async () => {
   const query = { page: pagination.value.currentPage, limit: pagination.value.perPage }
@@ -24,10 +23,9 @@ const getBookings = async () => {
 
   bookings.value = customerStore.bookings
   pagination.value.total = customerStore.total
-  error.value = customerStore.error
 }
 
-onMounted(async () => getBookings())
+onMounted(() => getBookings())
 
 watch(
   () => route.query.page,

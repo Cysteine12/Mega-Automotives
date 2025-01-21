@@ -323,7 +323,10 @@ const scrollToTop = async () => {
                       </span>
                     </div>
                   </router-link>
-                  <router-link class="dropdown-item text-center small text-gray-500" to="/">
+                  <router-link
+                    to="/notifications"
+                    class="dropdown-item text-center small text-gray-500"
+                  >
                     Show All Alerts
                   </router-link>
                 </div>
