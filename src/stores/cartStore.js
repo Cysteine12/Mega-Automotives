@@ -6,7 +6,9 @@ const toast = useToast()
 
 export const useCartStore = defineStore('cart', {
   state: () => ({
-    cart: {},
+    cart: {
+      items: [],
+    },
     loading: false,
     error: null,
   }),
@@ -60,11 +62,13 @@ export const useCartStore = defineStore('cart', {
         const res = await API.patch(`/carts/edit/${id}`, newItem)
 
         if (res.data.success) {
-          this.cart.items.forEach((item) => {
+          this.cart.items.map((item) => {
             if (item._id === id) {
               item.quantity = newItem.quantity
             }
+            return item
           })
+
           toast.success(res.data.message)
         } else {
           this.error = res.data.message
@@ -78,16 +82,17 @@ export const useCartStore = defineStore('cart', {
       }
     },
 
-    async removeItem({ id }) {
+    async removeItem(id) {
       this.loading = true
       this.error = null
       try {
         const res = await API.patch(`/carts/remove/${id}`)
 
         if (res.data.success) {
-          this.cart = this.cart.items.filter((item) => {
+          this.cart.items = this.cart.items.filter((item) => {
             return item._id !== id
           })
+
           toast.success(res.data.message)
         } else {
           this.error = res.data.message
@@ -101,16 +106,14 @@ export const useCartStore = defineStore('cart', {
       }
     },
 
-    async clearCart({ id }) {
+    async clearCart() {
       this.loading = true
       this.error = null
       try {
         const res = await API.delete(`/carts/clear`)
 
         if (res.data.success) {
-          this.cart = this.cart.items.filter((item) => {
-            return item._id !== id
-          })
+          this.cart.items = []
           toast.success(res.data.message)
         } else {
           this.error = res.data.message

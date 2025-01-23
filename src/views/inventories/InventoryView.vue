@@ -36,7 +36,7 @@ const addItemToCart = async () => {
     <AppHeading title="Inventory Details" />
 
     <div v-if="inventory" class="row m-auto">
-      <div class="col-md-6">
+      <div class="col-lg-6">
         <div class="card w-100">
           <div class="card-header font-weight-bold text-primary">{{ inventory.name }}</div>
           <div class="card-body">

@@ -3,11 +3,13 @@ import { useAuthStore } from '@/stores/authStore'
 import { useCartStore } from '@/stores/cartStore'
 import { useNotificationStore } from '@/stores/notificationStore'
 import { formatDate } from '@/utils/formatters'
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 
 const user = ref(null)
 const notifications = ref(null)
-const cart = ref(null)
+const cart = ref({
+  items: [],
+})
 
 const authStore = useAuthStore()
 const notificationStore = useNotificationStore()
@@ -23,6 +25,13 @@ onMounted(async () => {
   await cartStore.fetchCart()
   cart.value = cartStore.cart
 })
+
+watch(
+  () => cartStore.cart.items,
+  (cartItems) => {
+    cart.value.items = cartItems
+  },
+)
 
 const logout = async () => {
   await authStore.logout()
@@ -189,9 +198,11 @@ const scrollToTop = async () => {
             data-parent="#accordionSidebar"
           >
             <div class="bg-white py-2 collapse-inner rounded">
-              <router-link class="collapse-item" to="/profile"> My Profile </router-link>
-              <router-link class="collapse-item" to="/"> Notifications </router-link>
-              <router-link class="collapse-item" to="/"> My Payments </router-link>
+              <router-link to="/profile" class="collapse-item"> My Profile </router-link>
+              <router-link to="/notifications" class="collapse-item">
+                My Notifications
+              </router-link>
+              <router-link to="/" class="collapse-item"> My Payments </router-link>
             </div>
           </div>
         </li>
@@ -333,7 +344,7 @@ const scrollToTop = async () => {
               </li>
 
               <!-- Nav Item - Cart -->
-              <li v-if="cart" class="nav-item dropdown no-arrow mx-1">
+              <li v-if="cart.items" class="nav-item dropdown no-arrow mx-1">
                 <a
                   class="nav-link dropdown-toggle"
                   href="#"
@@ -353,40 +364,42 @@ const scrollToTop = async () => {
                   aria-labelledby="messagesDropdown"
                 >
                   <h6 class="dropdown-header">Inventory Cart</h6>
-                  <router-link
-                    v-for="item in cart.items"
-                    :key="item.index"
-                    class="dropdown-item d-flex align-items-center justify-content-between"
-                    to="/"
-                  >
-                    <div class="d-flex">
-                      <div class="dropdown-list-image mr-3">
-                        <img class="rounded-circle" :src="item.inventory.thumbnail" />
-                        <div
-                          class="status-indicator"
-                          :class="`${item.inventory.status === 'Available' ? 'bg-success' : 'bg-danger'}`"
-                        ></div>
-                      </div>
-                      <div>
-                        <div>{{ item.inventory.name }}</div>
-                        <div class="small text-gray-500">
-                          {{ item.inventory.category }} · ${{ item.inventory.price }}
+                  <template v-if="cart.items.length > 0">
+                    <router-link
+                      v-for="item in cart.items"
+                      :key="item.index"
+                      class="dropdown-item d-flex align-items-center justify-content-between"
+                      to="/cart"
+                    >
+                      <div class="d-flex">
+                        <div class="dropdown-list-image mr-3">
+                          <img class="rounded-circle" :src="item.inventory.thumbnail" />
+                          <div
+                            class="status-indicator"
+                            :class="`${item.inventory.status === 'Available' ? 'bg-success' : 'bg-danger'}`"
+                          ></div>
+                        </div>
+                        <div>
+                          <div>{{ item.inventory.name }}</div>
+                          <div class="small text-gray-500">
+                            {{ item.inventory.category }} · ${{ item.inventory.price }}
+                          </div>
                         </div>
                       </div>
-                    </div>
-                    <div>
-                      <div v-if="item.inventory.status === 'Available'">
-                        {{ item.quantity }}
+                      <div>
+                        <div v-if="item.inventory.status === 'Available'">
+                          {{ item.quantity }}
+                        </div>
+                        <button v-else class="btn btn-danger btn-icon-split btn-sm" disabled>
+                          <span class="icon icon-sm text-white-50 small">
+                            <i class="fas fa-exclamation-triangle"></i>
+                          </span>
+                          <span class="text small">{{ item.inventory.status }}</span>
+                        </button>
                       </div>
-                      <button v-else class="btn btn-danger btn-icon-split btn-sm" disabled>
-                        <span class="icon icon-sm text-white-50 small">
-                          <i class="fas fa-exclamation-triangle"></i>
-                        </span>
-                        <span class="text small">{{ item.inventory.status }}</span>
-                      </button>
-                    </div>
-                  </router-link>
-                  <router-link class="dropdown-item text-center small font-weight-bold" to="/">
+                    </router-link>
+                  </template>
+                  <router-link to="/cart" class="dropdown-item text-center small font-weight-bold">
                     <i class="fas fa-sign-out-alt fa-sm fa-fw"></i>
                     Go To Checkout
                   </router-link>

@@ -64,6 +64,11 @@ const router = createRouter({
           component: () => import('@/views/user/UserNotificationsView.vue'),
         },
         {
+          path: '/cart',
+          name: 'user.cart',
+          component: () => import('@/views/user/UserCartView.vue'),
+        },
+        {
           path: '/services',
           children: [
             {

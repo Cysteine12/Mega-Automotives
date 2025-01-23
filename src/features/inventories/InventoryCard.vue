@@ -31,7 +31,7 @@ const addItemToCart = async () => {
     <div class="row">
       <div class="card-img-wrapper col-6 position-relative">
         <router-link :to="`/inventories/${inventory._id}`">
-          <img src="/megaautomotives.png" alt="Product image" class="card-img" />
+          <img :src="inventory.thumbnail" alt="Product image" class="card-img" />
         </router-link>
         <button
           type="button"
