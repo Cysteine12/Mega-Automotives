@@ -226,13 +226,15 @@ router.beforeEach((to, from, next) => {
 
   if (to.matched.some((record) => record.meta.requiresAuth)) {
     if (!isAuthenticated) {
-      next('/login')
+      next(`/login?redirect=${to.fullPath}`)
     } else if (!isVerified) {
       next('/verify-email')
     } else if (to.meta.roles && !to.meta.roles?.includes(userRole)) {
       return next({ name: 'not-found' })
     } else {
-      next()
+      console.log(from, to)
+      if (from.query.redirect && from.query.redirect !== to.fullPath) next(from.query.redirect)
+      else next()
     }
   } else if (to.matched.some((record) => record.meta.requiresGuest)) {
     if (isAuthenticated) {
