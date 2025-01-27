@@ -5,12 +5,13 @@ import { useRoute } from 'vue-router'
 import AppHeading from '@/components/AppHeading.vue'
 import AppPagination from '@/components/AppPagination.vue'
 import { formatDate } from '@/utils/formatters'
+import AppSpinner from '@/components/AppSpinner.vue'
 
 const route = useRoute()
 const notificationStore = useNotificationStore()
 
 const notifications = ref(null)
-const isLoading = ref(false)
+const isLoading = ref(true)
 const pagination = ref({
   currentPage: Number(route.query.page) || 1,
   perPage: 10,
@@ -37,7 +38,8 @@ watch(
   },
 )
 
-const handleClick = async (notificationId) => {
+const handleClick = async (notificationId, notificationStatus) => {
+  if (notificationStatus === 'read') return
   await notificationStore.updateNotificationStatus(notificationId)
 }
 </script>
@@ -52,7 +54,7 @@ const handleClick = async (notificationId) => {
           <div v-for="notification in notifications" :key="notification._id">
             <router-link
               :to="notification.link"
-              @click="handleClick(notification._id)"
+              @click="handleClick(notification._id, notification.status)"
               class="text-decoration-none text-reset"
             >
               <div
@@ -88,7 +90,7 @@ const handleClick = async (notificationId) => {
       <AppPagination v-if="notifications" :pagination="pagination" />
     </div>
 
-    <div v-else class="text-xl m-auto">Loading...</div>
+    <AppSpinner v-else />
   </main>
 </template>
 
