@@ -202,7 +202,7 @@ const scrollToTop = async () => {
               <router-link to="/notifications" class="collapse-item">
                 My Notifications
               </router-link>
-              <router-link to="/" class="collapse-item"> My Payments </router-link>
+              <router-link to="/payments" class="collapse-item"> My Payments </router-link>
             </div>
           </div>
         </li>

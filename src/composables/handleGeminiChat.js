@@ -1,11 +1,15 @@
 import { getChatSession } from '@/libs/gemini'
 
 const getGeminiChat = async (history, prompt) => {
-  const chatSession = getChatSession(history)
+  try {
+    const chatSession = getChatSession(history)
 
-  const res = await chatSession.sendMessage(prompt)
+    const res = await chatSession.sendMessage(prompt)
 
-  return res.response.text()
+    return res.response.text()
+  } catch (err) {
+    console.error(err.message)
+  }
 }
 
 export { getGeminiChat }

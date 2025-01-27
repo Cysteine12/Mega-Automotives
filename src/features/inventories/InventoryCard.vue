@@ -21,7 +21,6 @@ const isAddedToCart = computed(() => {
 })
 
 const addItemToCart = async () => {
-  isAddedToCart.value = true
   await cartStore.addItem(props.inventory)
 }
 </script>

@@ -41,7 +41,7 @@ const addItemToCart = async () => {
           <div class="card-header font-weight-bold text-primary">{{ inventory.name }}</div>
           <div class="card-body">
             <div class="card-img-wrapper position-relative">
-              <img src="/megaautomotives.png" alt="Product image" class="card-img" />
+              <img :src="inventory.thumbnail" alt="Product image" class="card-img" />
               <button
                 type="button"
                 class="btn btn-outline btn-icon-split btn-sm btn-inventory"

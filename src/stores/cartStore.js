@@ -21,7 +21,7 @@ export const useCartStore = defineStore('cart', {
         const res = await API.get(`/carts`)
 
         if (res.data.success) {
-          this.cart = res.data.data
+          if (res.data.data) this.cart = res.data.data
         } else {
           this.error = res.data.message
           toast.error(this.error)

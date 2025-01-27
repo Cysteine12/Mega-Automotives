@@ -201,6 +201,21 @@ const router = createRouter({
             },
           ],
         },
+        {
+          path: '/payments',
+          children: [
+            {
+              path: '',
+              name: 'user.payments.index',
+              component: () => import('@/views/user/payments/PaymentsView.vue'),
+            },
+            {
+              path: 'verify',
+              name: 'user.payments.verify',
+              component: () => import('@/views/user/payments/PaymentVerifyView.vue'),
+            },
+          ],
+        },
       ],
     },
     {
@@ -232,7 +247,6 @@ router.beforeEach((to, from, next) => {
     } else if (to.meta.roles && !to.meta.roles?.includes(userRole)) {
       return next({ name: 'not-found' })
     } else {
-      console.log(from, to)
       if (from.query.redirect && from.query.redirect !== to.fullPath) next(from.query.redirect)
       else next()
     }

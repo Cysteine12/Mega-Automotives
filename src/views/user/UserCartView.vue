@@ -3,6 +3,7 @@ import { computed, onMounted, ref, watch } from 'vue'
 import { useCartStore } from '@/stores/cartStore'
 import AppHeading from '@/components/AppHeading.vue'
 import AppButton from '@/components/AppButton.vue'
+import { handleCartPayment } from '@/composables/handleCartPayment'
 
 const cartStore = useCartStore()
 
@@ -48,6 +49,10 @@ const cartTotalPrice = computed(() =>
     return pre + cur.inventory.price * cur.quantity
   }, 0),
 )
+
+const handleCheckoutClick = async () => {
+  await handleCartPayment(cart.value)
+}
 </script>
 
 <template>
@@ -127,9 +132,9 @@ const cartTotalPrice = computed(() =>
               <div>${{ cartTotalPrice }}</div>
             </div>
           </div>
-          <router-link to="/">
-            <button class="btn btn-user btn-warning w-100">Checkout (${{ cartTotalPrice }})</button>
-          </router-link>
+          <button @click="handleCheckoutClick" class="btn btn-user btn-warning w-100">
+            Checkout (${{ cartTotalPrice }})
+          </button>
         </div>
       </div>
     </div>
