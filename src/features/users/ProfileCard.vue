@@ -77,9 +77,9 @@ const handleFileInput = async (e) => {
               v-if="!loading"
               type="button"
               @click="triggerFileInput"
-              class="btn badge rounded-circle bg-white text-primary p-1"
+              class="btn badge rounded-circle bg-white text-primary p-1 cursor-pointer"
             >
-              <i class="fas fa-images small" aria-hidden="true"></i>
+              <i class="fas fa-camera" aria-hidden="true"></i>
             </button>
             <input
               v-show="false"
