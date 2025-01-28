@@ -47,7 +47,7 @@ export const useUserStore = defineStore('user', {
           localStorage.setItem('user', JSON.stringify(this.user))
           toast.success(this.message)
 
-          router.push('/profile')
+          router.go(-1)
           return
         } else {
           this.error = res.data.message
@@ -73,8 +73,6 @@ export const useUserStore = defineStore('user', {
 
           localStorage.setItem('user', JSON.stringify(this.user))
           toast.success(this.message)
-
-          return
         } else {
           this.error = res.data.message
           toast.error(this.error)

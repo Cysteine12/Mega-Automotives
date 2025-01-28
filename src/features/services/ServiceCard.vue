@@ -11,7 +11,7 @@ defineProps({
 </script>
 
 <template>
-  <router-link :to="route" class="card mb-4 text-decoration-none">
+  <router-link :to="route" class="card my-3 text-decoration-none">
     <!-- Card Body -->
     <div class="card-img-hover">
       <img class="card-img-top" :src="service.thumbnail" alt="" width="100%" height="100%" />

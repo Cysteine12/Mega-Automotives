@@ -60,10 +60,12 @@ const handleEmit = (fileInput) => {
 const submitForm = async () => {
   loading.value = true
 
-  formData.value.photos.photoBefore = await handleFileChange(
-    userStore.user._id,
-    formData.value.photos.photoBefore,
-  )
+  if (formData.value.photos.photoBefore) {
+    formData.value.photos.photoBefore = await handleFileChange(
+      userStore.user._id,
+      formData.value.photos.photoBefore,
+    )
+  }
   emit('submitForm', formData.value)
 }
 </script>
@@ -173,10 +175,11 @@ const submitForm = async () => {
 
         <div class="form-group">
           <label for="vehiclePic" class="form-label text-primary">
-            Current picture of your vehicle
+            Current image of the vehicle (Optional)
           </label>
           <AppInputFileBox
             :photos="formData.photos.photoBefore ? [formData.photos.photoBefore] : []"
+            :isRequired="false"
             @fileInput="handleEmit"
           />
         </div>

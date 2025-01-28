@@ -65,7 +65,6 @@ watch(
         <i class="fas fa-info-circle"></i>
         No bookings found
       </div>
-      <div v-if="error">{{ error }}</div>
     </div>
 
     <AppPagination v-if="bookings" :pagination="pagination" />
