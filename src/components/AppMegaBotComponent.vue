@@ -1,31 +1,43 @@
 <script setup>
 import { getGeminiChat } from '@/composables/handleGeminiChat'
 import { useUserStore } from '@/stores/userStore'
-import { onMounted, ref } from 'vue'
+import { renderBase64Image } from '@/utils/imageFormatter'
+import { computed, onMounted, ref } from 'vue'
 
 const userStore = useUserStore()
 
 const user = ref(null)
-const chats = ref([
-  { role: 'user', parts: [{ text: 'Hi' }] },
-  { role: 'model', parts: [{ text: 'Hi, how may I help you today?' }] },
-])
+const imageFile = ref(null)
+const fileInputRef = ref(null)
+const chats = ref([])
 const message = ref(null)
 
 onMounted(() => {
   user.value = userStore.user
 })
 
+const triggerFileInput = () => {
+  fileInputRef.value.click()
+}
+
+const handleFileInput = (e) => {
+  imageFile.value = e.target.files[0]
+}
+
+const fileUrl = computed(() => URL.createObjectURL(imageFile.value))
+
 const handleSubmit = async () => {
   if (!message.value) return
   const prompt = message.value
+  const file = imageFile.value
 
   message.value = null
+  imageFile.value = null
+
+  await getGeminiChat(chats.value, prompt, file)
   setTimeout(() => {
     stickToButtom()
   }, 500)
-
-  await getGeminiChat(chats.value, prompt)
 }
 
 const stickToButtom = () => {
@@ -51,7 +63,7 @@ const stickToButtom = () => {
           </div>
         </div>
 
-        <div v-if="chats && user" class="card-body scroll-container msg_card_body">
+        <div v-if="chats.length > 0 && user" class="card-body scroll-container msg_card_body">
           <div v-for="chat in chats" :key="chat" class="my-1">
             <div v-if="chat.role === 'model'" class="d-flex justify-content-start mb-4 w-75">
               <div class="img_cont_msg">
@@ -64,7 +76,14 @@ const stickToButtom = () => {
 
             <div v-else class="d-flex justify-content-end mb-4">
               <div class="msg_cotainer_send">
-                {{ chat.parts[0].text }}
+                <div v-if="chat.parts.length > 1" class="mb-3">
+                  <img
+                    :src="renderBase64Image(chat.parts[1].inlineData)"
+                    alt="Uploaded image"
+                    height="150"
+                  />
+                </div>
+                <div>{{ chat.parts[0].text }}</div>
               </div>
               <div class="img_cont_msg">
                 <img :src="user.photo" class="rounded-circle user_img_msg" />
@@ -77,15 +96,34 @@ const stickToButtom = () => {
         </div>
         <div v-else class="card-body scroll-container msg_card_body">
           <span class="text-white">
-            Hello there, start a conversation with MegaBot now
+            Hello there, start a conversation with MegaBot now.
+            <br />
+            Just upload a photo or send a message
             <i class="fas fa-laugh-wink"></i>
           </span>
         </div>
 
         <div class="card-footer">
-          <form @submit.prevent="handleSubmit" class="input-group">
-            <div class="input-group-append">
-              <span class="input-group-text attach_btn"><i class="fas fa-envelope"></i></span>
+          <form @submit.prevent="handleSubmit" class="form-bg-color input-group">
+            <div v-if="imageFile" class="p-1 w-100">
+              <div class="d-flex justify-content-end">
+                <img :src="fileUrl" alt="" class="rounded" height="100" />
+              </div>
+            </div>
+            <div @click="triggerFileInput" class="input-group-append" title="Upload photo">
+              <button type="button" class="btn btn-none">
+                <span class="input-group-text">
+                  <i class="fas fa-camera"></i>
+                </span>
+              </button>
+
+              <input
+                v-show="false"
+                type="file"
+                accept="image/*"
+                ref="fileInputRef"
+                @change="handleFileInput"
+              />
             </div>
             <textarea
               v-model="message"
@@ -301,6 +339,11 @@ const stickToButtom = () => {
 .action_menu ul li:hover {
   cursor: pointer;
   background-color: rgba(0, 0, 0, 0.2);
+}
+
+.form-bg-color {
+  background: rgba(0, 0, 0, 0.3) !important;
+  border-radius: 10px;
 }
 .form-button {
   appearance: none;
