@@ -4,7 +4,7 @@ import { onMounted, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import AppHeading from '@/components/AppHeading.vue'
 import AppPagination from '@/components/AppPagination.vue'
-import { formatDate } from '@/utils/formatters'
+import { formatDate } from '@/utils/dateFormatter'
 import AppSpinner from '@/components/AppSpinner.vue'
 
 const route = useRoute()

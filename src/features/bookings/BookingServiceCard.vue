@@ -1,6 +1,6 @@
 <script setup>
 import AppButton from '@/components/AppButton.vue'
-import { formatDate } from '@/utils/formatters'
+import { formatDate } from '@/utils/dateFormatter'
 
 defineProps({
   booking: {
@@ -65,11 +65,11 @@ const statusTags = {
     </div>
     <div class="card-body">
       <div class="d-flex justify-content-between flex-wrap mb-lg-3">
-        <div class="card-img-wrapper">
-          <img src="/img/b.png" class="card-img img-size" />
+        <div v-if="booking.photos.photoBefore" class="card-img-wrapper">
+          <img :src="booking.photos.photoBefore" class="card-img img-size" />
         </div>
 
-        <div class="vehicle small font-weight-bold my-3 my-lg-0 mx-lg-auto">
+        <div class="vehicle small my-3 my-lg-0 mx-lg-auto">
           <div class="d-flex justify-content-between mb-2">
             <span class="text-primary mx-lg-2">License: </span>
             <span class="text-uppercase ml-2">{{ booking.vehicles[0].licenseNo }}</span>

@@ -2,7 +2,7 @@
 import { useAuthStore } from '@/stores/authStore'
 import { useCartStore } from '@/stores/cartStore'
 import { useNotificationStore } from '@/stores/notificationStore'
-import { formatDate } from '@/utils/formatters'
+import { formatDate } from '@/utils/dateFormatter'
 import { onMounted, ref, watch } from 'vue'
 
 const user = ref(null)

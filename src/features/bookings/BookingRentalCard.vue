@@ -1,6 +1,6 @@
 <script setup>
 import AppButton from '@/components/AppButton.vue'
-import { formatDate } from '@/utils/formatters'
+import { formatDate } from '@/utils/dateFormatter'
 
 defineProps({
   booking: {

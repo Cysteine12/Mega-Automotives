@@ -1,5 +1,5 @@
 <script setup>
-import { formatDate } from '@/utils/formatters'
+import { formatDate } from '@/utils/dateFormatter'
 import AppButton from '@/components/AppButton.vue'
 
 defineProps({

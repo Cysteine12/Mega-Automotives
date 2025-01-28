@@ -4,7 +4,7 @@ import { useRoute } from 'vue-router'
 import { usePaymentStore } from '@/stores/paymentStore'
 import AppHeading from '@/components/AppHeading.vue'
 import AppPagination from '@/components/AppPagination.vue'
-import { formatDateIntl } from '@/utils/formatters'
+import { formatDateIntl } from '@/utils/dateFormatter'
 
 const route = useRoute()
 const paymentStore = usePaymentStore()
