@@ -129,7 +129,7 @@ const handleCheckoutClick = async () => {
             <div class="my-3">
               <div class="d-flex justify-content-between my-1">
                 <div>Total Items</div>
-                <div>${{ cartTotalItem }}</div>
+                <div>{{ cartTotalItem }}</div>
               </div>
               <div class="d-flex justify-content-between my-1">
                 <div>Subtotal</div>

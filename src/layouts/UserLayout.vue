@@ -1,9 +1,10 @@
 <script setup>
+import { onMounted, ref, watch } from 'vue'
 import { useAuthStore } from '@/stores/authStore'
 import { useCartStore } from '@/stores/cartStore'
 import { useNotificationStore } from '@/stores/notificationStore'
 import { formatDate } from '@/utils/dateFormatter'
-import { onMounted, ref, watch } from 'vue'
+import AppFooter from '@/components/AppFooter.vue'
 
 const user = ref(null)
 const notifications = ref(null)
@@ -433,11 +434,11 @@ const scrollToTop = async () => {
                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                     Profile
                   </router-link>
-                  <router-link class="dropdown-item" to="/">
-                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                    Settings
+                  <router-link class="dropdown-item" to="/payments">
+                    <i class="fas fa-dollar-sign fa-sm fa-fw mr-2 text-gray-400"></i>
+                    Payments
                   </router-link>
-                  <router-link class="dropdown-item" to="/">
+                  <router-link class="dropdown-item" to="/notifications">
                     <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
                     Activity Log
                   </router-link>
@@ -461,13 +462,7 @@ const scrollToTop = async () => {
         <!-- End of Main Content -->
 
         <!-- Footer -->
-        <footer class="sticky-footer bg-white">
-          <div class="container my-auto">
-            <div class="copyright text-center my-auto">
-              <span>Copyright &copy; Your Website 2021</span>
-            </div>
-          </div>
-        </footer>
+        <AppFooter />
         <!-- End of Footer -->
       </div>
       <!-- End of Content Wrapper -->

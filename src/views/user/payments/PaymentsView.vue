@@ -31,7 +31,7 @@ onMounted(() => getPayments())
 watch(
   () => route.query.page,
   (currentPage) => {
-    loading.value = true.value
+    loading.value = true
     pagination.value.currentPage = Number(currentPage)
     getPayments()
     window.scrollTo(0, 0)
