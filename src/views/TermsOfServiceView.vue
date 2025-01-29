@@ -3,7 +3,7 @@
     <div class="card shadow">
       <div class="card-body">
         <h1 class="card-title text-center mb-4">Terms of Service</h1>
-        <p class="text-muted text-center">Last Updated: [Insert Date]</p>
+        <p class="text-muted text-center">Last Updated: 29/01/2025</p>
         <hr />
         <div>
           Welcome to Mega-Automotives! By using our web app, you agree to comply with these Terms of
@@ -107,8 +107,8 @@
         <section class="mt-4">
           <h3>10. Contact Us</h3>
           <p>If you have questions or concerns about these Terms of Service, please contact us:</p>
-          <p><strong>Email:</strong> [Insert Support Email]</p>
-          <p><strong>Phone:</strong> [Insert Support Phone Number]</p>
+          <p><strong>Email:</strong> gbengabp12@gmail.com</p>
+          <p><strong>Phone:</strong> +(234)7064544565</p>
         </section>
       </div>
     </div>

@@ -5,6 +5,7 @@ import { useInventoryStore } from '@/stores/inventoryStore'
 import { useCartStore } from '@/stores/cartStore'
 import AppHeading from '@/components/AppHeading.vue'
 import AppButton from '@/components/AppButton.vue'
+import AppSpinner from '@/components/AppSpinner.vue'
 
 const route = useRoute()
 const inventoryStore = useInventoryStore()
@@ -12,10 +13,12 @@ const cartStore = useCartStore()
 
 const inventory = ref(null)
 const cart = ref(null)
+const loading = ref(true)
 
 onMounted(async () => {
   await inventoryStore.fetchInventoryById(route.params.id)
   inventory.value = inventoryStore.inventories[0]
+  loading.value = inventoryStore.loading
 
   await cartStore.fetchCart()
   cart.value = cartStore.cart
@@ -35,7 +38,7 @@ const addItemToCart = async () => {
   <main>
     <AppHeading title="Inventory Details" />
 
-    <div v-if="inventory" class="row m-auto">
+    <div v-if="!loading" class="row m-auto">
       <div class="col-lg-6">
         <div class="card w-100">
           <div class="card-header font-weight-bold text-primary">{{ inventory.name }}</div>
@@ -78,6 +81,8 @@ const addItemToCart = async () => {
         </div>
       </div>
     </div>
+
+    <AppSpinner v-else />
   </main>
 </template>
 

@@ -21,9 +21,9 @@ onMounted(async () => {
 })
 
 const submitForm = async () => {
-  loading.value = userStore.loading
-
+  loading.value = true
   await userStore.updateProfile(formData.value)
+  loading.value = userStore.loading
 }
 </script>
 

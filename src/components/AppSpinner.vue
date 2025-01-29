@@ -7,6 +7,6 @@
 <style scoped>
 .text-xl {
   height: 50vh;
-  font-size: 8rem;
+  font-size: 6rem;
 }
 </style>

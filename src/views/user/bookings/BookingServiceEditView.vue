@@ -4,6 +4,7 @@ import { useCustomerStore } from '@/stores/customerStore'
 import { useRoute } from 'vue-router'
 import { useServiceStore } from '@/stores/serviceStore'
 import AppHeading from '@/components/AppHeading.vue'
+import AppSpinner from '@/components/AppSpinner.vue'
 import BookServiceForm from '@/features/bookings/BookServiceForm.vue'
 
 const route = useRoute()
@@ -13,6 +14,7 @@ const serviceStore = useServiceStore()
 const booking = ref(null)
 const vehicles = ref(null)
 const services = ref(null)
+const loading = ref(null)
 
 onMounted(async () => {
   const bookingId = route.params.id
@@ -26,6 +28,7 @@ onMounted(async () => {
   const query = { page: null, limit: null }
   await customerStore.fetchVehicles(query)
   vehicles.value = customerStore.vehicles
+  loading.value = customerStore.loading && serviceStore.loading
 })
 
 const filteredSubservices = computed(() =>
@@ -43,8 +46,8 @@ const handleSubmit = async (formData) => {
   <main>
     <AppHeading title="Edit Booking" />
 
-    <div v-if="booking && filteredSubservices && vehicles" class="row">
-      <div class="col-md-6 mb-4">
+    <div v-if="!loading && vehicles" class="row">
+      <div class="col-lg-6 mb-4">
         <BookServiceForm
           :subservices="filteredSubservices"
           :vehicles="vehicles"
@@ -53,5 +56,7 @@ const handleSubmit = async (formData) => {
         />
       </div>
     </div>
+
+    <AppSpinner v-else />
   </main>
 </template>

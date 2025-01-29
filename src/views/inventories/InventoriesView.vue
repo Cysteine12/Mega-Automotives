@@ -1,12 +1,13 @@
 <script setup>
 import { onMounted, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
+import { useCartStore } from '@/stores/cartStore'
 import { useInventoryStore } from '@/stores/inventoryStore'
 import AppHeading from '@/components/AppHeading.vue'
 import AppSearchModal from '@/components/AppSearchModal.vue'
 import AppPagination from '@/components/AppPagination.vue'
+import AppSpinner from '@/components/AppSpinner.vue'
 import InventoryCard from '@/features/inventories/InventoryCard.vue'
-import { useCartStore } from '@/stores/cartStore'
 
 const route = useRoute()
 const inventoryStore = useInventoryStore()
@@ -14,6 +15,7 @@ const cartStore = useCartStore()
 
 const inventories = ref(null)
 const cart = ref(null)
+const loading = ref(true)
 const pagination = ref({
   currentPage: Number(route.query.page) || 1,
   perPage: 4,
@@ -25,6 +27,7 @@ const getInventories = async () => {
   await inventoryStore.fetchInventories(query)
 
   inventories.value = inventoryStore.inventories
+  loading.value = inventoryStore.loading
   pagination.value.total = inventoryStore.total
 }
 
@@ -37,6 +40,7 @@ onMounted(async () => {
 watch(
   () => route.query.page,
   (currentPage) => {
+    loading.value = true
     pagination.value.currentPage = Number(currentPage)
     getInventories()
     window.scrollTo(0, 0)
@@ -65,16 +69,19 @@ const handleSearchInput = (searchInput) => {
       @handleSearchInput="handleSearchInput"
     />
 
-    <div v-if="inventories && cart" class="row m-auto">
-      <div
-        v-for="inventory in inventories"
-        :key="inventory._id"
-        class="d-flex align-items-stretch col-md-6 col-lg-4"
-      >
-        <InventoryCard :inventory="inventory" :cart="cart" />
+    <div v-if="!loading">
+      <div class="row m-auto">
+        <div
+          v-for="inventory in inventories"
+          :key="inventory._id"
+          class="d-flex align-items-stretch col-md-6 col-lg-4"
+        >
+          <InventoryCard v-if="cart" :inventory="inventory" :cart="cart" />
+        </div>
       </div>
+      <AppPagination :pagination="pagination" />
     </div>
 
-    <AppPagination v-if="inventories" :pagination="pagination" />
+    <AppSpinner v-else />
   </main>
 </template>

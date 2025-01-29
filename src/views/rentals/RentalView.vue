@@ -4,6 +4,7 @@ import { useRoute } from 'vue-router'
 import { useRentalStore } from '@/stores/rentalStore'
 import { useCustomerStore } from '@/stores/customerStore'
 import AppHeading from '@/components/AppHeading.vue'
+import AppSpinner from '@/components/AppSpinner.vue'
 import BookRentalForm from '@/features/bookings/BookRentalForm.vue'
 import BookingUnavailableCard from '@/features/bookings/BookingUnavailableCard.vue'
 
@@ -12,12 +13,14 @@ const rentalStore = useRentalStore()
 const customerStore = useCustomerStore()
 
 const rental = ref(null)
+const loading = ref(true)
 
 onMounted(async () => {
   const rentalId = route.params.id
 
   await rentalStore.fetchRentalById(rentalId)
   rental.value = rentalStore.rentals[0]
+  loading.value = rentalStore.loading
 })
 
 const handleSubmit = async (formData) => {
@@ -32,7 +35,7 @@ const handleSubmit = async (formData) => {
   <main>
     <AppHeading title="Rental Details" />
 
-    <div v-if="rental" class="row">
+    <div v-if="!loading" class="row">
       <div class="col-xl-6 mb-4">
         <div class="card">
           <div class="card-body">
@@ -96,6 +99,8 @@ const handleSubmit = async (formData) => {
         <BookingUnavailableCard v-else />
       </div>
     </div>
+
+    <AppSpinner v-else />
   </main>
 </template>
 

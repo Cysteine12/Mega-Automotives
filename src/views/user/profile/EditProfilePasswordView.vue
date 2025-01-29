@@ -19,9 +19,10 @@ const submitForm = async () => {
     toast.error('New password fields do not match')
     return
   }
-  loading.value = authStore.loading
 
+  loading.value = true
   await authStore.changePassword(formData)
+  loading.value = authStore.loading
 }
 </script>
 

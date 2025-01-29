@@ -4,12 +4,14 @@ import { useRoute } from 'vue-router'
 import { useServiceStore } from '@/stores/serviceStore'
 import AppHeading from '@/components/AppHeading.vue'
 import AppSearchModal from '@/components/AppSearchModal.vue'
-import SubservicesList from '@/features/services/SubservicesList.vue'
 import AppMegaBotComponent from '@/components/AppMegaBotComponent.vue'
+import AppSpinner from '@/components/AppSpinner.vue'
+import SubservicesList from '@/features/services/SubservicesList.vue'
 
 const route = useRoute()
 const serviceStore = useServiceStore()
 const services = ref(null)
+const loading = ref(true)
 const selectedCategory = ref(null)
 const filteredSubservices = ref(null)
 const subservices = ref(null)
@@ -17,6 +19,7 @@ const subservices = ref(null)
 onMounted(async () => {
   await serviceStore.fetchServices()
   services.value = serviceStore.services
+  loading.value = serviceStore.loading
 
   if (route.query.category) {
     selectedCategory.value = route.query.category
@@ -68,23 +71,26 @@ const changeCategory = (category) => {
         @handleSearchInput="handleSearchInput"
       />
 
-      <div
-        v-if="services"
-        class="row d-flex flex-row align-items-center justify-content-center bg-white text-dark my-4 mx-0"
-      >
+      <div v-if="!loading">
         <div
-          type="button"
-          v-for="service in services"
-          :key="service._id"
-          @click="changeCategory(service.category)"
-          class="mx-1 py-2 px-1 font-weight-bold"
-          :class="{ 'border-bottom-primary': service.category === selectedCategory }"
+          class="row d-flex flex-row align-items-center justify-content-center bg-white text-dark my-4 mx-0"
         >
-          {{ service.category }}
+          <div
+            type="button"
+            v-for="service in services"
+            :key="service._id"
+            @click="changeCategory(service.category)"
+            class="mx-1 py-2 px-1 font-weight-bold"
+            :class="{ 'border-bottom-primary': service.category === selectedCategory }"
+          >
+            {{ service.category }}
+          </div>
         </div>
+
+        <SubservicesList :filteredSubservices="filteredSubservices" />
       </div>
 
-      <SubservicesList v-if="filteredSubservices" :filteredSubservices="filteredSubservices" />
+      <AppSpinner v-else />
 
       <AppMegaBotComponent />
     </div>

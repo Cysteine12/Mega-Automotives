@@ -32,8 +32,9 @@ const handleSubmit = async () => {
     return
   }
 
-  loading.value = authStore.loading
+  loading.value = true
   await authStore.resetPassword(token.value, formData)
+  loading.value = authStore.loading
 }
 </script>
 

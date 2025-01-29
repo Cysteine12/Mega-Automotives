@@ -11,7 +11,7 @@ const route = useRoute()
 const notificationStore = useNotificationStore()
 
 const notifications = ref(null)
-const isLoading = ref(true)
+const loading = ref(true)
 const pagination = ref({
   currentPage: Number(route.query.page) || 1,
   perPage: 10,
@@ -23,8 +23,8 @@ const getNotifications = async () => {
   await notificationStore.fetchNotifications(query)
 
   notifications.value = notificationStore.notifications
+  loading.value = notificationStore.loading
   pagination.value.total = notificationStore.total
-  isLoading.value = notificationStore.loading
 }
 
 onMounted(() => getNotifications())
@@ -48,7 +48,7 @@ const handleClick = async (notificationId, notificationStatus) => {
   <main>
     <AppHeading title="My Notifications" />
 
-    <div v-if="!isLoading">
+    <div v-if="!loading">
       <div class="d-flex justify-content-center">
         <div class="card p-2 w-100">
           <div v-for="notification in notifications" :key="notification._id">
@@ -87,7 +87,7 @@ const handleClick = async (notificationId, notificationStatus) => {
         </div>
       </div>
 
-      <AppPagination v-if="notifications" :pagination="pagination" />
+      <AppPagination :pagination="pagination" />
     </div>
 
     <AppSpinner v-else />

@@ -1,6 +1,6 @@
 <script setup>
-import { onMounted, ref, toRef } from 'vue'
-import { formatDate } from '@/utils/formatters'
+import { onMounted, ref } from 'vue'
+import { formatDate } from '@/utils/dateFormatter'
 import { useUserStore } from '@/stores/userStore'
 import handleFileChange from '@/composables/handleFileChange'
 
@@ -8,7 +8,7 @@ const userStore = useUserStore()
 
 const user = ref(null)
 const fileInput = ref(null)
-const loading = toRef(userStore.loading)
+const loading = ref(false)
 
 onMounted(async () => {
   user.value = userStore.user
@@ -19,15 +19,16 @@ const triggerFileInput = () => {
 }
 
 const handleFileInput = async (e) => {
+  loading.value = true
   const file = e.target.files[0]
   const currentFileUrl = userStore.user.photo
 
   user.value.photo = URL.createObjectURL(file)
-  loading.value = true
 
   const newFileUrl = await handleFileChange(user.value._id, file, currentFileUrl)
 
   await userStore.updateProfilePhoto({ photo: newFileUrl })
+  loading.value = userStore.loading
 }
 </script>
 

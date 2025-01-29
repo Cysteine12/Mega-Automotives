@@ -3,7 +3,7 @@
     <div class="card shadow">
       <div class="card-body">
         <h1 class="card-title text-center mb-4">Privacy Policy</h1>
-        <p class="text-muted text-center">Last Updated: [Insert Date]</p>
+        <p class="text-muted text-center">Last Updated: 29/01/2025</p>
         <hr />
         <div>
           At Mega-Automotives, we value your privacy and are committed to protecting your personal
@@ -95,8 +95,8 @@
           <p>
             If you have any questions or concerns about this Privacy Policy, please contact us at:
           </p>
-          <p><strong>Email:</strong> [Insert Support Email]</p>
-          <p><strong>Phone:</strong> [Insert Support Phone Number]</p>
+          <p><strong>Email:</strong> gbengabp12@gmail.com</p>
+          <p><strong>Phone:</strong> +(234)7064544565</p>
         </section>
       </div>
     </div>

@@ -4,6 +4,7 @@ import { useRoute } from 'vue-router'
 import { useServiceStore } from '@/stores/serviceStore'
 import { useCustomerStore } from '@/stores/customerStore'
 import AppHeading from '@/components/AppHeading.vue'
+import AppSpinner from '@/components/AppSpinner.vue'
 import SubserviceComponent from '@/features/services/SubserviceComponent.vue'
 import BookServiceForm from '@/features/bookings/BookServiceForm.vue'
 import BookingUnavailableCard from '@/features/bookings/BookingUnavailableCard.vue'
@@ -13,6 +14,7 @@ const serviceStore = useServiceStore()
 const customerStore = useCustomerStore()
 
 const subservice = ref(null)
+const loading = ref(true)
 const vehicles = ref(null)
 
 onMounted(async () => {
@@ -20,6 +22,7 @@ onMounted(async () => {
 
   await serviceStore.fetchSubservice(subserviceId)
   subservice.value = serviceStore.subservice
+  loading.value = customerStore.loading
 
   const query = { page: 1, limit: 10 }
   await customerStore.fetchVehicles(query)
@@ -34,24 +37,28 @@ const handleSubmit = async (formData) => {
 </script>
 
 <template>
-  <main v-if="subservice">
-    <AppHeading :title="subservice.name" />
+  <main>
+    <div v-if="!loading">
+      <AppHeading :title="subservice.name" />
 
-    <!-- Content Row -->
-    <div class="row">
-      <div class="col-xl-6 mb-4">
-        <SubserviceComponent :subservice="subservice" />
-      </div>
+      <!-- Content Row -->
+      <div class="row">
+        <div class="col-xl-6 mb-4">
+          <SubserviceComponent :subservice="subservice" />
+        </div>
 
-      <div v-if="vehicles" class="col-xl-6 mb-4">
-        <BookServiceForm
-          v-if="subservice.availability"
-          :vehicles="vehicles"
-          @submitForm="handleSubmit"
-        />
+        <div v-if="vehicles" class="col-xl-6 mb-4">
+          <BookServiceForm
+            v-if="subservice.availability"
+            :vehicles="vehicles"
+            @submitForm="handleSubmit"
+          />
 
-        <BookingUnavailableCard v-else />
+          <BookingUnavailableCard v-else />
+        </div>
       </div>
     </div>
+
+    <AppSpinner v-else />
   </main>
 </template>

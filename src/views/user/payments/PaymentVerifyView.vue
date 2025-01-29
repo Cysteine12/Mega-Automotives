@@ -2,7 +2,7 @@
 import { onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { usePaymentStore } from '@/stores/paymentStore'
-import AppHeading from '@/components/AppHeading.vue'
+import AppSpinner from '@/components/AppSpinner.vue'
 
 const route = useRoute()
 const router = useRouter()
@@ -17,6 +17,6 @@ onMounted(async () => {
 
 <template>
   <main>
-    <AppHeading title="Loading..." />
+    <AppSpinner />
   </main>
 </template>

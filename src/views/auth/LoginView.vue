@@ -19,8 +19,9 @@ const handleSubmit = async () => {
     return
   }
 
-  loading.value = authStore.loading
+  loading.value = true
   await authStore.login(formData)
+  loading.value = authStore.loading
 }
 
 const handleGoogleAuth = async () => {

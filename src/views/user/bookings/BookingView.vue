@@ -4,6 +4,7 @@ import { useRoute } from 'vue-router'
 import { useCustomerStore } from '@/stores/customerStore'
 import AppHeading from '@/components/AppHeading.vue'
 import AppModal from '@/components/AppModal.vue'
+import AppSpinner from '@/components/AppSpinner.vue'
 import BookingServiceCard from '@/features/bookings/BookingServiceCard.vue'
 import BookingRentalCard from '@/features/bookings/BookingRentalCard.vue'
 
@@ -11,12 +12,14 @@ const customerStore = useCustomerStore()
 const route = useRoute()
 
 const booking = ref(null)
+const loading = ref(true)
 
 onMounted(async () => {
   const bookingId = route.params.id
 
   await customerStore.fetchBookingById(bookingId)
   booking.value = customerStore.bookings[0]
+  loading.value = customerStore.loading
 })
 
 const handleDelete = async () => {
@@ -28,7 +31,7 @@ const handleDelete = async () => {
   <main>
     <AppHeading title="Booking Details" />
 
-    <div class="row">
+    <div v-if="!loading" class="row">
       <div class="col-lg-6 mb-4">
         <BookingServiceCard
           v-if="booking && booking.assignedToModel === 'Subservice'"
@@ -104,13 +107,15 @@ const handleDelete = async () => {
           </template>
         </BookingRentalCard>
       </div>
+
+      <AppModal
+        title="Delete Booking"
+        message="Are you sure you want to delete this booking?"
+        @confirmAction="handleDelete"
+      />
     </div>
 
-    <AppModal
-      title="Delete Booking"
-      message="Are you sure you want to delete this booking?"
-      @confirmAction="handleDelete"
-    />
+    <AppSpinner v-else />
   </main>
 </template>
 

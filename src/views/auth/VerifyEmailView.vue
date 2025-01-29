@@ -15,8 +15,9 @@ onMounted(() => {
 })
 
 const handleSubmit = async () => {
-  loading.value = authStore.loading
+  loading.value = true
   await authStore.verifyEmail(token.value)
+  loading.value = authStore.loading
 }
 </script>
 
