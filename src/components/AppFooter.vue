@@ -12,35 +12,59 @@ const currentYear = date.getFullYear()
             <h4>Mega Automotives</h4>
           </router-link>
           <p>Our online portal can be accessed by anyone at any time for maximum convenience.</p>
-          <div class="social-links d-flex mt-4">
+          <div class="w-50 social-links d-flex justify-content-between my-4 mx-auto">
             <a href="https://twitter.com/GbengaPeace" class="twitter">
-              <i class="fas fa-twitter"></i>
+              <i class="fab fa-twitter fa-2x"></i>
             </a>
-            <router-link to="#" class="facebook"><i class="fas fa-facebook"></i></router-link>
+            <router-link to="#" class="facebook"><i class="fab fa-facebook fa-2x"></i></router-link>
             <a href="#" class="instagram">
-              <i class="fas fa-instagram"></i>
+              <i class="fab fa-instagram fa-2x"></i>
             </a>
-            <router-link to="#" class="linkedin"><i class="fas fa-linkedin"></i></router-link>
+            <router-link to="#" class="linkedin"><i class="fab fa-linkedin fa-2x"></i></router-link>
           </div>
         </div>
 
         <div class="col-lg-2 col-6 footer-links">
           <h4>Useful Links</h4>
-          <ul>
-            <li><router-link to="/">Home</router-link></li>
-            <li><router-link to="/dashboard">Dashboard</router-link></li>
-            <li><router-link to="/services">Services</router-link></li>
-            <li><router-link to="/privacy-policy">Privacy policy</router-link></li>
-            <li><router-link to="/terms-of-service">Terms of service</router-link></li>
+          <ul class="list-unstyled">
+            <li>
+              <i class="fas fa-cog fa-xs fa-spin mr-2"></i>
+              <router-link to="/">Home</router-link>
+            </li>
+            <li>
+              <i class="fas fa-cog fa-xs fa-spin mr-2"></i>
+              <router-link to="/dashboard">Dashboard</router-link>
+            </li>
+            <li>
+              <i class="fas fa-cog fa-xs fa-spin mr-2"></i>
+              <router-link to="/services">Services</router-link>
+            </li>
+            <li>
+              <i class="fas fa-cog fa-xs fa-spin mr-2"></i>
+              <router-link to="/privacy-policy">Privacy policy</router-link>
+            </li>
+            <li>
+              <i class="fas fa-cog fa-xs fa-spin mr-2"></i>
+              <router-link to="/terms-of-service">Terms of service</router-link>
+            </li>
           </ul>
         </div>
 
         <div class="col-lg-2 col-6 footer-links">
           <h4>Our Services</h4>
-          <ul>
-            <li><router-link to="/services">Vehicle Repairs</router-link></li>
-            <li><router-link to="/rentals">Vehicle Rentals</router-link></li>
-            <li><router-link to="/inventories">Parts/Accessories</router-link></li>
+          <ul class="list-unstyled">
+            <li>
+              <i class="fas fa-cog fa-xs fa-spin mr-2"></i>
+              <router-link to="/services">Vehicle Repairs</router-link>
+            </li>
+            <li>
+              <i class="fas fa-cog fa-xs fa-spin mr-2"></i>
+              <router-link to="/rentals">Vehicle Rentals</router-link>
+            </li>
+            <li>
+              <i class="fas fa-cog fa-xs fa-spin mr-2"></i>
+              <router-link to="/inventories">Parts/Accessories</router-link>
+            </li>
           </ul>
         </div>
 
@@ -88,5 +112,6 @@ a {
 
 a:hover {
   text-decoration: none;
+  color: #cfcfcf;
 }
 </style>
