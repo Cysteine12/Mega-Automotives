@@ -4,7 +4,7 @@ const currentYear = date.getFullYear()
 </script>
 
 <template>
-  <footer class="footer sticky-footer">
+  <footer class="footer sticky-footer mt-5">
     <div class="container">
       <div class="row gy-4">
         <div class="col-lg-5 col-md-12 footer-info">
@@ -100,7 +100,7 @@ const currentYear = date.getFullYear()
   </footer>
 </template>
 
-<style>
+<style scoped>
 .footer {
   background-color: #6b6f9c;
   color: #fff;

@@ -1,43 +1,29 @@
 import { defineStore } from 'pinia'
-import { useToast } from 'vue-toastification'
 import API from '@/libs/api'
-import axios from 'axios'
-import * as google from '@/libs/google'
+import { useToast } from 'vue-toastification'
 import router from '../router'
-
-const API2 = axios.create({
-  baseURL: import.meta.env.VITE_API_URL,
-  withCredentials: true,
-})
 
 const toast = useToast()
 
-export const useAuthStore = defineStore('auth', {
+export const useAdminStore = defineStore('admin', {
   state: () => ({
-    user: JSON.parse(localStorage.getItem('user')) || null,
+    users: [],
+    payments: [],
+    total: null,
     loading: false,
     message: null,
     error: null,
   }),
 
-  getters: {
-    isAuthenticated: (state) => !!state.user,
-    isVerified: (state) => state.user?.isVerified,
-    userRole: (state) => state.user?.role,
-  },
-
   actions: {
-    async register(newUser) {
+    async dashboard() {
       this.loading = true
       this.error = null
       try {
-        const res = await API.post(`/auth/register`, newUser)
+        const res = await API.get(`/admin/dashboard`)
 
         if (res.data.success) {
-          this.message = res.data.message
-          toast.success(this.message)
-
-          this.login(newUser)
+          this.total = res.data.total
         } else {
           this.error = res.data.message
           toast.error(this.error)
@@ -50,25 +36,15 @@ export const useAuthStore = defineStore('auth', {
       }
     },
 
-    async login(newUser) {
+    async fetchUsers({ page, limit }) {
       this.loading = true
       this.error = null
       try {
-        const res = await API.post(`/auth/login`, newUser)
+        const res = await API.get(`/admin/users?page=${page}&limit=${limit}`)
 
         if (res.data.success) {
-          this.user = res.data.user
-          this.message = res.data.message
-
-          localStorage.setItem('user', JSON.stringify(this.user))
-          toast.success(this.message)
-
-          if (this.userRole === 'administrator') {
-            router.push('/admin/dashboard')
-          } else {
-            router.push('/dashboard')
-          }
-          return
+          this.users = res.data.data
+          this.total = res.data.total
         } else {
           this.error = res.data.message
           toast.error(this.error)
@@ -81,76 +57,15 @@ export const useAuthStore = defineStore('auth', {
       }
     },
 
-    async googleLogin() {
+    async fetchUsersByRole(role, { page, limit }) {
       this.loading = true
       this.error = null
       try {
-        const { access_token } = await google.login()
-        if (!access_token) {
-          toast.error('Error completing sign in')
-          return
-        }
-
-        const res = await API.post(`/auth/google`, { access_token })
+        const res = await API.get(`/admin/users/role/${role}?page=${page}&limit=${limit}`)
 
         if (res.data.success) {
-          this.user = res.data.user
-          this.message = res.data.message
-
-          localStorage.setItem('user', JSON.stringify(this.user))
-          toast.success(this.message)
-
-          if (this.userRole === 'administrator') {
-            router.push('/admin/dashboard')
-          } else {
-            router.push('/dashboard')
-          }
-          return
-        } else {
-          this.error = res.data.message
-          toast.error(this.error)
-        }
-      } catch (err) {
-        this.error = err.response?.data?.message
-        console.log(err)
-      } finally {
-        this.loading = false
-      }
-    },
-
-    async forgotPassword(newUser) {
-      this.loading = true
-      this.error = null
-      try {
-        const res = await API.post(`/auth/forgot-password`, newUser)
-
-        if (res.data.success) {
-          this.loading = true
-          this.message = res.data.message
-          toast.success(this.message, { timeout: false })
-        } else {
-          this.loading = false
-          this.error = res.data.message
-          toast.error(this.error)
-        }
-      } catch (err) {
-        this.loading = false
-        this.error = err.response?.data?.message
-        toast.error(this.error)
-      }
-    },
-
-    async resetPassword(token, newUser) {
-      this.loading = true
-      this.error = null
-      try {
-        const res = await API.post(`/auth/reset-password/${token}`, newUser)
-
-        if (res.data.success) {
-          this.message = res.data.message
-          toast.success(this.message)
-
-          this.login(newUser)
+          this.users = res.data.data
+          this.total = res.data.total
         } else {
           this.error = res.data.message
           toast.error(this.error)
@@ -163,32 +78,15 @@ export const useAuthStore = defineStore('auth', {
       }
     },
 
-    async refreshToken() {
-      try {
-        await API2.post(`/auth/refresh-token`)
-        return
-      } catch (err) {
-        this.error = err.response?.data?.message
-        toast.error(this.error)
-        throw err
-      }
-    },
-
-    async verifyEmail(token) {
+    async searchUsersByName(name, { page, limit }) {
       this.loading = true
       this.error = null
       try {
-        const res = await API.post(`/auth/verify-email/${token}`)
+        const res = await API.get(`/admin/users/search?name=${name}&page=${page}&limit=${limit}`)
 
         if (res.data.success) {
-          this.message = res.data.message
-          toast.success(this.message)
-
-          if (this.userRole === 'administrator') {
-            router.push('/admin/dashboard')
-          } else {
-            router.push('/dashboard')
-          }
+          this.users = res.data.data
+          this.total = res.data.total
         } else {
           this.error = res.data.message
           toast.error(this.error)
@@ -201,21 +99,14 @@ export const useAuthStore = defineStore('auth', {
       }
     },
 
-    async changePassword(newUser) {
+    async fetchUserById(id) {
       this.loading = true
       this.error = null
       try {
-        const res = await API.post(`/auth/change-password`, newUser)
+        const res = await API.get(`/admin/users/${id}`)
 
         if (res.data.success) {
-          this.message = res.data.message
-          toast.success(this.message)
-
-          if (this.userRole === 'administrator') {
-            router.push('/admin/profile')
-          } else {
-            router.push('/profile')
-          }
+          this.users = [res.data.data]
         } else {
           this.error = res.data.message
           toast.error(this.error)
@@ -228,20 +119,129 @@ export const useAuthStore = defineStore('auth', {
       }
     },
 
-    async logout() {
+    async createUser(newUser) {
       this.loading = true
       this.error = null
       try {
-        const res = await API2.post(`/auth/logout`)
+        const res = await API.post(`/admin/users`, newUser)
 
         if (res.data.success) {
-          this.user = null
+          this.users.push(res.data.data)
           this.message = res.data.message
-
-          localStorage.removeItem('user')
           toast.success(this.message)
 
-          location.assign('/login')
+          router.push(`/admin/users/${this.users.at(-1)._id}`)
+        } else {
+          this.error = res.data.message
+          toast.error(this.error)
+        }
+      } catch (err) {
+        this.error = err.response?.data?.message
+        toast.error(this.error)
+      } finally {
+        this.loading = false
+      }
+    },
+
+    async updateUser(id, newUser) {
+      this.loading = true
+      this.error = null
+      try {
+        const res = await API.patch(`/admin/users/${id}`, newUser)
+
+        if (res.data.success) {
+          this.message = res.data.message
+          toast.success(this.message)
+
+          router.push(`/admin/users/${id}`)
+        } else {
+          this.error = res.data.message
+          toast.error(this.error)
+        }
+      } catch (err) {
+        this.error = err.response?.data?.message
+        toast.error(this.error)
+      } finally {
+        this.loading = false
+      }
+    },
+
+    async updateUserRole(id, newUser) {
+      this.loading = true
+      this.error = null
+      try {
+        const res = await API.patch(`/admin/users/${id}/role`, newUser)
+
+        if (res.data.success) {
+          this.message = res.data.message
+          toast.success(this.message)
+
+          router.push(`/admin/users/${id}`)
+        } else {
+          this.error = res.data.message
+          toast.error(this.error)
+        }
+      } catch (err) {
+        this.error = err.response?.data?.message
+        toast.error(this.error)
+      } finally {
+        this.loading = false
+      }
+    },
+
+    async deleteUser(id) {
+      this.loading = true
+      this.error = null
+      try {
+        const res = await API.delete(`/admin/users/${id}`)
+
+        if (res.data.success) {
+          this.message = res.data.message
+          toast.success(this.message)
+
+          router.go(-1)
+        } else {
+          this.error = res.data.message
+          toast.error(this.error)
+        }
+      } catch (err) {
+        this.error = err.response?.data?.message
+        toast.error(this.error)
+      } finally {
+        this.loading = false
+      }
+    },
+
+    async fetchPayments({ page, limit }) {
+      this.loading = true
+      this.error = null
+      try {
+        const res = await API.get(`/admin/payments?page=${page}&limit=${limit}`)
+
+        if (res.data.success) {
+          this.payments = res.data.data
+          this.total = res.data.total
+        } else {
+          this.error = res.data.message
+          toast.error(this.error)
+        }
+      } catch (err) {
+        this.error = err.response?.data?.message
+        toast.error(this.error)
+      } finally {
+        this.loading = false
+      }
+    },
+
+    async fetchPaymentsByUser(id, { page, limit }) {
+      this.loading = true
+      this.error = null
+      try {
+        const res = await API.get(`/admin/payments/user/${id}?page=${page}&limit=${limit}`)
+
+        if (res.data.success) {
+          this.payments = res.data.data
+          this.total = res.data.total
         } else {
           this.error = res.data.message
           toast.error(this.error)

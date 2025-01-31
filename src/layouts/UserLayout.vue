@@ -423,7 +423,7 @@ const scrollToTop = async () => {
                   <span class="mr-2 d-none d-lg-inline text-gray-600 small">
                     {{ user.name.firstName + ' ' + user.name.lastName }}
                   </span>
-                  <img class="img-profile rounded-circle" :src="user.photo || 'img/user.png'" />
+                  <img class="img-profile rounded-circle" :src="user.photo || '/img/user.png'" />
                 </a>
                 <!-- Dropdown - User Information -->
                 <div

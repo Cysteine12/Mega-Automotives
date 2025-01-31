@@ -138,7 +138,7 @@ onMounted(async () => {
       <div class="row">
         <div v-for="service in services" :key="service._id" class="col-xl-4 col-lg-7">
           <ServiceCard
-            :route="{ name: 'user.services.index', query: { category: service.category } }"
+            :route="{ name: 'customer.services.index', query: { category: service.category } }"
             :service="service"
           />
         </div>

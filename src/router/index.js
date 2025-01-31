@@ -47,7 +47,7 @@ const router = createRouter({
         },
       ],
     },
-    // User-specific routes
+    // Customer-specific routes
     {
       path: '/',
       component: () => import('@/layouts/UserLayout.vue'),
@@ -55,30 +55,30 @@ const router = createRouter({
       children: [
         {
           path: '/dashboard',
-          name: 'user.dashboard',
-          component: () => import('@/views/user/UserDashboardView.vue'),
+          name: 'customer.dashboard',
+          component: () => import('@/views/customer/DashboardView.vue'),
         },
         {
           path: '/notifications',
-          name: 'user.notifications',
-          component: () => import('@/views/user/UserNotificationsView.vue'),
+          name: 'customer.notifications',
+          component: () => import('@/views/customer/NotificationsView.vue'),
         },
         {
           path: '/cart',
-          name: 'user.cart',
-          component: () => import('@/views/user/UserCartView.vue'),
+          name: 'customer.cart',
+          component: () => import('@/views/customer/CartView.vue'),
         },
         {
           path: '/services',
           children: [
             {
               path: '',
-              name: 'user.services.index',
+              name: 'customer.services.index',
               component: () => import('@/views/services/ServicesView.vue'),
             },
             {
               path: ':subservice',
-              name: 'user.services.show',
+              name: 'customer.services.show',
               component: () => import('@/views/services/SubserviceView.vue'),
               props: true,
             },
@@ -89,12 +89,12 @@ const router = createRouter({
           children: [
             {
               path: '',
-              name: 'user.rentals.index',
+              name: 'customer.rentals.index',
               component: () => import('@/views/rentals/RentalsView.vue'),
             },
             {
               path: ':id',
-              name: 'user.rentals.show',
+              name: 'customer.rentals.show',
               component: () => import('@/views/rentals/RentalView.vue'),
               props: true,
             },
@@ -105,12 +105,12 @@ const router = createRouter({
           children: [
             {
               path: '',
-              name: 'user.inventories.index',
+              name: 'customer.inventories.index',
               component: () => import('@/views/inventories/InventoriesView.vue'),
             },
             {
               path: ':id',
-              name: 'user.inventories.show',
+              name: 'customer.inventories.show',
               component: () => import('@/views/inventories/InventoryView.vue'),
               props: true,
             },
@@ -121,18 +121,18 @@ const router = createRouter({
           children: [
             {
               path: '',
-              name: 'user.profile.index',
-              component: () => import('@/views/user/profile/ProfileView.vue'),
+              name: 'customer.profile.index',
+              component: () => import('@/views/customer/profile/ProfileView.vue'),
             },
             {
               path: 'edit',
-              name: 'user.profile.edit',
-              component: () => import('@/views/user/profile/EditProfileView.vue'),
+              name: 'customer.profile.edit',
+              component: () => import('@/views/customer/profile/EditProfileView.vue'),
             },
             {
               path: 'change-password',
-              name: 'user.profile.change-password',
-              component: () => import('@/views/user/profile/EditProfilePasswordView.vue'),
+              name: 'customer.profile.change-password',
+              component: () => import('@/views/customer/profile/EditProfilePasswordView.vue'),
             },
           ],
         },
@@ -141,35 +141,35 @@ const router = createRouter({
           children: [
             {
               path: '',
-              name: 'user.bookings.index',
-              component: () => import('@/views/user/bookings/BookingsView.vue'),
+              name: 'customer.bookings.index',
+              component: () => import('@/views/customer/bookings/BookingsView.vue'),
             },
             {
               path: 'service/create',
-              name: 'user.bookings.service.create',
-              component: () => import('@/views/user/bookings/BookingServiceCreateView.vue'),
+              name: 'customer.bookings.service.create',
+              component: () => import('@/views/customer/bookings/BookingServiceCreateView.vue'),
             },
             {
               path: 'rental/create',
-              name: 'user.bookings.rental.create',
-              component: () => import('@/views/user/bookings/BookingRentalCreateView.vue'),
+              name: 'customer.bookings.rental.create',
+              component: () => import('@/views/customer/bookings/BookingRentalCreateView.vue'),
             },
             {
               path: ':id',
-              name: 'user.bookings.show',
-              component: () => import('@/views/user/bookings/BookingView.vue'),
+              name: 'customer.bookings.show',
+              component: () => import('@/views/customer/bookings/BookingView.vue'),
               props: true,
             },
             {
               path: 'service/:id/edit',
-              name: 'user.bookings.service.edit',
-              component: () => import('@/views/user/bookings/BookingServiceEditView.vue'),
+              name: 'customer.bookings.service.edit',
+              component: () => import('@/views/customer/bookings/BookingServiceEditView.vue'),
               props: true,
             },
             {
               path: 'rental/:id/edit',
-              name: 'user.bookings.rental.edit',
-              component: () => import('@/views/user/bookings/BookingRentalEditView.vue'),
+              name: 'customer.bookings.rental.edit',
+              component: () => import('@/views/customer/bookings/BookingRentalEditView.vue'),
               props: true,
             },
           ],
@@ -179,24 +179,24 @@ const router = createRouter({
           children: [
             {
               path: '',
-              name: 'user.vehicles.index',
-              component: () => import('@/views/user/vehicles/VehiclesView.vue'),
+              name: 'customer.vehicles.index',
+              component: () => import('@/views/customer/vehicles/VehiclesView.vue'),
             },
             {
               path: 'create',
-              name: 'user.vehicles.create',
-              component: () => import('@/views/user/vehicles/VehicleCreateView.vue'),
+              name: 'customer.vehicles.create',
+              component: () => import('@/views/customer/vehicles/VehicleCreateView.vue'),
             },
             {
               path: ':id',
-              name: 'user.vehicles.show',
-              component: () => import('@/views/user/vehicles/VehicleView.vue'),
+              name: 'customer.vehicles.show',
+              component: () => import('@/views/customer/vehicles/VehicleView.vue'),
               props: true,
             },
             {
               path: ':id/edit',
-              name: 'user.vehicles.edit',
-              component: () => import('@/views/user/vehicles/VehicleEditView.vue'),
+              name: 'customer.vehicles.edit',
+              component: () => import('@/views/customer/vehicles/VehicleEditView.vue'),
               props: true,
             },
           ],
@@ -206,15 +206,28 @@ const router = createRouter({
           children: [
             {
               path: '',
-              name: 'user.payments.index',
-              component: () => import('@/views/user/payments/PaymentsView.vue'),
+              name: 'customer.payments.index',
+              component: () => import('@/views/customer/payments/PaymentsView.vue'),
             },
             {
               path: 'verify',
-              name: 'user.payments.verify',
-              component: () => import('@/views/user/payments/PaymentVerifyView.vue'),
+              name: 'customer.payments.verify',
+              component: () => import('@/views/customer/payments/PaymentVerifyView.vue'),
             },
           ],
+        },
+      ],
+    },
+    // Admin-specific routes
+    {
+      path: '/admin',
+      component: () => import('@/layouts/AdminLayout.vue'),
+      meta: { requiresAuth: true, roles: ['administrator'] },
+      children: [
+        {
+          path: 'dashboard',
+          name: 'admin.dashboard',
+          component: () => import('@/views/admin/DashboardView.vue'),
         },
       ],
     },
@@ -248,21 +261,27 @@ router.beforeEach((to, from, next) => {
 
   if (to.matched.some((record) => record.meta.requiresAuth)) {
     if (!isAuthenticated) {
-      next(`/login?redirect=${to.fullPath}`)
-    } else if (!isVerified) {
-      next('/verify-email')
-    } else if (to.meta.roles && !to.meta.roles?.includes(userRole)) {
-      return next({ name: 'not-found' })
-    } else {
-      if (from.query.redirect && from.query.redirect !== to.fullPath) next(from.query.redirect)
-      else next()
+      return next(`/login?redirect=${to.fullPath}`)
     }
+    if (!isVerified) {
+      return next('/verify-email')
+    }
+    if (to.meta.roles && !to.meta.roles?.includes(userRole)) {
+      return next({ name: 'not-found' })
+    }
+    if (from.query.redirect && from.query.redirect !== to.fullPath) {
+      return next(from.query.redirect)
+    }
+    next()
   } else if (to.matched.some((record) => record.meta.requiresGuest)) {
     if (isAuthenticated) {
-      next('/dashboard')
-    } else {
-      next()
+      if (userRole === 'administrator') {
+        next('/admin/dashboard')
+      } else {
+        next('/dashboard')
+      }
     }
+    next()
   } else {
     next()
   }
