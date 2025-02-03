@@ -15,11 +15,11 @@ export const useBookingStore = defineStore('booking', {
   }),
 
   actions: {
-    async fetchBookings(category, { page, limit }) {
+    async fetchBookings({ page, limit }) {
       this.loading = true
       this.error = null
       try {
-        const res = await API.get(`/bookings/${category}?page=${page}&limit=${limit}`)
+        const res = await API.get(`/bookings?page=${page}&limit=${limit}`)
 
         if (res.data.success) {
           this.bookings = res.data.data
@@ -36,13 +36,11 @@ export const useBookingStore = defineStore('booking', {
       }
     },
 
-    async fetchBookingsByStatus({ category, status }, { page, limit }) {
+    async fetchBookingsByStatus(status, { page, limit }) {
       this.loading = true
       this.error = null
       try {
-        const res = await API.get(
-          `/bookings/${category}/status/${status}?page=${page}&limit=${limit}`,
-        )
+        const res = await API.get(`/bookings/status/${status}?page=${page}&limit=${limit}`)
 
         if (res.data.success) {
           this.bookings = res.data.data
@@ -59,13 +57,11 @@ export const useBookingStore = defineStore('booking', {
       }
     },
 
-    async searchBookingsByOwner(category, { name, page, limit }) {
+    async fetchBookingsByOwnerId(id, { page, limit }) {
       this.loading = true
       this.error = null
       try {
-        const res = await API.get(
-          `/bookings/${category}/search?name=${name}&page=${page}&limit=${limit}`,
-        )
+        const res = await API.get(`/bookings/owner/${id}?page=${page}&limit=${limit}`)
 
         if (res.data.success) {
           this.bookings = res.data.data
@@ -82,11 +78,32 @@ export const useBookingStore = defineStore('booking', {
       }
     },
 
-    async fetchBookingById({ category, id }) {
+    async searchBookingsByOwner(name, { page, limit }) {
       this.loading = true
       this.error = null
       try {
-        const res = await API.get(`/bookings/${category}/${id}`)
+        const res = await API.get(`/bookings/search?name=${name}&page=${page}&limit=${limit}`)
+
+        if (res.data.success) {
+          this.bookings = res.data.data
+          this.total = res.data.total
+        } else {
+          this.error = res.data.message
+          toast.error(this.error)
+        }
+      } catch (err) {
+        this.error = err.response?.data?.message
+        toast.error(this.error)
+      } finally {
+        this.loading = false
+      }
+    },
+
+    async fetchBookingById(id) {
+      this.loading = true
+      this.error = null
+      try {
+        const res = await API.get(`/bookings/${id}`)
 
         if (res.data.success) {
           this.bookings.push(res.data.data)

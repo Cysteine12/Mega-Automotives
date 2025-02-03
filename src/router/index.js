@@ -229,6 +229,31 @@ const router = createRouter({
           name: 'admin.dashboard',
           component: () => import('@/views/admin/DashboardView.vue'),
         },
+        {
+          path: 'users',
+          children: [
+            {
+              path: '',
+              name: 'admin.users.index',
+              component: () => import('@/views/admin/users/UsersView.vue'),
+            },
+            {
+              path: 'create',
+              name: 'admin.users.create',
+              component: () => import('@/views/admin/users/UserCreateView.vue'),
+            },
+            {
+              path: ':id',
+              name: 'admin.users.show',
+              component: () => import('@/views/admin/users/UserView.vue'),
+            },
+            {
+              path: ':id/edit',
+              name: 'admin.users.edit',
+              component: () => import('@/views/admin/users/UserEditView.vue'),
+            },
+          ],
+        },
       ],
     },
     // General Routes

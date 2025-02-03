@@ -57,7 +57,7 @@ export const useVehicleStore = defineStore('vehicle', {
       }
     },
 
-    async fetchVehiclesByOwnerId({ id }, { page, limit }) {
+    async fetchVehiclesByOwnerId(id, { page, limit }) {
       this.loading = true
       this.error = null
       try {
@@ -78,7 +78,7 @@ export const useVehicleStore = defineStore('vehicle', {
       }
     },
 
-    async searchVehiclesByLicenseNo({ licenseNo, page, limit }) {
+    async searchVehiclesByLicenseNo(licenseNo, { page, limit }) {
       this.loading = true
       this.error = null
       try {
@@ -101,7 +101,7 @@ export const useVehicleStore = defineStore('vehicle', {
       }
     },
 
-    async fetchVehicleById({ id }) {
+    async fetchVehicleById(id) {
       this.loading = true
       this.error = null
       try {

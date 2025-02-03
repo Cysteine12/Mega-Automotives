@@ -9,10 +9,13 @@ import { useUserStore } from '@/stores/userStore'
 const customerStore = useCustomerStore()
 const userStore = useUserStore()
 
+const user = ref(null)
 const vehicles = ref(null)
 const bookings = ref(null)
 
 onMounted(async () => {
+  user.value = userStore.user
+
   const query = { page: 1, limit: 10 }
   await customerStore.fetchVehicles(query)
   vehicles.value = customerStore.vehicles
@@ -32,7 +35,7 @@ const submitDelete = async () => {
 
     <div class="row">
       <div class="col-xl-8 col-lg-7">
-        <ProfileCard>
+        <ProfileCard v-if="user" :user="user">
           <template #profile-content>
             <router-link
               v-if="vehicles"

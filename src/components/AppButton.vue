@@ -6,7 +6,7 @@ defineProps({
   },
   text: {
     type: String,
-    required: true,
+    required: false,
   },
   color: {
     type: String,
@@ -21,7 +21,7 @@ defineProps({
 
 <template>
   <button :type="type" class="btn border-2 shadow" :class="color" :disabled="isDisabled">
-    {{ text }}
+    <slot> {{ text }} </slot>
   </button>
 </template>
 

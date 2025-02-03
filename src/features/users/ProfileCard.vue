@@ -1,18 +1,22 @@
 <script setup>
-import { onMounted, ref } from 'vue'
+import { ref } from 'vue'
 import { formatDate } from '@/utils/dateFormatter'
 import { useUserStore } from '@/stores/userStore'
 import handleFileChange from '@/composables/handleFileChange'
+import { hasPermission } from '@/utils/permissions'
+
+const props = defineProps({
+  user: {
+    type: Object,
+    required: true,
+  },
+})
 
 const userStore = useUserStore()
 
-const user = ref(null)
+const user = ref(props.user)
 const fileInput = ref(null)
 const loading = ref(false)
-
-onMounted(async () => {
-  user.value = userStore.user
-})
 
 const triggerFileInput = () => {
   fileInput.value.click()
@@ -38,7 +42,7 @@ const handleFileInput = async (e) => {
       <div class="upper">
         <img src="/img/Desert.jpg" class="img-fluid" />
       </div>
-      <div class="dropdown no-arrow p-1">
+      <div v-if="hasPermission('customer')" class="dropdown no-arrow p-1">
         <a
           class="dropdown-toggle"
           href="#"
@@ -71,11 +75,11 @@ const handleFileInput = async (e) => {
       <div class="user text-center">
         <div class="profile-img">
           <div>
-            <img :src="user.photo || 'img/user.png'" class="rounded-circle" width="80" />
+            <img :src="user.photo || '/img/user.png'" class="rounded-circle" width="80" />
             <span v-if="loading" class="img-spinner"><i class="fas fa-spinner fa-spin"></i></span>
 
             <button
-              v-if="!loading"
+              v-if="!loading && hasPermission('customer')"
               type="button"
               @click="triggerFileInput"
               class="btn badge rounded-circle bg-white text-primary p-1 cursor-pointer"

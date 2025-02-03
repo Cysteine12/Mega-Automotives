@@ -1,5 +1,9 @@
 <script setup>
 defineProps({
+  id: {
+    type: String,
+    default: 'promptModal',
+  },
   title: {
     type: String,
     required: true,
@@ -37,7 +41,7 @@ const confirmModal = () => {
 <template>
   <div
     class="modal fade"
-    id="promptModal"
+    :id="id"
     role="dialog"
     tabindex="-1"
     aria-labelledby="modalLabel"
