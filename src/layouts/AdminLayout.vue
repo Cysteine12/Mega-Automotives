@@ -2,13 +2,22 @@
 import { onMounted, ref } from 'vue'
 import { useAuthStore } from '@/stores/authStore'
 import AppFooter from '@/components/AppFooter.vue'
+import { useNotificationStore } from '@/stores/notificationStore'
+import { formatDate } from '@/utils/dateFormatter'
+
+const notificationStore = useNotificationStore()
 
 const user = ref(null)
+const notifications = ref(null)
 
 const authStore = useAuthStore()
 
 onMounted(async () => {
   user.value = authStore.user
+
+  const query = { page: 1, limit: 4 }
+  await notificationStore.fetchNotifications(query)
+  notifications.value = notificationStore.notifications
 })
 
 const logout = async () => {
@@ -97,24 +106,24 @@ const scrollToTop = async () => {
             class="nav-link collapsed"
             href="#"
             data-toggle="collapse"
-            data-target="#collapseThree"
+            data-target="#collapseUsers"
             aria-expanded="true"
-            aria-controls="collapseThree"
+            aria-controls="collapseUsers"
           >
             <i class="fas fa-fw fa-users"></i>
             <span>Users</span>
           </a>
           <div
-            id="collapseThree"
+            id="collapseUsers"
             class="collapse"
             data-toggle="collapse"
-            data-target="#collapseThree"
+            data-target="#collapseUsers"
             aria-labelledby="headingThree"
             data-parent="#accordionSidebar"
           >
             <div class="bg-white py-2 collapse-inner rounded">
-              <router-link class="collapse-item" to="/admin/users">View Users</router-link>
               <router-link class="collapse-item" to="/admin/users/create">Add User</router-link>
+              <router-link class="collapse-item" to="/admin/users">View Users</router-link>
             </div>
           </div>
         </li>
@@ -141,8 +150,10 @@ const scrollToTop = async () => {
             data-parent="#accordionSidebar"
           >
             <div class="bg-white py-2 collapse-inner rounded">
-              <router-link class="collapse-item" to="/vehicles/create">Add new vehicle</router-link>
-              <router-link class="collapse-item" to="/vehicles">View vehicles</router-link>
+              <router-link class="collapse-item" to="/admin/vehicles/create"
+                >Add Vehicle</router-link
+              >
+              <router-link class="collapse-item" to="/admin/vehicles">View Vehicles</router-link>
             </div>
           </div>
         </li>
@@ -329,6 +340,56 @@ const scrollToTop = async () => {
                       </div>
                     </div>
                   </form>
+                </div>
+              </li>
+
+              <!-- Nav Item - Alerts -->
+              <li v-if="notifications" class="nav-item dropdown no-arrow mx-1">
+                <a
+                  class="nav-link dropdown-toggle"
+                  href="#"
+                  id="alertsDropdown"
+                  role="button"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  <i class="fas fa-bell fa-fw"></i>
+                  <!-- Counter - Alerts -->
+                  <span class="badge badge-danger badge-counter">{{ notifications.length }}+</span>
+                </a>
+                <!-- Dropdown - Alerts -->
+                <div
+                  class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                  aria-labelledby="alertsDropdown"
+                >
+                  <h6 class="dropdown-header">Notification Alerts</h6>
+                  <router-link
+                    v-for="notification in notifications"
+                    :key="notification._id"
+                    :to="notification.link"
+                    class="dropdown-item d-flex align-items-center"
+                  >
+                    <div class="mr-3">
+                      <div class="icon-circle bg-primary">
+                        <i class="fas fa-file-alt text-white"></i>
+                      </div>
+                    </div>
+                    <div>
+                      <div class="small text-gray-500">
+                        {{ formatDate(notification.createdAt) }}
+                      </div>
+                      <span :class="{ 'font-weight-bold': notification.status === 'unread' }">
+                        {{ notification.title }}
+                      </span>
+                    </div>
+                  </router-link>
+                  <router-link
+                    to="/notifications"
+                    class="dropdown-item text-center small text-gray-500"
+                  >
+                    Show All Alerts
+                  </router-link>
                 </div>
               </li>
 

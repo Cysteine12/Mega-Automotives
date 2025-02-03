@@ -254,6 +254,26 @@ const router = createRouter({
             },
           ],
         },
+        {
+          path: 'vehicles',
+          children: [
+            {
+              path: '',
+              name: 'admin.vehicles.index',
+              component: () => import('@/views/admin/vehicles/VehiclesView.vue'),
+            },
+            {
+              path: ':id',
+              name: 'admin.vehicles.show',
+              component: () => import('@/views/admin/vehicles/VehicleView.vue'),
+            },
+            {
+              path: ':id/edit',
+              name: 'admin.vehicles.edit',
+              component: () => import('@/views/admin/vehicles/VehicleEditView.vue'),
+            },
+          ],
+        },
       ],
     },
     // General Routes

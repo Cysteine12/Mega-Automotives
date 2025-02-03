@@ -38,8 +38,6 @@ const logout = async () => {
   await authStore.logout()
 }
 
-const getDate = (datetime) => formatDate(datetime)
-
 const sidebarToggle = async () => {
   var body = document.getElementsByClassName('body-toggle')[0]
   body.classList.toggle('sidebar-toggled')
@@ -329,7 +327,9 @@ const scrollToTop = async () => {
                       </div>
                     </div>
                     <div>
-                      <div class="small text-gray-500">{{ getDate(notification.createdAt) }}</div>
+                      <div class="small text-gray-500">
+                        {{ formatDate(notification.createdAt) }}
+                      </div>
                       <span :class="{ 'font-weight-bold': notification.status === 'unread' }">
                         {{ notification.title }}
                       </span>

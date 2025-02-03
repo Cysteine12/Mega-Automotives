@@ -40,7 +40,6 @@ onMounted(async () => {
       <ProfileCard :user="user">
         <template #profile-content>
           <router-link
-            v-if="totalVehicles"
             :to="`/admin/users/${user._id}/vehicles`"
             class="stats mx-2 btn btn-sm text-primary"
           >
@@ -48,7 +47,6 @@ onMounted(async () => {
             <span>{{ totalVehicles }}</span>
           </router-link>
           <router-link
-            v-if="totalBookings"
             :to="`/admin/users/${user._id}/bookings`"
             class="stats mx-2 btn btn-sm text-primary"
           >

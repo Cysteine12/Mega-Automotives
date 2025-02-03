@@ -43,7 +43,7 @@ watch(
   },
 )
 
-const handleSubmit = async (searchInput) => {
+const handleSearch = async (searchInput) => {
   const query = { page: null, limit: null }
   await adminStore.searchUsersByName(searchInput, query)
   users.value = adminStore.users
@@ -64,7 +64,7 @@ const handleDelete = async () => {
   <main>
     <AppHeading title="Our Users" />
 
-    <AppSearchModal placeholder="Search for a user..." @handleSubmit="handleSubmit" />
+    <AppSearchModal placeholder="Search for a user..." @handleSubmit="handleSearch" />
 
     <div v-if="!loading" class="card shadow my-4">
       <div class="card-header py-3">
@@ -84,7 +84,7 @@ const handleDelete = async () => {
             </thead>
 
             <tbody>
-              <tr v-for="user in users" :key="user._id">
+              <tr v-for="user in users" :key="user._id" class="text-capitalize text-nowrap">
                 <td class="text-nowrap">{{ user.name.firstName }} {{ user.name.lastName }}</td>
                 <td>{{ user.email }}</td>
                 <td>

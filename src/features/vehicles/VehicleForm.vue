@@ -2,6 +2,10 @@
 import { onMounted, ref } from 'vue'
 
 const props = defineProps({
+  loading: {
+    type: Boolean,
+    default: false,
+  },
   vehicle: {
     type: Object,
     required: false,
@@ -10,7 +14,6 @@ const props = defineProps({
 
 const emit = defineEmits(['submitForm'])
 
-const loading = ref(false)
 const formData = ref({
   category: null,
   licenseNo: null,
@@ -25,8 +28,6 @@ onMounted(() => {
 })
 
 const submitForm = async () => {
-  loading.value = true
-
   emit('submitForm', formData.value)
 }
 </script>
