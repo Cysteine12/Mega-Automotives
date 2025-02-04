@@ -42,6 +42,9 @@ const handleDelete = async () => {
                 <div class="my-2">
                   <i>{{ booking.description }}</i>
                 </div>
+                <div v-if="booking.message" class="my-2">
+                  Message: <i>{{ booking.message }}</i>
+                </div>
 
                 <div class="row">
                   <div class="col-6 border border-gray rounded-left">
@@ -75,6 +78,9 @@ const handleDelete = async () => {
               <div class="small">
                 <div class="my-2">
                   <i>{{ booking.description }}</i>
+                </div>
+                <div v-if="booking.message" class="my-2">
+                  Message: <i>{{ booking.message }}</i>
                 </div>
 
                 <div class="row">
