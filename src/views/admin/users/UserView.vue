@@ -40,14 +40,14 @@ onMounted(async () => {
       <ProfileCard :user="user">
         <template #profile-content>
           <router-link
-            :to="`/admin/users/${user._id}/vehicles`"
+            :to="`/admin/vehicles?userId=${user._id}`"
             class="stats mx-2 btn btn-sm text-primary"
           >
             <h6 class="mb-0">Vehicles</h6>
             <span>{{ totalVehicles }}</span>
           </router-link>
           <router-link
-            :to="`/admin/users/${user._id}/bookings`"
+            :to="`/admin/bookings?userId=${user._id}`"
             class="stats mx-2 btn btn-sm text-primary"
           >
             <h6 class="mb-0">Bookings</h6>

@@ -88,7 +88,7 @@ export const useVehicleStore = defineStore('vehicle', {
 
         if (res.data.success) {
           this.vehicles = res.data.data
-          //   this.total = res.data.total
+          this.total = res.data.total
         } else {
           this.error = res.data.message
           toast.error(this.error)

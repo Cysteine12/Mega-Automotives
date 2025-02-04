@@ -128,70 +128,20 @@ const scrollToTop = async () => {
           </div>
         </li>
 
-        <!-- Nav Item - Pages Collapse Menu -->
         <li class="nav-item">
-          <a
-            class="nav-link collapsed"
-            href="#"
-            data-toggle="collapse"
-            data-target="#collapsePages"
-            aria-expanded="true"
-            aria-controls="collapsePages"
-          >
+          <router-link class="nav-link" to="/admin/vehicles">
             <i class="fas fa-fw fa-car"></i>
             <span>Vehicles</span>
-          </a>
-          <div
-            id="collapsePages"
-            class="collapse"
-            data-toggle="collapse"
-            data-target="#collapsePages"
-            aria-labelledby="headingPages"
-            data-parent="#accordionSidebar"
-          >
-            <div class="bg-white py-2 collapse-inner rounded">
-              <router-link class="collapse-item" to="/admin/vehicles/create"
-                >Add Vehicle</router-link
-              >
-              <router-link class="collapse-item" to="/admin/vehicles">View Vehicles</router-link>
-            </div>
-          </div>
+          </router-link>
         </li>
 
-        <!-- Nav Item - Charts -->
         <li class="nav-item">
-          <a
-            class="nav-link collapsed"
-            href="#"
-            data-toggle="collapse"
-            data-target="#collapseThree"
-            aria-expanded="true"
-            aria-controls="collapseThree"
-          >
-            <i class="fas fa-fw fa-clipboard-list"></i>
+          <router-link class="nav-link" to="/admin/bookings">
+            <i class="fas fa-fw fa-list"></i>
             <span>Bookings</span>
-          </a>
-          <div
-            id="collapseThree"
-            class="collapse"
-            data-toggle="collapse"
-            data-target="#collapseThree"
-            aria-labelledby="headingThree"
-            data-parent="#accordionSidebar"
-          >
-            <div class="bg-white py-2 collapse-inner rounded">
-              <router-link class="collapse-item" to="/bookings/service/create"
-                >Book services</router-link
-              >
-              <router-link class="collapse-item" to="/bookings/rental/create"
-                >Rent vehicles</router-link
-              >
-              <router-link class="collapse-item" to="/bookings">View bookings</router-link>
-            </div>
-          </div>
+          </router-link>
         </li>
 
-        <!-- Nav Item - Charts -->
         <li class="nav-item">
           <a
             class="nav-link collapsed"

@@ -1,6 +1,6 @@
 <script setup>
 import { onMounted, ref, watch } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { useVehicleStore } from '@/stores/vehicleStore'
 import AppButton from '@/components/AppButton.vue'
 import AppHeading from '@/components/AppHeading.vue'
@@ -11,6 +11,7 @@ import AppSpinner from '@/components/AppSpinner.vue'
 
 const vehicleStore = useVehicleStore()
 const route = useRoute()
+const router = useRouter()
 
 const vehicles = ref(null)
 const selectedVehicleData = ref(null)
@@ -23,8 +24,14 @@ const pagination = ref({
 
 const getVehicles = async () => {
   const query = { page: pagination.value.currentPage, limit: pagination.value.perPage }
-  await vehicleStore.fetchVehicles(query)
 
+  if (route.query.licenseNo) {
+    await vehicleStore.searchVehiclesByLicenseNo(route.query.licenseNo, query)
+  } else if (route.query.userId) {
+    await vehicleStore.fetchVehiclesByOwnerId(route.query.userId, query)
+  } else {
+    await vehicleStore.fetchVehicles(query)
+  }
   vehicles.value = vehicleStore.vehicles
   loading.value = vehicleStore.loading
   pagination.value.total = vehicleStore.total
@@ -33,20 +40,20 @@ const getVehicles = async () => {
 onMounted(async () => getVehicles())
 
 watch(
-  () => route.query.page,
-  (currentPage) => {
+  () => router.currentRoute.value.fullPath,
+  () => {
     loading.value = true
-    pagination.value.currentPage = Number(currentPage)
+    pagination.value.currentPage = Number(route.query.page) || 1
     getVehicles()
     window.scrollTo(0, 0)
   },
 )
 
-const handleSearch = async (searchInput) => {
-  const query = { page: null, limit: null }
-  await vehicleStore.searchVehiclesByLicenseNo(searchInput, query)
-  vehicles.value = vehicleStore.vehicles
-}
+const handleSearch = async (searchInput) =>
+  router.push({
+    name: router.currentRoute.value.name,
+    query: { licenseNo: searchInput },
+  })
 
 const handleDelete = async () => {
   const { id } = selectedVehicleData.value

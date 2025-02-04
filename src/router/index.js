@@ -274,6 +274,21 @@ const router = createRouter({
             },
           ],
         },
+        {
+          path: 'bookings',
+          children: [
+            {
+              path: '',
+              name: 'admin.bookings.index',
+              component: () => import('@/views/admin/bookings/BookingsView.vue'),
+            },
+            {
+              path: ':id',
+              name: 'admin.bookings.show',
+              component: () => import('@/views/admin/bookings/BookingView.vue'),
+            },
+          ],
+        },
       ],
     },
     // General Routes
