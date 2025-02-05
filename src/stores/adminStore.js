@@ -253,5 +253,92 @@ export const useAdminStore = defineStore('admin', {
         this.loading = false
       }
     },
+
+    async searchPaymentByReference(reference, { page, limit }) {
+      this.loading = true
+      this.error = null
+      try {
+        const res = await API.get(
+          `/admin/payments/search?reference=${reference}&page=${page}&limit=${limit}`,
+        )
+
+        if (res.data.success) {
+          this.payments = res.data.data
+          this.total = res.data.total
+        } else {
+          this.error = res.data.message
+          toast.error(this.error)
+        }
+      } catch (err) {
+        this.error = err.response?.data?.message
+        toast.error(this.error)
+      } finally {
+        this.loading = false
+      }
+    },
+
+    async fetchPaymentById(id) {
+      this.loading = true
+      this.error = null
+      try {
+        const res = await API.get(`/admin/payments/${id}`)
+
+        if (res.data.success) {
+          this.payments = [res.data.data]
+        } else {
+          this.error = res.data.message
+          toast.error(this.error)
+        }
+      } catch (err) {
+        this.error = err.response?.data?.message
+        toast.error(this.error)
+      } finally {
+        this.loading = false
+      }
+    },
+
+    async updatePaymentStatus(id, newPayment) {
+      this.loading = true
+      this.error = null
+      try {
+        const res = await API.patch(`/admin/payments/${id}/status`, newPayment)
+
+        if (res.data.success) {
+          this.message = res.data.message
+          toast.success(this.message)
+
+          router.push(`/admin/payments`)
+        } else {
+          this.error = res.data.message
+          toast.error(this.error)
+        }
+      } catch (err) {
+        this.error = err.response?.data?.message
+        toast.error(this.error)
+      } finally {
+        this.loading = false
+      }
+    },
+
+    async deletePayment(id) {
+      this.loading = true
+      this.error = null
+      try {
+        const res = await API.delete(`/admin/payments/${id}`)
+
+        if (res.data.success) {
+          this.message = res.data.message
+          toast.success(this.message)
+        } else {
+          this.error = res.data.message
+          toast.error(this.error)
+        }
+      } catch (err) {
+        this.error = err.response?.data?.message
+        toast.error(this.error)
+      } finally {
+        this.loading = false
+      }
+    },
   },
 })

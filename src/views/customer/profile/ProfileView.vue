@@ -5,23 +5,25 @@ import AppHeading from '@/components/AppHeading.vue'
 import ProfileCard from '@/features/users/ProfileCard.vue'
 import AppModal from '@/components/AppModal.vue'
 import { useUserStore } from '@/stores/userStore'
+import { hasPermission } from '@/utils/permissions'
 
 const customerStore = useCustomerStore()
 const userStore = useUserStore()
 
 const user = ref(null)
-const vehicles = ref(null)
-const bookings = ref(null)
+const totalVehicles = ref(null)
+const totalBookings = ref(null)
+const totalPayments = ref(null)
 
 onMounted(async () => {
   user.value = userStore.user
 
-  const query = { page: 1, limit: 10 }
+  const query = { page: null, limit: null }
   await customerStore.fetchVehicles(query)
-  vehicles.value = customerStore.vehicles
+  totalVehicles.value = customerStore.total
 
   await customerStore.fetchBookings(query)
-  bookings.value = customerStore.bookings
+  totalBookings.value = customerStore.total
 })
 
 const submitDelete = async () => {
@@ -35,23 +37,31 @@ const submitDelete = async () => {
 
     <div class="row">
       <div class="col-xl-8 col-lg-7">
-        <ProfileCard v-if="user" :user="user">
+        <ProfileCard v-if="user && hasPermission('customer')" :user="user">
           <template #profile-content>
             <router-link
-              v-if="vehicles"
+              v-if="totalVehicles"
               :to="`/vehicles`"
               class="stats mx-2 btn btn-sm text-primary"
             >
               <h6 class="mb-0">My Vehicles</h6>
-              <span>{{ vehicles.length }}</span>
+              <span>{{ totalVehicles }}</span>
             </router-link>
             <router-link
-              v-if="bookings"
+              v-if="totalBookings"
               :to="`/bookings`"
               class="stats mx-2 btn btn-sm text-primary"
             >
               <h6 class="mb-0">My Bookings</h6>
-              <span>{{ bookings.length }}</span>
+              <span>{{ totalBookings }}</span>
+            </router-link>
+            <router-link
+              v-if="totalPayments"
+              :to="`/payments`"
+              class="stats mx-2 btn btn-sm text-primary"
+            >
+              <h6 class="mb-0">My Payments</h6>
+              <span>{{ totalPayments }}</span>
             </router-link>
           </template>
         </ProfileCard>

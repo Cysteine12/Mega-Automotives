@@ -16,6 +16,7 @@ const bookingStore = useBookingStore()
 const user = ref(null)
 const totalVehicles = ref(0)
 const totalBookings = ref(0)
+const totalPayments = ref(0)
 const loading = ref(true)
 
 onMounted(async () => {
@@ -29,6 +30,9 @@ onMounted(async () => {
 
   await bookingStore.fetchBookingsByOwnerId(user.value._id, query)
   totalBookings.value = bookingStore.total
+
+  await adminStore.fetchPaymentsByUser(user.value._id, query)
+  totalPayments.value = adminStore.total
 })
 </script>
 
@@ -52,6 +56,13 @@ onMounted(async () => {
           >
             <h6 class="mb-0">Bookings</h6>
             <span>{{ totalBookings }}</span>
+          </router-link>
+          <router-link
+            :to="`/admin/payments?userId=${user._id}`"
+            class="stats mx-2 btn btn-sm text-primary"
+          >
+            <h6 class="mb-0">Payments</h6>
+            <span>{{ totalPayments }}</span>
           </router-link>
         </template>
       </ProfileCard>
