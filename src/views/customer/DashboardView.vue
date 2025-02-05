@@ -11,9 +11,9 @@ const customerStore = useCustomerStore()
 const paymentStore = usePaymentStore()
 
 const services = ref(null)
-const vehiclesTotal = ref(null)
-const bookingsTotal = ref(null)
-const paymentsTotal = ref(null)
+const vehiclesTotal = ref(0)
+const bookingsTotal = ref(0)
+const paymentsTotal = ref(0)
 
 onMounted(async () => {
   const query = { page: null, limit: null }
@@ -39,7 +39,7 @@ onMounted(async () => {
     <!-- Content Row -->
     <div class="row">
       <!-- Earnings (Monthly) Card Example -->
-      <div v-if="vehiclesTotal" class="col-xl-3 col-md-6 mb-4">
+      <div class="col-xl-3 col-md-6 mb-4">
         <div class="card border-left-primary shadow h-100 py-2">
           <div class="card-body">
             <div class="row no-gutters align-items-center">
@@ -58,7 +58,7 @@ onMounted(async () => {
       </div>
 
       <!-- Earnings (Monthly) Card Example -->
-      <div v-if="paymentsTotal" class="col-xl-3 col-md-6 mb-4">
+      <div class="col-xl-3 col-md-6 mb-4">
         <div class="card border-left-success shadow h-100 py-2">
           <div class="card-body">
             <div class="row no-gutters align-items-center">
@@ -110,7 +110,7 @@ onMounted(async () => {
       </div>
 
       <!-- Pending Requests Card Example -->
-      <div v-if="bookingsTotal" class="col-xl-3 col-md-6 mb-4">
+      <div class="col-xl-3 col-md-6 mb-4">
         <div class="card border-left-warning shadow h-100 py-2">
           <div class="card-body">
             <div class="row no-gutters align-items-center">

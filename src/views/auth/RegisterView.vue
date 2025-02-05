@@ -21,7 +21,7 @@ const formData = reactive({
 
 const handleSubmit = async () => {
   if (formData.password !== formData.confirmPassword) {
-    toast.error('Passwords does not match')
+    toast.error('Passwords do not match')
     return
   }
 
