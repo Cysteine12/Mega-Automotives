@@ -289,6 +289,21 @@ const router = createRouter({
             },
           ],
         },
+        {
+          path: 'payments',
+          children: [
+            {
+              path: '',
+              name: 'admin.payments.index',
+              component: () => import('@/views/admin/payments/PaymentsView.vue'),
+            },
+            {
+              path: ':id',
+              name: 'admin.payments.show',
+              component: () => import('@/views/admin/payments/PaymentView.vue'),
+            },
+          ],
+        },
       ],
     },
     // General Routes

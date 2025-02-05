@@ -143,35 +143,10 @@ const scrollToTop = async () => {
         </li>
 
         <li class="nav-item">
-          <a
-            class="nav-link collapsed"
-            href="#"
-            data-toggle="collapse"
-            data-target="#collapseThree"
-            aria-expanded="true"
-            aria-controls="collapseThree"
-          >
+          <router-link class="nav-link" to="/admin/payments">
             <i class="fas fa-fw fa-dollar-sign"></i>
             <span>Payments</span>
-          </a>
-          <div
-            id="collapseThree"
-            class="collapse"
-            data-toggle="collapse"
-            data-target="#collapseThree"
-            aria-labelledby="headingThree"
-            data-parent="#accordionSidebar"
-          >
-            <div class="bg-white py-2 collapse-inner rounded">
-              <router-link class="collapse-item" to="/bookings/service/create"
-                >Book services</router-link
-              >
-              <router-link class="collapse-item" to="/bookings/rental/create"
-                >Rent vehicles</router-link
-              >
-              <router-link class="collapse-item" to="/bookings">View bookings</router-link>
-            </div>
-          </div>
+          </router-link>
         </li>
 
         <!-- Nav Item - Settings Collapse Menu -->
@@ -200,7 +175,6 @@ const scrollToTop = async () => {
               <router-link to="/notifications" class="collapse-item">
                 My Notifications
               </router-link>
-              <router-link to="/payments" class="collapse-item"> My Payments </router-link>
             </div>
           </div>
         </li>
