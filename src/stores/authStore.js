@@ -182,13 +182,13 @@ export const useAuthStore = defineStore('auth', {
 
         if (res.data.success) {
           this.message = res.data.message
+          this.user = res.data.user
+
+          localStorage.setItem('user', JSON.stringify(this.user))
           toast.success(this.message)
 
-          if (this.userRole === 'administrator') {
-            router.push('/admin/dashboard')
-          } else {
-            router.push('/dashboard')
-          }
+          router.push('/dashboard')
+          return
         } else {
           this.error = res.data.message
           toast.error(this.error)
@@ -216,6 +216,7 @@ export const useAuthStore = defineStore('auth', {
           } else {
             router.push('/profile')
           }
+          return
         } else {
           this.error = res.data.message
           toast.error(this.error)
