@@ -5,6 +5,7 @@ import AppHeading from '@/components/AppHeading.vue'
 import AppButton from '@/components/AppButton.vue'
 import AppSpinner from '@/components/AppSpinner.vue'
 import { handleCartPayment } from '@/composables/handleCartPayment'
+import { useDebounce } from '@/composables/useDebounce'
 
 const cartStore = useCartStore()
 
@@ -30,10 +31,10 @@ const removeItemFromCart = async (itemId) => {
   await cartStore.removeItem(itemId)
 }
 
-const editItemInCart = async (id, quantity) => {
+const editItemInCart = useDebounce(async (id, quantity) => {
   if (quantity < 1) return
   await cartStore.editItem({ id, newItem: { quantity } })
-}
+}, 2000)
 
 const clearCart = async () => {
   await cartStore.clearCart()
@@ -95,14 +96,14 @@ const handleCheckoutClick = async () => {
                 <div class="mb-2 mr-2">
                   <div class="d-flex" v-if="item.inventory.status === 'Available'">
                     <AppButton
-                      @click="editItemInCart(item._id, item.quantity - 1)"
+                      @click="editItemInCart(item._id, --item.quantity)"
                       text="-"
                       class="text-white font-weight-bold"
                       color="bg-warning"
                     />
                     <div class="p-2 px-3 font-weight-bold">{{ item.quantity }}</div>
                     <AppButton
-                      @click="editItemInCart(item._id, item.quantity + 1)"
+                      @click="editItemInCart(item._id, ++item.quantity)"
                       text="+"
                       class="text-white font-weight-bold"
                       color="bg-warning"
