@@ -40,7 +40,7 @@ const router = createRouter({
           meta: { requiresGuest: true },
         },
         {
-          path: '/verify-email/:token(.*)?',
+          path: '/verify-email/:token?',
           name: 'verify-email',
           component: () => import('@/views/auth/VerifyEmailView.vue'),
           props: (route) => ({ token: route.params.token || null }),
@@ -228,22 +228,6 @@ const router = createRouter({
           path: 'dashboard',
           name: 'admin.dashboard',
           component: () => import('@/views/admin/DashboardView.vue'),
-        },
-        {
-          path: 'services',
-          children: [
-            {
-              path: '',
-              name: 'services.index',
-              component: () => import('@/views/services/ServicesView.vue'),
-            },
-            {
-              path: ':subservice',
-              name: 'services.show',
-              component: () => import('@/views/services/SubserviceView.vue'),
-              props: true,
-            },
-          ],
         },
         {
           path: 'users',
