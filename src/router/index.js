@@ -40,7 +40,7 @@ const router = createRouter({
           meta: { requiresGuest: true },
         },
         {
-          path: '/verify-email/:token?',
+          path: '/verify-email/:token(.*)?',
           name: 'verify-email',
           component: () => import('@/views/auth/VerifyEmailView.vue'),
           props: (route) => ({ token: route.params.token || null }),
