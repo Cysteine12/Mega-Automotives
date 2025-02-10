@@ -230,6 +230,27 @@ const router = createRouter({
           component: () => import('@/views/admin/DashboardView.vue'),
         },
         {
+          path: 'services',
+          children: [
+            {
+              path: '',
+              name: 'admin.services.index',
+              component: () => import('@/views/services/ServicesView.vue'),
+            },
+            {
+              path: ':subservice',
+              name: 'admin.services.show',
+              component: () => import('@/views/services/SubserviceView.vue'),
+              props: true,
+            },
+            {
+              path: 'create',
+              name: 'admin.services.create',
+              component: () => import('@/views/admin/services/ServiceCreateView.vue'),
+            },
+          ],
+        },
+        {
           path: 'users',
           children: [
             {

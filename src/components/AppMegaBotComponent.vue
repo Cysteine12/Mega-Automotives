@@ -86,7 +86,7 @@ const stickToButtom = () => {
                 <div>{{ chat.parts[0].text }}</div>
               </div>
               <div class="img_cont_msg">
-                <img :src="user.photo" class="rounded-circle user_img_msg" />
+                <img :src="user.photo || '/img/user.png'" class="rounded-circle user_img_msg" />
                 <span class="read_icon" title="Read">
                   <i class="fas fa-check-circle"></i>
                 </span>

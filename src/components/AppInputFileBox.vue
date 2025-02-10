@@ -4,7 +4,7 @@ import { ref } from 'vue'
 const props = defineProps({
   photos: {
     type: Array,
-    required: false,
+    dafault: false,
   },
   isRequired: {
     type: Boolean,
@@ -13,7 +13,7 @@ const props = defineProps({
 })
 const emit = defineEmits(['fileInput'])
 
-const currentPhotos = ref(props.photos)
+const currentPhotos = ref(props.photos || [])
 
 const handleFileChange = async (e) => {
   const files = Array.from(e.target.files)

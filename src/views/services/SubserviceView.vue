@@ -8,6 +8,7 @@ import AppSpinner from '@/components/AppSpinner.vue'
 import SubserviceComponent from '@/features/services/SubserviceComponent.vue'
 import BookServiceForm from '@/features/bookings/BookServiceForm.vue'
 import BookingUnavailableCard from '@/features/bookings/BookingUnavailableCard.vue'
+import { hasPermission } from '@/utils/permissions'
 
 const route = useRoute()
 const serviceStore = useServiceStore()
@@ -24,9 +25,11 @@ onMounted(async () => {
   subservice.value = serviceStore.subservice
   loading.value = customerStore.loading
 
-  const query = { page: 1, limit: 10 }
-  await customerStore.fetchVehicles(query)
-  vehicles.value = customerStore.vehicles
+  if (hasPermission('customer')) {
+    const query = { page: null, limit: null }
+    await customerStore.fetchVehicles(query)
+    vehicles.value = customerStore.vehicles
+  }
 })
 
 const handleSubmit = async (formData) => {
@@ -47,7 +50,7 @@ const handleSubmit = async (formData) => {
           <SubserviceComponent :subservice="subservice" />
         </div>
 
-        <div v-if="vehicles" class="col-xl-6 mb-4">
+        <div v-if="hasPermission('customer') && vehicles" class="col-xl-6 mb-4">
           <BookServiceForm
             v-if="subservice.availability"
             :vehicles="vehicles"
