@@ -72,6 +72,7 @@ const scrollToTop = async () => {
 
         <!-- Nav Item - Services -->
         <li class="nav-item">
+<<<<<<< HEAD
           <a
             class="nav-link collapsed"
             href="#"
@@ -80,6 +81,9 @@ const scrollToTop = async () => {
             aria-expanded="true"
             aria-controls="collapseTwo"
           >
+=======
+          <router-link class="nav-link" to="/admin/services">
+>>>>>>> origin/main
             <i class="fas fa-fw fa-table"></i>
             <span>Services</span>
           </a>
