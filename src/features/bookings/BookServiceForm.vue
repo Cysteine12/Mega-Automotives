@@ -62,7 +62,7 @@ const submitForm = async () => {
 
   if (formData.value.photos.photoBefore) {
     formData.value.photos.photoBefore = await handleFileChange(
-      userStore.user._id,
+      `users/${userStore.user._id}`,
       formData.value.photos.photoBefore,
     )
   }

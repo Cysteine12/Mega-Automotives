@@ -29,7 +29,7 @@ const handleFileInput = async (e) => {
 
   user.value.photo = URL.createObjectURL(file)
 
-  const newFileUrl = await handleFileChange(user.value._id, file, currentFileUrl)
+  const newFileUrl = await handleFileChange(`users/${user.value._id}`, file, currentFileUrl)
 
   await userStore.updateProfilePhoto({ photo: newFileUrl })
   loading.value = userStore.loading
