@@ -23,7 +23,11 @@ const handleSubmit = async () => {
   loading.value = true
 
   if (formData.value.thumbnail.type) {
-    formData.value.thumbnail = await handleFileChange('app/rentals', formData.value.thumbnail)
+    formData.value.thumbnail = await handleFileChange(
+      'app/rentals',
+      formData.value.thumbnail,
+      rental.value.thumbnail,
+    )
   }
 
   await rentalStore.createRental(formData.value)
