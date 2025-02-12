@@ -1,7 +1,6 @@
 <script setup>
 import { ref } from 'vue'
 import { useServiceStore } from '@/stores/serviceStore'
-import { useUserStore } from '@/stores/userStore'
 import AppHeading from '@/components/AppHeading.vue'
 import AppButton from '@/components/AppButton.vue'
 import AppInputFileBox from '@/components/AppInputFileBox.vue'
@@ -9,7 +8,6 @@ import SubserviceForm from '@/features/services/SubserviceForm.vue'
 import handleFileChange from '@/composables/handleFileChange'
 
 const serviceStore = useServiceStore()
-const userStore = useUserStore()
 
 const formData = ref({
   category: null,
@@ -41,6 +39,12 @@ const addSubservice = () => {
   return
 }
 
+const removeSelectedSubservice = (subserviceId) => {
+  formData.value.subservices = formData.value.subservices.filter(
+    (subservice) => subservice.id !== subserviceId,
+  )
+}
+
 const handleSubserviceFormEmit = (subserviceId, newSubservice) => {
   formData.value.subservices = formData.value.subservices.map((subservice) => {
     if (subservice.id === subserviceId) {
@@ -51,19 +55,13 @@ const handleSubserviceFormEmit = (subserviceId, newSubservice) => {
   })
 }
 
-const removeSelectedSubservice = (subserviceId) => {
-  formData.value.subservices = formData.value.subservices.filter(
-    (subservice) => subservice.id !== subserviceId,
-  )
-}
-
 const handleSubmit = async () => {
   loading.value = true
   formData.value.subservices = formData.value.subservices.map(async (subservice) => {
-    return await handleFileChange(userStore.user._id, subservice.thumbnail)
+    return await handleFileChange('app/services', subservice.thumbnail)
   })
 
-  formData.value.thumbnail = await handleFileChange(userStore.user._id, formData.value.thumbnail)
+  formData.value.thumbnail = await handleFileChange('app/services', formData.value.thumbnail)
 
   await serviceStore.createService(formData.value)
   loading.value = serviceStore.loading
