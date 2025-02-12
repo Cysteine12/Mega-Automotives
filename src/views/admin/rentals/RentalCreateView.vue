@@ -27,7 +27,7 @@ const handleSubmit = async (vehicleFormData) => {
 
 <template>
   <main>
-    <AppHeading title="Create Rental" />
+    <AppHeading title="Add  New Rental" />
 
     <div class="row">
       <div class="col-lg-6">

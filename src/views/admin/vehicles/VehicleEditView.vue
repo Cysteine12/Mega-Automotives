@@ -12,7 +12,7 @@ const vehicle = ref(null)
 const loading = ref(false)
 
 onMounted(async () => {
-  vehicleStore.fetchVehicleById(route.params.id)
+  await vehicleStore.fetchVehicleById(route.params.id)
   vehicle.value = vehicleStore.vehicles[0]
 })
 

@@ -268,6 +268,11 @@ const router = createRouter({
               name: 'admin.rentals.show',
               component: () => import('@/views/rentals/RentalView.vue'),
             },
+            {
+              path: ':id/edit',
+              name: 'admin.rentals.edit',
+              component: () => import('@/views/admin/rentals/RentalEditView.vue'),
+            },
           ],
         },
         {
