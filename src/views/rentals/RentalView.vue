@@ -7,6 +7,7 @@ import AppHeading from '@/components/AppHeading.vue'
 import AppSpinner from '@/components/AppSpinner.vue'
 import BookRentalForm from '@/features/bookings/BookRentalForm.vue'
 import BookingUnavailableCard from '@/features/bookings/BookingUnavailableCard.vue'
+import { hasPermission } from '@/utils/permissions'
 
 const route = useRoute()
 const rentalStore = useRentalStore()
@@ -93,7 +94,7 @@ const handleSubmit = async (formData) => {
         </div>
       </div>
 
-      <div class="col-xl-6 mb-4">
+      <div v-if="hasPermission('customer')" class="col-xl-6 mb-4">
         <BookRentalForm v-if="rental.status !== 'unavailable'" @submitForm="handleSubmit" />
 
         <BookingUnavailableCard v-else />

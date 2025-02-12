@@ -92,6 +92,8 @@ const submitForm = async () => {
           </div>
         </div>
 
+        <slot></slot>
+
         <button type="submit" class="btn btn-primary btn-block" :disabled="loading">
           Add Vehicle
         </button>

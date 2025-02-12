@@ -102,10 +102,32 @@ const scrollToTop = async () => {
 
         <!-- Nav Item - Rentals -->
         <li class="nav-item">
-          <router-link class="nav-link" to="/rentals">
+          <a
+            class="nav-link collapsed"
+            href="#"
+            data-toggle="collapse"
+            data-target="#collapseRentals"
+            aria-expanded="true"
+            aria-controls="collapseRentals"
+          >
             <i class="fas fa-fw fa-car"></i>
             <span>Rentals</span>
-          </router-link>
+          </a>
+          <div
+            id="collapseRentals"
+            class="collapse"
+            data-toggle="collapse"
+            data-target="#collapseRentals"
+            aria-labelledby="headingTwo"
+            data-parent="#accordionSidebar"
+          >
+            <div class="bg-white py-2 collapse-inner rounded">
+              <router-link to="/admin/rentals/create" class="collapse-item">
+                Add Rental
+              </router-link>
+              <router-link to="/admin/rentals" class="collapse-item"> View Rentals </router-link>
+            </div>
+          </div>
         </li>
 
         <!-- Nav Item - Inventory -->
