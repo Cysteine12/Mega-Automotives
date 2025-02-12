@@ -16,8 +16,9 @@ const emit = defineEmits(['fileInput'])
 const currentPhotos = ref(props.photos || [])
 
 const handleFileChange = async (e) => {
-  const files = Array.from(e.target.files)
+  if (e.target.files.length < 1) return
 
+  const files = Array.from(e.target.files)
   currentPhotos.value.push(files.map((file) => URL.createObjectURL(file)))
 
   emit('fileInput', files)

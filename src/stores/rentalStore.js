@@ -123,6 +123,27 @@ export const useRentalStore = defineStore('rental', {
       }
     },
 
+    async updateRentalStatus(id, newRental) {
+      this.loading = true
+      this.error = null
+      try {
+        const res = await API.patch(`/rentals/${id}/status`, newRental)
+
+        if (res.data.success) {
+          this.message = res.data.message
+          toast.success(this.message)
+        } else {
+          this.error = res.data.message
+          toast.error(this.error)
+        }
+      } catch (err) {
+        this.error = err.response?.data?.message
+        toast.error(this.error)
+      } finally {
+        this.loading = false
+      }
+    },
+
     async deleteRental(id) {
       this.loading = true
       this.error = null

@@ -87,7 +87,12 @@ const submitForm = async () => {
         <div v-if="rentals" class="form-group">
           <label for="vehicle" class="form-label text-primary">Select Vehicle(s)*</label>
           <div class="d-flex">
-            <select ref="selectedRentalRef" class="form-control" title="Select vehicle">
+            <select
+              ref="selectedRentalRef"
+              id="vehicle"
+              class="form-control"
+              title="Select vehicle"
+            >
               <option disabled hidden selected>Select..</option>
               <option v-for="rental in rentals" :key="rental._id" :value="rental._id">
                 {{ rental.vehicle.brand }}

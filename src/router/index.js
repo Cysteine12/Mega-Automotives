@@ -251,6 +251,31 @@ const router = createRouter({
           ],
         },
         {
+          path: 'rentals',
+          children: [
+            {
+              path: '',
+              name: 'admin.rentals.index',
+              component: () => import('@/views/admin/rentals/RentalsView.vue'),
+            },
+            {
+              path: 'create',
+              name: 'admin.rentals.create',
+              component: () => import('@/views/admin/rentals/RentalCreateView.vue'),
+            },
+            {
+              path: ':id',
+              name: 'admin.rentals.show',
+              component: () => import('@/views/rentals/RentalView.vue'),
+            },
+            {
+              path: ':id/edit',
+              name: 'admin.rentals.edit',
+              component: () => import('@/views/admin/rentals/RentalEditView.vue'),
+            },
+          ],
+        },
+        {
           path: 'users',
           children: [
             {

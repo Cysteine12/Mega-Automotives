@@ -1,5 +1,6 @@
 <script setup>
 import AppButton from '@/components/AppButton.vue'
+import { formatRoleRoute } from '@/utils/routeFormatter'
 
 defineProps({
   rental: {
@@ -58,7 +59,7 @@ defineProps({
     </div>
 
     <div class="d-flex justify-content-end p-0">
-      <router-link :to="`/rentals/${rental._id}`" class="btn link mx-2">
+      <router-link :to="formatRoleRoute(`/rentals/${rental._id}`)" class="btn link mx-2">
         <AppButton type="button" text="View Vehicle" class="btn-sm" />
       </router-link>
     </div>
