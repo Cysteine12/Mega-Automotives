@@ -18,7 +18,7 @@ const cart = ref(null)
 const loading = ref(true)
 const pagination = ref({
   currentPage: Number(route.query.page) || 1,
-  perPage: 4,
+  perPage: 10,
   total: null,
 })
 
