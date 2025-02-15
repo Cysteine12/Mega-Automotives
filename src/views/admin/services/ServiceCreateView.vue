@@ -135,7 +135,12 @@ const handleSubmit = async () => {
               </AppButton>
 
               <div class="d-flex justify-content-end my-2">
-                <AppButton @click="handleSubmit" text="Add Service" :isDisabled="loading" />
+                <AppButton
+                  @click="handleSubmit"
+                  text="Add Service"
+                  :loading="loading"
+                  :disabled="loading"
+                />
               </div>
             </form>
           </div>

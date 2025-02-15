@@ -162,6 +162,7 @@ const handleFileInput = async (e) => {
 
 .upper img {
   width: 100%;
+  height: 100px;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
 }
@@ -195,7 +196,7 @@ const handleFileInput = async (e) => {
 
 .profile-btn {
   position: absolute;
-  top: -1.5em; /* - 20px */
+  top: -1.4em; /* - 20px */
   right: 0;
 }
 

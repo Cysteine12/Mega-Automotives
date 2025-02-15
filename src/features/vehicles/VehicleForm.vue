@@ -1,5 +1,6 @@
 <script setup>
 import { onMounted, ref } from 'vue'
+import AppButton from '@/components/AppButton.vue'
 
 const props = defineProps({
   loading: {
@@ -94,9 +95,13 @@ const submitForm = async () => {
 
         <slot></slot>
 
-        <button type="submit" class="btn btn-primary btn-block" :disabled="loading">
-          Add Vehicle
-        </button>
+        <AppButton
+          type="submit"
+          text="Add Vehicle"
+          class="btn-block"
+          :loading="loading"
+          :disabled="loading"
+        />
       </form>
     </div>
   </div>

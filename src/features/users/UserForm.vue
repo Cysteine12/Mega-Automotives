@@ -1,4 +1,5 @@
 <script setup>
+import AppButton from '@/components/AppButton.vue'
 import { onMounted, ref } from 'vue'
 
 const props = defineProps({
@@ -91,8 +92,12 @@ const handleSubmit = () => {
       </select>
     </div>
 
-    <button type="submit" class="btn btn-primary btn-user btn-block" :disabled="loading">
-      Add User
-    </button>
+    <AppButton
+      type="submit"
+      text="Add User"
+      class="btn-user btn-block"
+      :loading="loading"
+      :disabled="loading"
+    />
   </form>
 </template>

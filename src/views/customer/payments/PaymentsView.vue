@@ -49,13 +49,7 @@ watch(
           <PaymentCard :payment="payment" />
         </div>
       </div>
-      <div v-else class="card w-100 p-3">
-        No Item in cart yet
-        <br /><br />
-        <div class="d-flex">
-          Go to <router-link to="/inventories" class="ml-1"> Inventory</router-link>
-        </div>
-      </div>
+      <div v-else class="card w-100 p-3">No payments made yet</div>
 
       <AppPagination :pagination="pagination" />
     </div>

@@ -54,9 +54,9 @@ const cartTotalPrice = computed(() =>
   }, 0),
 )
 
-const handleCheckoutClick = async () => {
+const handleCheckoutClick = useDebounce(async () => {
   await handleCartPayment(cart.value)
-}
+}, 3000)
 </script>
 
 <template>

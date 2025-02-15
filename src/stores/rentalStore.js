@@ -87,7 +87,8 @@ export const useRentalStore = defineStore('rental', {
           this.rentals.push(res.data.data)
           toast.success(this.message)
 
-          router.go(`/rentals/${this.rentals.at(-1)}`)
+          router.push(`/rentals/${this.rentals.at(-1)}`)
+          return
         } else {
           this.error = res.data.message
           toast.error(this.error)

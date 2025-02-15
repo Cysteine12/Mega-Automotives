@@ -1,7 +1,7 @@
 <script setup>
 import AppButton from '@/components/AppButton.vue'
 import { useCartStore } from '@/stores/cartStore'
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 
 const props = defineProps({
   inventory: {
@@ -16,11 +16,14 @@ const props = defineProps({
 
 const cartStore = useCartStore()
 
+const disabled = ref(false)
+
 const isAddedToCart = computed(() => {
   return [...props.cart.items.map((item) => item.inventory._id)].includes(props.inventory._id)
 })
 
 const addItemToCart = async () => {
+  disabled.value = true
   await cartStore.addItem(props.inventory)
 }
 </script>
@@ -62,7 +65,7 @@ const addItemToCart = async () => {
             :text="isAddedToCart ? 'Added to cart' : 'Add to cart'"
             class="btn-sm text-white"
             color="bg-warning"
-            :isDisabled="isAddedToCart"
+            :disabled="isAddedToCart || disabled"
           />
         </div>
       </div>

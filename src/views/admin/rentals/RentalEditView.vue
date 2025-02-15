@@ -5,6 +5,7 @@ import { useRentalStore } from '@/stores/rentalStore'
 import AppHeading from '@/components/AppHeading.vue'
 import RentalForm from '@/features/rentals/RentalForm.vue'
 import handleFileChange from '@/composables/handleFileChange'
+import AppButton from '@/components/AppButton.vue'
 
 const route = useRoute()
 const rentalStore = useRentalStore()
@@ -52,9 +53,13 @@ const handleSubmit = async () => {
                 @handleFormChangeEmit="(formData) => (formData = formData)"
               />
 
-              <button type="submit" class="btn btn-primary btn-block" :disabled="loading">
-                Add Vehicle
-              </button>
+              <AppButton
+                type="submit"
+                text="Update Vehicle"
+                class="btn-block"
+                :loading="loading"
+                :disabled="loading"
+              />
             </form>
           </div>
         </div>

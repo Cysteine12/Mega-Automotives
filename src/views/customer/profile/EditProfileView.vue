@@ -3,6 +3,7 @@ import { onMounted, ref } from 'vue'
 import { useAuthStore } from '@/stores/authStore'
 import { useUserStore } from '@/stores/userStore'
 import AppHeading from '@/components/AppHeading.vue'
+import AppButton from '@/components/AppButton.vue'
 
 const authStore = useAuthStore()
 const userStore = useUserStore()
@@ -73,13 +74,14 @@ const submitForm = async () => {
                     required
                   />
                 </div>
-                <button
+
+                <AppButton
                   type="submit"
-                  class="btn btn-primary btn-user btn-block"
+                  text="Update Profile"
+                  class="btn-user btn-block"
+                  :loading="loading"
                   :disabled="loading"
-                >
-                  Update Profile
-                </button>
+                />
               </form>
             </div>
           </div>

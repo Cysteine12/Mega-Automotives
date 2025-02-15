@@ -69,6 +69,7 @@ export const useCustomerStore = defineStore('customer', {
           toast.success(this.message)
 
           router.push(`/vehicles/${this.vehicles.at(-1)._id}`)
+          return
         } else {
           this.error = res.data.message
           toast.error(this.error)

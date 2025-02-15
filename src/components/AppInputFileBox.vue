@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, watchEffect } from 'vue'
 
 const props = defineProps({
   photos: {
@@ -13,7 +13,11 @@ const props = defineProps({
 })
 const emit = defineEmits(['fileInput'])
 
-const currentPhotos = ref(props.photos || [])
+const currentPhotos = ref([])
+
+watchEffect(() => {
+  if (props.photos.length > 0) currentPhotos.value = props.photos
+})
 
 const handleFileChange = async (e) => {
   if (e.target.files.length < 1) return

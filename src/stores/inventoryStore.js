@@ -109,7 +109,8 @@ export const useInventoryStore = defineStore('inventory', {
           this.inventories.push(res.data.data)
           toast.success(this.message)
 
-          router.go(`/inventories/${this.inventories.at(-1)}`)
+          router.push(`/inventories/${this.inventories.at(-1)}`)
+          return
         } else {
           this.error = res.data.message
           toast.error(this.error)

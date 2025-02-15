@@ -3,6 +3,7 @@ import { reactive, ref } from 'vue'
 import { useAuthStore } from '@/stores/authStore'
 import AppHeading from '@/components/AppHeading.vue'
 import { useToast } from 'vue-toastification'
+import AppButton from '@/components/AppButton.vue'
 
 const authStore = useAuthStore()
 const toast = useToast()
@@ -66,13 +67,13 @@ const submitForm = async () => {
                   />
                 </div>
 
-                <button
+                <AppButton
                   type="submit"
-                  class="btn btn-primary btn-user btn-block"
+                  text="Change Password"
+                  class="btn-user btn-block"
+                  :loading="loading"
                   :disabled="loading"
-                >
-                  Change Password
-                </button>
+                />
               </form>
             </div>
           </div>

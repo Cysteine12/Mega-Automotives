@@ -66,6 +66,7 @@ export const useServiceStore = defineStore('service', {
           toast.success(this.message)
 
           router.push(`/services?category=${newService.category}`)
+          return
         } else {
           this.error = res.data.message
           toast.error(this.error)

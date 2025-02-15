@@ -3,6 +3,7 @@ import { reactive, ref } from 'vue'
 import { useToast } from 'vue-toastification'
 import { useAuthStore } from '@/stores/authStore'
 import AuthForm from '@/features/auth/AuthForm.vue'
+import AppButton from '@/components/AppButton.vue'
 
 const toast = useToast()
 const authStore = useAuthStore()
@@ -64,10 +65,13 @@ const handleGoogleAuth = async () => {
             <label class="custom-control-label" for="customCheck">Remember Me</label>
           </div>
         </div>
-        <button type="submit" class="btn btn-primary btn-user btn-block" :disabled="loading">
-          Login
-        </button>
-        <hr />
+        <AppButton
+          type="submit"
+          text="Login"
+          class="btn btn-primary btn-user btn-block"
+          :loading="loading"
+          :disabled="loading"
+        />
         <button
           @click="handleGoogleAuth"
           type="button"

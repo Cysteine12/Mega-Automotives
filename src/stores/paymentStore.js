@@ -68,6 +68,7 @@ export const usePaymentStore = defineStore('payment', {
           toast.success(this.message)
 
           router.push(`/payments`)
+          return
         } else {
           this.error = res.data.message
           toast.error(this.error)

@@ -1,4 +1,5 @@
 <script setup>
+import AppButton from '@/components/AppButton.vue'
 import { computed, onMounted, ref } from 'vue'
 
 const props = defineProps({
@@ -187,9 +188,13 @@ const submitForm = async () => {
           </textarea>
         </div>
 
-        <button type="submit" class="btn btn-primary btn-block" :disabled="loading">
-          Place Booking
-        </button>
+        <AppButton
+          type="submit"
+          text="Place Booking"
+          class="btn-block"
+          :loading="loading"
+          :disabled="loading"
+        />
       </form>
     </div>
   </div>

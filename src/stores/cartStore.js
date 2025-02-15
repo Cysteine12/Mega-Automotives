@@ -41,7 +41,7 @@ export const useCartStore = defineStore('cart', {
         const res = await API.post(`/carts/add`, { inventory: item._id })
 
         if (res.data.success) {
-          this.cart.items.push({ inventory: item, quantity: 1 })
+          this.cart.items.unshift({ inventory: item, quantity: 1 })
           toast.success(res.data.message)
         } else {
           this.error = res.data.message

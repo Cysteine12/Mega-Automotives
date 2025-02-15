@@ -3,6 +3,7 @@ import { onMounted, ref } from 'vue'
 import { useUserStore } from '@/stores/userStore'
 import AppInputFileBox from '@/components/AppInputFileBox.vue'
 import handleFileChange from '@/composables/handleFileChange'
+import AppButton from '@/components/AppButton.vue'
 
 const props = defineProps({
   subservices: {
@@ -60,7 +61,7 @@ const handleEmit = (fileInput) => {
 const submitForm = async () => {
   loading.value = true
 
-  if (formData.value.photos.photoBefore) {
+  if (formData.value.photos.photoBefore.type) {
     formData.value.photos.photoBefore = await handleFileChange(
       `users/${userStore.user._id}`,
       formData.value.photos.photoBefore,
@@ -184,9 +185,13 @@ const submitForm = async () => {
           />
         </div>
 
-        <button type="submit" class="btn btn-primary btn-block" :disabled="loading">
-          Place Booking
-        </button>
+        <AppButton
+          type="submit"
+          text="Place Booking"
+          class="btn-block"
+          :loading="loading"
+          :disabled="loading"
+        />
       </form>
     </div>
   </div>

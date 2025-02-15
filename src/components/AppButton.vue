@@ -12,7 +12,11 @@ defineProps({
     type: String,
     default: 'btn-primary',
   },
-  isDisabled: {
+  loading: {
+    type: Boolean,
+    default: false,
+  },
+  disabled: {
     type: Boolean,
     default: false,
   },
@@ -20,15 +24,18 @@ defineProps({
 </script>
 
 <template>
-  <button :type="type" class="btn border-2 shadow" :class="color" :disabled="isDisabled">
-    <slot> {{ text }} </slot>
+  <button :type="type" class="btn border-2 shadow" :class="color" :disabled="disabled">
+    <span v-if="loading"><i class="fas fa-spinner fa-spin"></i></span>
+    <slot v-if="!loading">
+      <span> {{ text }} </span>
+    </slot>
   </button>
 </template>
 
 <style scoped>
-.btn:hover {
+/* .btn:hover {
   background: #fff;
   color: #3d40df;
   color: var(--bs-primary);
-}
+} */
 </style>

@@ -3,6 +3,7 @@ import { reactive, ref } from 'vue'
 import { useToast } from 'vue-toastification'
 import { useAuthStore } from '@/stores/authStore'
 import AuthForm from '@/features/auth/AuthForm.vue'
+import AppButton from '@/components/AppButton.vue'
 
 const toast = useToast()
 const authStore = useAuthStore()
@@ -47,9 +48,13 @@ const handleSubmit = async () => {
             required
           />
         </div>
-        <button type="submit" class="btn btn-primary btn-user btn-block" :disabled="loading">
-          Reset Password
-        </button>
+        <AppButton
+          type="submit"
+          text="Reset Password"
+          class="btn btn-primary btn-user btn-block"
+          :loading="loading"
+          :disabled="loading"
+        />
       </form>
     </template>
 

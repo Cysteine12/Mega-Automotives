@@ -74,7 +74,7 @@ const addItemToCart = async () => {
                 :text="isAddedToCart ? 'Added to cart' : 'Add to cart'"
                 class="btn-sm text-white"
                 color="bg-warning"
-                :isDisabled="isAddedToCart"
+                :disabled="isAddedToCart"
               />
             </div>
           </div>
