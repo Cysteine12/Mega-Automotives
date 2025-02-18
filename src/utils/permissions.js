@@ -6,4 +6,8 @@ const hasPermission = (role) => {
   return userStore.user.role === role
 }
 
-export { hasPermission }
+const hasOwnPermission = (userId) => {
+  return (userStore.user._id = userId)
+}
+
+export { hasPermission, hasOwnPermission }

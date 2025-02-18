@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watchEffect } from 'vue'
+import { onMounted, ref } from 'vue'
 
 const props = defineProps({
   photos: {
@@ -15,7 +15,7 @@ const emit = defineEmits(['fileInput'])
 
 const currentPhotos = ref([])
 
-watchEffect(() => {
+onMounted(() => {
   if (props.photos.length > 0) currentPhotos.value = props.photos
 })
 
@@ -23,7 +23,7 @@ const handleFileChange = async (e) => {
   if (e.target.files.length < 1) return
 
   const files = Array.from(e.target.files)
-  currentPhotos.value.push(files.map((file) => URL.createObjectURL(file)))
+  currentPhotos.value.push(...files.map((file) => URL.createObjectURL(file)))
 
   emit('fileInput', files)
 }

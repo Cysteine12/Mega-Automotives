@@ -75,9 +75,9 @@ const currentYear = date.getFullYear()
             Oyo State,<br />
             Nigeria.<br /><br />
             <strong>Phone:</strong>
-            <router-link to="tel:+2347064544565"> +234 706 454 4565</router-link><br />
+            <a href="tel:+2347064544565"> +234 706 454 4565</a><br />
             <strong>Email:</strong>
-            <router-link to="mailto:gbengabp12@gmail.com"> gbengabp12@gmail.com</router-link>
+            <a href="mailto:gbengabp12@gmail.com"> gbengabp12@gmail.com</a>
           </p>
         </div>
       </div>

@@ -215,7 +215,7 @@ const scrollToTop = async () => {
             data-parent="#accordionSidebar"
           >
             <div class="bg-white py-2 collapse-inner rounded">
-              <router-link to="/profile" class="collapse-item"> My Profile </router-link>
+              <router-link to="/admin/profile" class="collapse-item"> My Profile </router-link>
               <router-link to="/notifications" class="collapse-item">
                 My Notifications
               </router-link>
@@ -384,7 +384,7 @@ const scrollToTop = async () => {
                   class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                   aria-labelledby="userDropdown"
                 >
-                  <router-link class="dropdown-item" to="/profile">
+                  <router-link class="dropdown-item" to="/admin/profile">
                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                     Profile
                   </router-link>

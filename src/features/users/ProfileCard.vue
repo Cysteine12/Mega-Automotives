@@ -3,7 +3,7 @@ import { ref } from 'vue'
 import { formatDate } from '@/utils/dateFormatter'
 import { useUserStore } from '@/stores/userStore'
 import handleFileChange from '@/composables/handleFileChange'
-import { hasPermission } from '@/utils/permissions'
+import { hasOwnPermission } from '@/utils/permissions'
 
 const props = defineProps({
   user: {
@@ -42,7 +42,7 @@ const handleFileInput = async (e) => {
       <div class="upper">
         <img src="/img/Desert.jpg" class="img-fluid" />
       </div>
-      <div v-if="hasPermission('customer')" class="dropdown no-arrow p-1">
+      <div v-if="hasOwnPermission(user._id)" class="dropdown no-arrow p-1">
         <a
           class="dropdown-toggle"
           href="#"
@@ -79,7 +79,7 @@ const handleFileInput = async (e) => {
             <span v-if="loading" class="img-spinner"><i class="fas fa-spinner fa-spin"></i></span>
 
             <button
-              v-if="!loading && hasPermission('customer')"
+              v-if="!loading && hasOwnPermission(user._id)"
               type="button"
               @click="triggerFileInput"
               class="btn badge rounded-circle bg-white text-primary p-1 cursor-pointer"

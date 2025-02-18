@@ -69,6 +69,26 @@ const router = createRouter({
           component: () => import('@/views/customer/CartView.vue'),
         },
         {
+          path: '/profile',
+          children: [
+            {
+              path: '',
+              name: 'customer.profile.index',
+              component: () => import('@/views/profile/ProfileView.vue'),
+            },
+            {
+              path: 'edit',
+              name: 'customer.profile.edit',
+              component: () => import('@/views/profile/EditProfileView.vue'),
+            },
+            {
+              path: 'change-password',
+              name: 'customer.profile.change-password',
+              component: () => import('@/views/profile/EditProfilePasswordView.vue'),
+            },
+          ],
+        },
+        {
           path: '/services',
           children: [
             {
@@ -113,26 +133,6 @@ const router = createRouter({
               name: 'customer.inventories.show',
               component: () => import('@/views/inventories/InventoryView.vue'),
               props: true,
-            },
-          ],
-        },
-        {
-          path: '/profile',
-          children: [
-            {
-              path: '',
-              name: 'customer.profile.index',
-              component: () => import('@/views/customer/profile/ProfileView.vue'),
-            },
-            {
-              path: 'edit',
-              name: 'customer.profile.edit',
-              component: () => import('@/views/customer/profile/EditProfileView.vue'),
-            },
-            {
-              path: 'change-password',
-              name: 'customer.profile.change-password',
-              component: () => import('@/views/customer/profile/EditProfilePasswordView.vue'),
             },
           ],
         },
@@ -228,6 +228,26 @@ const router = createRouter({
           path: 'dashboard',
           name: 'admin.dashboard',
           component: () => import('@/views/admin/DashboardView.vue'),
+        },
+        {
+          path: 'profile',
+          children: [
+            {
+              path: '',
+              name: 'admin.profile.index',
+              component: () => import('@/views/profile/ProfileView.vue'),
+            },
+            {
+              path: 'edit',
+              name: 'admin.profile.edit',
+              component: () => import('@/views/profile/EditProfileView.vue'),
+            },
+            {
+              path: 'change-password',
+              name: 'admin.profile.change-password',
+              component: () => import('@/views/profile/EditProfilePasswordView.vue'),
+            },
+          ],
         },
         {
           path: 'services',
@@ -397,9 +417,9 @@ router.beforeEach((to, from, next) => {
   } else if (to.matched.some((record) => record.meta.requiresGuest)) {
     if (isAuthenticated) {
       if (userRole === 'administrator') {
-        next('/admin/dashboard')
+        return next('/admin/dashboard')
       } else {
-        next('/dashboard')
+        return next('/dashboard')
       }
     }
     next()

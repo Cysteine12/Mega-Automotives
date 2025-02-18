@@ -53,7 +53,7 @@ const stickToButtom = () => {
         <div class="card-header msg_head">
           <div class="d-flex bd-highlight">
             <div class="img_cont">
-              <img src="/megaautomotives.png" class="rounded-circle user_img" />
+              <img src="/megaautomotives.webp" class="rounded-circle user_img" />
               <span class="online_icon"></span>
             </div>
             <div class="user_info">
@@ -67,7 +67,7 @@ const stickToButtom = () => {
           <div v-for="chat in chats" :key="chat" class="my-1">
             <div v-if="chat.role === 'model'" class="d-flex justify-content-start mb-4 w-75">
               <div class="img_cont_msg">
-                <img src="/megaautomotives.png" class="rounded-circle user_img_msg" />
+                <img src="/megaautomotives.webp" class="rounded-circle user_img_msg" />
               </div>
               <div class="msg_cotainer">
                 {{ chat.parts[0].text }}
