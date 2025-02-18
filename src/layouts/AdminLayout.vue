@@ -130,12 +130,36 @@ const scrollToTop = async () => {
           </div>
         </li>
 
-        <!-- Nav Item - Inventory -->
+        <!-- Nav Item - Inventories -->
         <li class="nav-item">
-          <router-link class="nav-link" to="/inventories">
+          <a
+            class="nav-link collapsed"
+            href="#"
+            data-toggle="collapse"
+            data-target="#collapseInventories"
+            aria-expanded="true"
+            aria-controls="collapseInventories"
+          >
             <i class="fas fa-fw fa-cogs"></i>
-            <span>Inventory</span>
-          </router-link>
+            <span>Inventories</span>
+          </a>
+          <div
+            id="collapseInventories"
+            class="collapse"
+            data-toggle="collapse"
+            data-target="#collapseInventories"
+            aria-labelledby="headingTwo"
+            data-parent="#accordionSidebar"
+          >
+            <div class="bg-white py-2 collapse-inner rounded">
+              <router-link to="/admin/inventories/create" class="collapse-item">
+                Add Inventory
+              </router-link>
+              <router-link to="/admin/inventories" class="collapse-item">
+                View Inventories
+              </router-link>
+            </div>
+          </div>
         </li>
 
         <!-- Divider -->

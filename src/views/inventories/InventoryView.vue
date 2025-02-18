@@ -6,6 +6,7 @@ import { useCartStore } from '@/stores/cartStore'
 import AppHeading from '@/components/AppHeading.vue'
 import AppButton from '@/components/AppButton.vue'
 import AppSpinner from '@/components/AppSpinner.vue'
+import { hasPermission } from '@/utils/permissions'
 
 const route = useRoute()
 const inventoryStore = useInventoryStore()
@@ -20,8 +21,10 @@ onMounted(async () => {
   inventory.value = inventoryStore.inventories[0]
   loading.value = inventoryStore.loading
 
-  await cartStore.fetchCart()
-  cart.value = cartStore.cart
+  if (hasPermission('customer')) {
+    await cartStore.fetchCart()
+    cart.value = cartStore.cart
+  }
 })
 
 const isAddedToCart = computed(() => {
@@ -66,9 +69,10 @@ const addItemToCart = async () => {
             <div class="small">{{ inventory.description }}</div>
             <div class="text-capitalize small">{{ inventory.category }}</div>
 
+            <!-- <div class="mt-2">{{ inventory.brand }} {{ inventory.model }} {{ inventory.modelNo }}</div> -->
             <div class="font-weight-bold mt-2">${{ inventory.price }}</div>
 
-            <div class="bottom d-flex justify-content-end">
+            <div v-if="hasPermission('customer')" class="bottom d-flex justify-content-end">
               <AppButton
                 @click="addItemToCart"
                 :text="isAddedToCart ? 'Added to cart' : 'Add to cart'"

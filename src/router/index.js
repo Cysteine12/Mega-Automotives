@@ -296,6 +296,31 @@ const router = createRouter({
           ],
         },
         {
+          path: 'inventories',
+          children: [
+            {
+              path: '',
+              name: 'admin.inventories.index',
+              component: () => import('@/views/admin/inventories/InventoriesView.vue'),
+            },
+            {
+              path: 'create',
+              name: 'admin.inventories.create',
+              component: () => import('@/views/admin/inventories/InventoryCreateView.vue'),
+            },
+            {
+              path: ':id',
+              name: 'admin.inventories.show',
+              component: () => import('@/views/inventories/InventoryView.vue'),
+            },
+            {
+              path: ':id/edit',
+              name: 'admin.inventories.edit',
+              component: () => import('@/views/admin/inventories/InventoryEditView.vue'),
+            },
+          ],
+        },
+        {
           path: 'users',
           children: [
             {
