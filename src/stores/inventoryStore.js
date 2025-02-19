@@ -156,7 +156,7 @@ export const useInventoryStore = defineStore('inventory', {
           this.message = res.data.message
           toast.success(this.message)
 
-          router.go(-1)
+          // router.go(-1)
         } else {
           this.error = res.data.message
           toast.error(this.error)

@@ -22,7 +22,13 @@ onMounted(async () => {
 const handleSubmit = async (formData) => {
   loading.value = true
 
-  formData.thumbnail = await handleFileChange('app/inventories', formData.thumbnail)
+  if (formData.thumbnail.type) {
+    formData.thumbnail = await handleFileChange(
+      'app/inventories',
+      formData.thumbnail,
+      inventory.value.thumbnail,
+    )
+  }
 
   await inventoryStore.createInventory(formData)
   loading.value = inventoryStore.loading
@@ -33,12 +39,12 @@ const handleSubmit = async (formData) => {
   <main>
     <AppHeading title="Edit Inventory Details" />
 
-    <div class="row">
-      <div v-if="!loading" class="col-lg-6">
+    <div v-if="!loading" class="row">
+      <div class="col-lg-6">
         <InventoryForm :inventory="inventory" :loading="loading" @submitForm="handleSubmit" />
       </div>
-
-      <AppSpinner v-else />
     </div>
+
+    <AppSpinner v-else />
   </main>
 </template>

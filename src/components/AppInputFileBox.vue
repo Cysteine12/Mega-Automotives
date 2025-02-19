@@ -4,7 +4,7 @@ import { onMounted, ref } from 'vue'
 const props = defineProps({
   photos: {
     type: Array,
-    dafault: false,
+    required: false,
   },
   isRequired: {
     type: Boolean,
@@ -15,9 +15,11 @@ const emit = defineEmits(['fileInput'])
 
 const currentPhotos = ref([])
 
-onMounted(() => {
-  if (props.photos.length > 0) currentPhotos.value = props.photos
-})
+// couldn't figure out vue reactivity problem - used setTimeout instead of onMounted
+setTimeout(() => {
+  if (props.photos.length > 0) currentPhotos.value = [...props.photos]
+  console.log(currentPhotos.value)
+}, 2000)
 
 const handleFileChange = async (e) => {
   if (e.target.files.length < 1) return
