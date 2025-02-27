@@ -60,7 +60,7 @@ for (let i = 1; i <= page.value.totalPage; i++) {
 
 <style>
 .current {
-  background: #2b60d1;
+  background: #158660;
   color: #fff;
 }
 </style>

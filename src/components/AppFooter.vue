@@ -102,7 +102,7 @@ const currentYear = date.getFullYear()
 
 <style scoped>
 .footer {
-  background-color: #6b6f9c;
+  background-color: #283a34;
   color: #fff;
 }
 
