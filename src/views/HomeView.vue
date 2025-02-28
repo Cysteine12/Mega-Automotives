@@ -361,8 +361,8 @@ document.querySelectorAll('#navbar a').forEach((navbarlink) => {
           </div>
 
           <div v-if="services" class="row gy-4">
-            <div v-for="service in services" :key="service._id" class="col col-lg-4">
-              <div class="service-item position-relative">
+            <div v-for="service in services" :key="service._id" class="col-lg-4">
+              <div class="my-2 service-item position-relative">
                 <div class="card-img-wrapper">
                   <img :src="service.thumbnail" class="img-fluid" alt="service thumbnail" />
                 </div>
@@ -400,7 +400,7 @@ document.querySelectorAll('#navbar a').forEach((navbarlink) => {
                 :key="inventory._id"
                 class="col-xl-4 col-md-6 portfolio-item filter-app"
               >
-                <div class="mb-4 portfolio-wrap">
+                <div class="mx-auto mb-4 portfolio-wrap">
                   <router-link
                     :to="`/inventories/${inventory._id}`"
                     data-gallery="portfolio-gallery-app"
@@ -408,7 +408,7 @@ document.querySelectorAll('#navbar a').forEach((navbarlink) => {
                   >
                     <div class="card-img-wrapper">
                       <img
-                        :src="`inventory.thumbnail`"
+                        :src="inventory.thumbnail"
                         class="img-fluid"
                         alt="Inventory item thumbnail"
                       />
@@ -1728,11 +1728,14 @@ section {
   background: #fff;
   border-radius: 10px;
   overflow: hidden;
+  max-width: 270px;
 }
 
 .portfolio-wrap img {
   border-radius: 10px 10px 0 0;
   transition: transform 0.3s ease-in-out;
+  height: 200px;
+  width: 100%;
 }
 
 .portfolio-wrap .card-img-wrapper {
