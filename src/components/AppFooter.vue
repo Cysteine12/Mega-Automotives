@@ -20,7 +20,7 @@ const currentYear = date.getFullYear()
             <a href="#" class="instagram">
               <i class="fab fa-instagram fa-2x"></i>
             </a>
-            <router-link to="#" class="linkedin"><i class="fab fa-linkedin fa-2x"></i></router-link>
+            <a href="https://linkedin.com/in/balogun-gbenga-68500119a" class="linkedin"><i class="fab fa-linkedin fa-2x"></i></a>
           </div>
         </div>
 
