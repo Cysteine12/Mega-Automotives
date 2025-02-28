@@ -2,6 +2,7 @@
 import { onMounted, ref } from 'vue'
 import { useAuthStore } from '@/stores/authStore'
 import AppFooter from '@/components/AppFooter.vue'
+import AppButton from '@/components/AppButton.vue'
 import { useServiceStore } from '@/stores/serviceStore'
 import { useInventoryStore } from '@/stores/inventoryStore'
 import { useRentalStore } from '@/stores/rentalStore'
@@ -29,6 +30,93 @@ onMounted(async () => {
   await rentalStore.fetchRentals({ page: 1, limit: 4 })
   rentals.value = rentalStore.rentals
 })
+
+/**
+ * Sticky Header on Scroll
+ */
+const selectHeader = document.querySelector('#header')
+if (selectHeader) {
+  let headerOffset = selectHeader.offsetTop
+  let nextElement = selectHeader.nextElementSibling
+
+  const headerFixed = () => {
+    if (headerOffset - window.scrollY <= 0) {
+      selectHeader.classList.add('sticked')
+      if (nextElement) nextElement.classList.add('sticked-header-offset')
+    } else {
+      selectHeader.classList.remove('sticked')
+      if (nextElement) nextElement.classList.remove('sticked-header-offset')
+    }
+  }
+  window.addEventListener('load', headerFixed)
+  document.addEventListener('scroll', headerFixed)
+}
+
+/**
+ * Navbar links active state on scroll
+ */
+let navbarlinks = document.querySelectorAll('#navbar a')
+
+function navbarlinksActive() {
+  navbarlinks.forEach((navbarlink) => {
+    if (!navbarlink.hash) return
+
+    let section = document.querySelector(navbarlink.hash)
+    if (!section) return
+
+    let position = window.scrollY + 200
+
+    if (position >= section.offsetTop && position <= section.offsetTop + section.offsetHeight) {
+      navbarlink.classList.add('active')
+    } else {
+      navbarlink.classList.remove('active')
+    }
+  })
+}
+window.addEventListener('load', navbarlinksActive)
+document.addEventListener('scroll', navbarlinksActive)
+
+/**
+ * Mobile nav toggle
+ */
+const mobileNavShow = document.querySelector('.mobile-nav-show')
+const mobileNavHide = document.querySelector('.mobile-nav-hide')
+
+const toggleMenu = (e) => {
+  console.log('iran')
+  e.preventDefault()
+  mobileNavToogle()
+}
+
+document.querySelectorAll('.mobile-nav-toggle').forEach((el) => {
+  el.addEventListener('click', function (event) {
+    console.log('iran')
+    event.preventDefault()
+    mobileNavToogle()
+  })
+})
+
+function mobileNavToogle() {
+  document.querySelector('body').classList.toggle('mobile-nav-active')
+  mobileNavShow.classList.toggle('d-none')
+  mobileNavHide.classList.toggle('d-none')
+}
+
+/**
+ * Hide mobile nav on same-page/hash links
+ */
+document.querySelectorAll('#navbar a').forEach((navbarlink) => {
+  if (!navbarlink.hash) return
+
+  let section = document.querySelector(navbarlink.hash)
+  if (!section) return
+
+  navbarlink.addEventListener('click', () => {
+    if (document.querySelector('.mobile-nav-active')) {
+      mobileNavToogle()
+    }
+  })
+})
 </script>
 
 <template>
@@ -38,18 +126,14 @@ onMounted(async () => {
         <router-link to="/" class="logo d-flex align-items-center">
           <!-- Uncomment the line below if you also wish to use an image logo -->
           <img src="/megaautomotives.webp" alt="" />
-          <h1>Mega-Automotives<span>.</span></h1>
+          <h1>Mega-Auto<span>.</span></h1>
         </router-link>
         <nav id="navbar" class="navbar">
           <ul>
             <li><router-link to="/">Home</router-link></li>
-            <li><router-link to="#about">About</router-link></li>
-            <li><router-link to="#services">Services</router-link></li>
-            <li><router-link to="#portfolio">Parts Store</router-link></li>
-            <li><router-link to="#team">Rentals</router-link></li>
 
             <li v-if="!user" class="rounded-pill">
-              <router-link to="/login"><b>Login</b></router-link>
+              <router-link to="/login"><AppButton text="Login" /></router-link>
             </li>
             <li v-else>
               <router-link to="/dashboard"><b>Dashboard</b></router-link>
@@ -58,9 +142,13 @@ onMounted(async () => {
         </nav>
         <!-- .navbar -->
 
-        <span class="mobile-nav-toggle mobile-nav-show"><i class="fas fa-menu"></i></span>
+        <span @click="toggleMenu" class="mobile-nav-toggle mobile-nav-show"
+          ><i class="fas fa-bars"></i
+        ></span>
 
-        <i class="mobile-nav-toggle mobile-nav-hide d-none fas fa-x"></i>
+        <span @click="toggleMenu" class="mobile-nav-toggle mobile-nav-hide d-none"
+          ><i class="fas fa-times"></i
+        ></span>
       </div>
     </header>
     <!-- End Header -->
