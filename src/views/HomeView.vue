@@ -293,7 +293,7 @@ document.querySelectorAll('#navbar a').forEach((navbarlink) => {
                 <div class="position-relative mt-4">
                   <img src="/home-imgs/about-2.jpg" class="img-fluid rounded-4" alt="" />
                   <router-link
-                    to="https://www.youtube.com/watch?v=LXb3EKWsInQ"
+                    to="https://www.youtube.com"
                     class="glightbox play-btn"
                   ></router-link>
                 </div>
