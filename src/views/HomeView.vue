@@ -370,7 +370,7 @@ document.querySelectorAll('#navbar a').forEach((navbarlink) => {
                 <p>
                   {{ service.description }}
                 </p>
-                <router-link :to="{ name: 'customer.services.index', query: { category: service.category }" class="readmore stretched-link"
+                <router-link :to="{ name: 'customer.services.index', query: { category: service.category } }" class="readmore stretched-link"
                   >Read more <i class="fas fa-arrow-right"></i
                 ></router-link>
               </div>
