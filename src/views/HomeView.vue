@@ -361,8 +361,8 @@ document.querySelectorAll('#navbar a').forEach((navbarlink) => {
           </div>
 
           <div v-if="services" class="row gy-4">
-            <div v-for="service in services" :key="service._id" class="col-lg-4">
-              <div class="my-2 service-item position-relative">
+            <div v-for="service in services" :key="service._id" class="my-2 col-lg-4">
+              <div class="service-item position-relative">
                 <div class="card-img-wrapper">
                   <img :src="service.thumbnail" class="img-fluid" alt="service thumbnail" />
                 </div>
@@ -370,7 +370,7 @@ document.querySelectorAll('#navbar a').forEach((navbarlink) => {
                 <p>
                   {{ service.description }}
                 </p>
-                <router-link :to="`/services/${service.category}`" class="readmore stretched-link"
+                <router-link :to="{ name: 'customer.services.index', query: { category: service.category }" class="readmore stretched-link"
                   >Read more <i class="fas fa-arrow-right"></i
                 ></router-link>
               </div>
